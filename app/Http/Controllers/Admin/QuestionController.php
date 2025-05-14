@@ -8,8 +8,8 @@ use App\Models\Question;
 use App\Models\Answer;
 use App\Models\Position;
 use App\Models\ShipType;
+use App\Models\Category;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Validation\Rule;
 
 class QuestionController extends Controller
 {
@@ -130,8 +130,9 @@ class QuestionController extends Controller
         $question = Question::with('answers')->findOrFail($id);
         $positions = Position::all();
         $shipTypes = ShipType::all();
+        $categories = Category::all();
 
-        return view('admin.questions.edit', compact('question', 'positions', 'shipTypes'));
+        return view('admin.questions.edit', compact('question', 'positions', 'shipTypes', 'categories'));
     }
 
     /**

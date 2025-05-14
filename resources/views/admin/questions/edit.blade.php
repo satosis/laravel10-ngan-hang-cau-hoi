@@ -317,7 +317,7 @@
             console.error(error);
         });
 
-    @if($question - > type == 'Trắc nghiệm')
+    @if($question->type == 'Trắc nghiệm')
     // Xử lý thêm phương án mới
     document.getElementById('add-option').addEventListener('click', function() {
         const container = document.getElementById('answer-options-container');
@@ -340,12 +340,12 @@
                     <label class="form-label required-label">Phương án ${optionLetter}</label>
                     <textarea class="form-control" name="answers[${newOptionId}][content]" rows="2" required></textarea>
                 </div>
-                
+
                 <div class="mb-3">
                     <label class="form-label">Giải thích (tùy chọn)</label>
                     <textarea class="form-control" name="answers[${newOptionId}][explanation]" rows="2"></textarea>
                 </div>
-                
+
                 <div class="is-correct-option">
                     <div class="form-check">
                         <input class="form-check-input correct-answer" type="radio" name="correct_answer" id="correct${newOptionId}" value="${newOptionId}">
@@ -354,7 +354,7 @@
                         </label>
                     </div>
                 </div>
-                
+
                 <div class="remove-option">
                     <i class="fas fa-times-circle" onclick="removeOption(${newOptionId})"></i>
                 </div>
@@ -405,7 +405,7 @@
             }
         }
     }
-    @elseif($question - > type == 'Tự luận' || $question - > type == 'Tình huống')
+    @elseif($question->type == 'Tự luận' || $question-> type == 'Tình huống')
     // Khởi tạo CKEditor cho đáp án tự luận
     ClassicEditor
         .create(document.querySelector('#essayAnswer'))
@@ -429,7 +429,7 @@
         .catch(error => {
             console.error(error);
         });
-    @elseif($question - > type == 'Thực hành')
+    @elseif($question->type == 'Thực hành')
     // Khởi tạo CKEditor cho hướng dẫn thực hành
     ClassicEditor
         .create(document.querySelector('#practicalInstructions'))
