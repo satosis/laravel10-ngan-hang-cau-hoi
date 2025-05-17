@@ -254,7 +254,7 @@
                 $userResponse = $attempt->userResponses->where('question_id', $question->id)->first();
                 $isCorrect = $userResponse && $userResponse->isCorrect();
                 @endphp
-
+                @endforeach
                 <div class="accordion-item mb-3 border">
                     <h2 class="accordion-header" id="heading{{ $index }}">
                         <button class="accordion-button {{ $index > 0 ? 'collapsed' : '' }}" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ $index }}" aria-expanded="{{ $index == 0 ? 'true' : 'false' }}" aria-controls="collapse{{ $index }}">
@@ -289,7 +289,7 @@
                                 <p><strong>Các lựa chọn:</strong></p>
                                 <ul class="list-group">
                                     @foreach($question->answers as $answer)
-                                    <li class="list-group-item 
+                                    <li class="list-group-item
                                                     @if($userResponse && $userResponse->answer_id == $answer->id && $answer->is_correct) answer-correct
                                                     @elseif($userResponse && $userResponse->answer_id == $answer->id && !$answer->is_correct) answer-incorrect
                                                     @elseif($answer->is_correct) answer-correct
@@ -550,7 +550,7 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
     // Khai báo biến PHP một cách an toàn
-    var attemptScore = @json($attempt - > score);
+    var attemptScore = @json($attempt->score);
 </script>
 <script>
     $(document).ready(function() {

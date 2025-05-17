@@ -33,10 +33,11 @@
     }
 
     .question-nav-btn {
-        width: 40px;
-        height: 40px;
+        width: 44px;
+        height: 44px;
         margin: 5px;
         font-weight: bold;
+        font-size: 12px;
     }
 
     .question-nav-btn.current {
@@ -306,11 +307,7 @@
 <script>
     $(document).ready(function() {
         let currentQuestion = 1;
-        const totalQuestions = {
-            {
-                $testQuestions - > count()
-            }
-        };
+        const totalQuestions = {{ $testQuestions->count()}};
         const answeredQuestions = new Set();
         const markedQuestions = new Set();
 
@@ -422,26 +419,14 @@
             const formData = $('#test-form').serialize();
 
             // Lưu vào localStorage
-            localStorage.setItem('testProgress_' + {
-                {
-                    $attempt - > id
-                }
-            }, formData);
+            localStorage.setItem('testProgress_' + {{ $attempt->id }}, formData);
 
             const answeredCount = answeredQuestions.size;
             const markedCount = markedQuestions.size;
 
             // Lưu danh sách câu đã trả lời và đánh dấu
-            localStorage.setItem('testAnswered_' + {
-                {
-                    $attempt - > id
-                }
-            }, Array.from(answeredQuestions).join(','));
-            localStorage.setItem('testMarked_' + {
-                {
-                    $attempt - > id
-                }
-            }, Array.from(markedQuestions).join(','));
+            localStorage.setItem('testAnswered_' + {{ $attempt->id }}, Array.from(answeredQuestions).join(','));
+            localStorage.setItem('testMarked_' + {{ $attempt->id }}, Array.from(markedQuestions).join(','));
         }
 
         // Tự động lưu mỗi 30 giây
@@ -449,21 +434,9 @@
 
         // Khôi phục tiến trình nếu có
         function restoreProgress() {
-            const savedAnswered = localStorage.getItem('testAnswered_' + {
-                {
-                    $attempt - > id
-                }
-            });
-            const savedMarked = localStorage.getItem('testMarked_' + {
-                {
-                    $attempt - > id
-                }
-            });
-            const savedProgress = localStorage.getItem('testProgress_' + {
-                {
-                    $attempt - > id
-                }
-            });
+            const savedAnswered = localStorage.getItem('testAnswered_' + {{ $attempt->id }});
+            const savedMarked = localStorage.getItem('testMarked_' + {{ $attempt->id }});
+            const savedProgress = localStorage.getItem('testProgress_' + {{ $attempt->id }});
 
             if (savedProgress) {
                 // Phân tích dữ liệu đã lưu

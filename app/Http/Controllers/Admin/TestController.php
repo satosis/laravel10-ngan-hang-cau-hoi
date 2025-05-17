@@ -98,8 +98,8 @@ class TestController extends Controller
                 'position_id' => $request->position_id,
                 'ship_type_id' => $request->ship_type_id,
                 'category' => $request->category,
-                'is_active' => $request->has('is_active') ? true : false,
-                'is_random' => $request->has('is_random') ? true : false,
+                'is_active' => $request->has('is_active') ? 1 : 0,
+                'is_random' => $request->has('is_random') ? 1 : 0,
                 'difficulty' => $request->difficulty,
                 'type' => $request->type,
                 'created_by' => auth()->id(),
@@ -138,9 +138,8 @@ class TestController extends Controller
     {
         $test = Test::with(['position', 'shipType', 'testAttempts.user'])
             ->findOrFail($id);
-
         // Sắp xếp các câu hỏi theo thứ tự
-        $testQuestions = $test->questions()->with('question')->orderBy('order')->get();
+        $testQuestions = $test?->questions()->orderBy('order')->get();
 
         // Tính toán thống kê
         $stats = [];
@@ -246,7 +245,6 @@ class TestController extends Controller
         }
 
         DB::beginTransaction();
-
         try {
             // Cập nhật thông tin bài kiểm tra
             $test->update([
@@ -257,8 +255,8 @@ class TestController extends Controller
                 'position_id' => $request->position_id,
                 'ship_type_id' => $request->ship_type_id,
                 'category' => $request->category,
-                'is_active' => $request->has('is_active') ? true : false,
-                'is_random' => $request->has('is_random') ? true : false,
+                'is_active' => $request->has('is_active') ? 1 : 0,
+                'is_random' => $request->has('is_random') ? 1 : 0,
                 'difficulty' => $request->difficulty,
                 'type' => $request->type,
             ]);

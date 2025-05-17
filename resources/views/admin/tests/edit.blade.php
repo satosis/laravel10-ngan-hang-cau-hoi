@@ -260,15 +260,17 @@
 </div>
 @endsection
 
-@section('scripts')
+@section('js')
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         // Xử lý hiển thị/ẩn phần ngẫu nhiên
         const isRandomCheckbox = document.getElementById('is_random');
+
         const randomQuestionsSection = document.querySelector('.random-questions-section');
         const questionSelectionSection = document.querySelector('.question-selection-section');
 
         isRandomCheckbox.addEventListener('change', function() {
+            console.log(2);
             if (this.checked) {
                 randomQuestionsSection.style.display = 'block';
                 questionSelectionSection.style.display = 'none';

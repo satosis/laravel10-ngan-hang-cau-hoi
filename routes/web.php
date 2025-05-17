@@ -61,6 +61,7 @@ Route::prefix('admin')->middleware(['auth', 'isAdmin'])->name('admin.')->group(f
     // Báo cáo và thống kê
     Route::get('/reports', [ReportController::class, 'index'])->name('reports.index');
     Route::get('/reports/performance', [ReportController::class, 'performance'])->name('reports.performance');
+    Route::get('/reports/performance/export', [ReportController::class, 'export'])->name('reports.performance.export');
     Route::get('/reports/test/{test}', [ReportController::class, 'testReport'])->name('reports.test');
     Route::get('/reports/seafarer/{user}', [ReportController::class, 'seafarerReport'])->name('reports.seafarer');
     Route::get('/reports/attempt/{testAttempt}', [ReportController::class, 'attemptReport'])->name('reports.attempt');

@@ -301,6 +301,7 @@
 @endsection
 
 @section('js')
+<script src="https://cdn.ckeditor.com/ckeditor5/35.0.1/classic/ckeditor.js"></script>
 <script>
     $(document).ready(function() {
         // Khởi tạo CKEditor cho trường mô tả
@@ -312,6 +313,8 @@
 
         // Xử lý hiển thị/ẩn phần tạo câu hỏi ngẫu nhiên
         $("#is_random").change(function() {
+            console.log($(this).is(":checked"));
+
             if ($(this).is(":checked")) {
                 $(".random-questions-section").show();
                 $(".question-selection-section").hide();

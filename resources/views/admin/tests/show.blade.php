@@ -302,9 +302,7 @@
                                 @endif
                             </div>
                             <div>
-                                @if($question->category)
-                                <span class="small text-muted">Danh mục: {{ $question->category->name }}</span>
-                                @endif
+                                <span class="small text-muted">Danh mục: {{ $question?->category }}</span>
                             </div>
                         </div>
                     </div>

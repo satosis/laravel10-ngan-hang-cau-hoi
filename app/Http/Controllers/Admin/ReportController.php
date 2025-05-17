@@ -9,11 +9,14 @@ use App\Models\Test;
 use App\Models\TestAttempt;
 use App\Models\Position;
 use App\Models\ShipType;
+use App\Models\ThuyenVien;
 use App\Models\Question;
 use App\Models\TestQuestion;
 use App\Models\Role;
 use Illuminate\Support\Facades\DB;
 use App\Models\UserResponse;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\ThuyenVienExport;
 
 class ReportController extends Controller
 {
@@ -48,7 +51,6 @@ class ReportController extends Controller
             ->select('positions.name', DB::raw('COUNT(thuyen_viens.id) as count'))
             ->groupBy('positions.id', 'positions.name')
             ->get();
-
         // Thống kê điểm trung bình theo loại bài kiểm tra
         $averageScoresByTest = Test::leftJoin('test_attempts', 'tests.id', '=', 'test_attempts.test_id')
             ->select(
@@ -155,6 +157,21 @@ class ReportController extends Controller
 
         $scoreTrend = $secondHalfAvg - $firstHalfAvg;
         $scoreTrendPercent = $firstHalfAvg > 0 ? ($scoreTrend / $firstHalfAvg) * 100 : 0;
+        $topThuyenVien = User::select(
+            'users.id',
+            'users.name',
+            DB::raw('COUNT(test_attempts.id) as attempts_count'),
+            DB::raw('AVG(test_attempts.score) as average_score'),
+            'positions.name as position_name'
+        )
+        ->leftJoin('test_attempts', 'users.id', '=', 'test_attempts.user_id')
+        ->leftJoin('thuyen_viens', 'users.id', '=', 'thuyen_viens.user_id')
+        ->leftJoin('positions', 'thuyen_viens.position_id', '=', 'positions.id')
+        ->groupBy('users.id', 'users.name', 'positions.name')
+        ->orderBy('average_score', 'desc')
+        ->take(10)
+        ->get();
+
 
         return view('admin.reports.performance_trend', compact(
             'performanceData',
@@ -165,7 +182,8 @@ class ReportController extends Controller
             'averageScore',
             'scoreTrend',
             'scoreTrendPercent',
-            'dateRange'
+            'dateRange',
+            'topThuyenVien'
         ));
     }
 
@@ -529,5 +547,10 @@ class ReportController extends Controller
         $attempt->save();
 
         return $attempt->score;
+    }
+
+    public function export()
+    {
+        return Excel::download(new ThuyenVienExport, 'thuyenvien.xlsx');
     }
 }

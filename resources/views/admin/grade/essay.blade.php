@@ -455,12 +455,12 @@
         };
         const passingScore = {
             {
-                $testAttempt - > test - > passing_score ?? 0
+                $testAttempt->test->passing_score ?? 0
             }
         };
         const totalPoints = {
             {
-                $testAttempt - > test - > total_points
+                $testAttempt->test->total_points
             }
         };
 
@@ -503,7 +503,7 @@
             const feedback = overallFeedbackTextarea.value;
             const testAttemptId = {
                 {
-                    $testAttempt - > id
+                    $testAttempt->id
                 }
             };
 

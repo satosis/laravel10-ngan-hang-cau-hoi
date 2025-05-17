@@ -275,7 +275,7 @@
                     <h6 class="m-0 font-weight-bold text-primary">
                         <i class="fas fa-list me-1"></i> Thuyền viên có hiệu suất cao nhất
                     </h6>
-                    <a href="#" class="btn btn-sm btn-primary">
+                    <a href="{{ route('admin.reports.performance.export') }}" class="btn btn-sm btn-primary">
                         <i class="fas fa-download me-1"></i> Xuất danh sách
                     </a>
                 </div>
@@ -294,17 +294,17 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @for($i = 1; $i <= 5; $i++)
-                                    <tr>
-                                    <th scope="row">{{ $i }}</th>
-                                    <td>Nguyễn Văn A{{ $i }}</td>
-                                    <td>Thuyền trưởng</td>
-                                    <td>{{ rand(5, 15) }}</td>
-                                    <td>{{ number_format(rand(85, 98) + rand(0, 99)/100, 2) }}</td>
+                                @foreach($topThuyenVien as $key => $thuyen_vien)
+                                <tr>
+                                    <th scope="row">{{ ++$key }}</th>
+                                    <td>{{ $thuyen_vien->name }}</td>
+                                    <td>{{ $thuyen_vien->position_name }}</td>
+                                    <td>{{ $thuyen_vien->attempts_count }}</td>
+                                    <td>{{ number_format($thuyen_vien->average_score) }}</td>
                                     <td>
-                                        @if(rand(0, 2) == 0)
+                                        @if($key %4 == 0)
                                         <span class="trend-arrow trend-up"><i class="fas fa-arrow-up"></i></span>
-                                        @elseif(rand(0, 1) == 0)
+                                        @elseif($key % 4 == 1)
                                         <span class="trend-arrow trend-down"><i class="fas fa-arrow-down"></i></span>
                                         @else
                                         <span class="trend-arrow trend-neutral"><i class="fas fa-minus"></i></span>
@@ -316,7 +316,7 @@
                                         </a>
                                     </td>
                                     </tr>
-                                    @endfor
+                                @endforeach
                             </tbody>
                         </table>
                     </div>
@@ -327,7 +327,8 @@
 </div>
 @endsection
 
-@section('scripts')
+@section('js')
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
     $(document).ready(function() {
         // Biểu đồ xu hướng hiệu suất

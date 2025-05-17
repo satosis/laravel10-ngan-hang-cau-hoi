@@ -1,2076 +1,603 @@
--- phpMyAdmin SQL Dump
--- version 5.2.1
--- https://www.phpmyadmin.net/
+-- MySQL dump 10.13  Distrib 8.0.40, for Win64 (x86_64)
 --
--- Máy chủ: localhost:8889
--- Thời gian đã tạo: Th5 03, 2025 lúc 06:37 AM
--- Phiên bản máy phục vụ: 8.0.40
--- Phiên bản PHP: 8.3.14
-
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-START TRANSACTION;
-SET time_zone = "+00:00";
-
+-- Host: 127.0.0.1    Database: thuyenvien
+-- ------------------------------------------------------
+-- Server version	5.5.5-10.4.32-MariaDB
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
+/*!50503 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Cơ sở dữ liệu: `thuyenvien`
+-- Table structure for table `answers`
 --
 
--- --------------------------------------------------------
-
---
--- Cấu trúc bảng cho bảng `answers`
---
-
+DROP TABLE IF EXISTS `answers`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `answers` (
-  `id` bigint UNSIGNED NOT NULL,
-  `question_id` bigint UNSIGNED NOT NULL,
-  `content` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `is_correct` tinyint(1) NOT NULL DEFAULT '0',
-  `explanation` text COLLATE utf8mb4_unicode_ci,
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `question_id` bigint(20) unsigned NOT NULL,
+  `content` text NOT NULL,
+  `is_correct` tinyint(1) NOT NULL DEFAULT 0,
+  `explanation` text DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `answers_question_id_foreign` (`question_id`),
+  CONSTRAINT `answers_question_id_foreign` FOREIGN KEY (`question_id`) REFERENCES `questions` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=113 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Đang đổ dữ liệu cho bảng `answers`
+-- Dumping data for table `answers`
 --
 
-INSERT INTO `answers` (`id`, `question_id`, `content`, `is_correct`, `explanation`, `created_at`, `updated_at`) VALUES
-(5, 2, 'Phao áo, phao tròn, xuồng cứu sinh và bè cứu sinh.', 1, 'Đây là những thiết bị cứu sinh bắt buộc theo quy định SOLAS.', '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(6, 2, 'Chỉ cần phao áo và xuồng cứu sinh là đủ.', 0, 'Thiếu các thiết bị cứu sinh bắt buộc khác theo quy định.', '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(7, 2, 'Máy bay trực thăng cứu hộ.', 0, 'Đây không phải là thiết bị cứu sinh bắt buộc trên tàu.', '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(8, 2, 'Tàu cứu hộ đi kèm.', 0, 'Đây không phải là thiết bị cứu sinh bắt buộc trên tàu.', '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(9, 13, 'Sử dụng sextant để đo góc cao của thiên thể và tính toán vị trí dựa trên bảng hải đồ thiên văn.', 1, 'Đây là phương pháp chính xác để xác định vị trí tàu bằng thiên văn.', '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(10, 13, 'Chỉ cần nhìn vào vị trí mặt trời.', 0, 'Phương pháp này không đủ chính xác để xác định vị trí tàu.', '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(11, 13, 'Dựa vào la bàn từ và hướng sao Bắc Đẩu.', 0, 'Phương pháp này chỉ xác định được hướng Bắc chứ không xác định được vị trí chính xác.', '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(12, 13, 'Dựa vào GPS, không cần thiên văn.', 0, 'GPS là phương pháp hiện đại nhưng câu hỏi yêu cầu xác định bằng phương pháp thiên văn.', '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(13, 14, 'Sử dụng sextant để đo góc cao của thiên thể và tính toán vị trí dựa trên bảng hải đồ thiên văn.', 1, 'Đây là phương pháp chính xác để xác định vị trí tàu bằng thiên văn.', '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(14, 14, 'Chỉ cần nhìn vào vị trí mặt trời.', 0, 'Phương pháp này không đủ chính xác để xác định vị trí tàu.', '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(15, 14, 'Dựa vào la bàn từ và hướng sao Bắc Đẩu.', 0, 'Phương pháp này chỉ xác định được hướng Bắc chứ không xác định được vị trí chính xác.', '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(16, 14, 'Dựa vào GPS, không cần thiên văn.', 0, 'GPS là phương pháp hiện đại nhưng câu hỏi yêu cầu xác định bằng phương pháp thiên văn.', '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(17, 15, 'Sử dụng sextant để đo góc cao của thiên thể và tính toán vị trí dựa trên bảng hải đồ thiên văn.', 1, 'Đây là phương pháp chính xác để xác định vị trí tàu bằng thiên văn.', '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(18, 15, 'Chỉ cần nhìn vào vị trí mặt trời.', 0, 'Phương pháp này không đủ chính xác để xác định vị trí tàu.', '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(19, 15, 'Dựa vào la bàn từ và hướng sao Bắc Đẩu.', 0, 'Phương pháp này chỉ xác định được hướng Bắc chứ không xác định được vị trí chính xác.', '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(20, 15, 'Dựa vào GPS, không cần thiên văn.', 0, 'GPS là phương pháp hiện đại nhưng câu hỏi yêu cầu xác định bằng phương pháp thiên văn.', '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(21, 16, 'Sử dụng sextant để đo góc cao của thiên thể và tính toán vị trí dựa trên bảng hải đồ thiên văn.', 1, 'Đây là phương pháp chính xác để xác định vị trí tàu bằng thiên văn.', '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(22, 16, 'Chỉ cần nhìn vào vị trí mặt trời.', 0, 'Phương pháp này không đủ chính xác để xác định vị trí tàu.', '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(23, 16, 'Dựa vào la bàn từ và hướng sao Bắc Đẩu.', 0, 'Phương pháp này chỉ xác định được hướng Bắc chứ không xác định được vị trí chính xác.', '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(24, 16, 'Dựa vào GPS, không cần thiên văn.', 0, 'GPS là phương pháp hiện đại nhưng câu hỏi yêu cầu xác định bằng phương pháp thiên văn.', '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(25, 17, 'Sử dụng sextant để đo góc cao của thiên thể và tính toán vị trí dựa trên bảng hải đồ thiên văn.', 1, 'Đây là phương pháp chính xác để xác định vị trí tàu bằng thiên văn.', '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(26, 17, 'Chỉ cần nhìn vào vị trí mặt trời.', 0, 'Phương pháp này không đủ chính xác để xác định vị trí tàu.', '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(27, 17, 'Dựa vào la bàn từ và hướng sao Bắc Đẩu.', 0, 'Phương pháp này chỉ xác định được hướng Bắc chứ không xác định được vị trí chính xác.', '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(28, 17, 'Dựa vào GPS, không cần thiên văn.', 0, 'GPS là phương pháp hiện đại nhưng câu hỏi yêu cầu xác định bằng phương pháp thiên văn.', '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(29, 18, 'Sử dụng sextant để đo góc cao của thiên thể và tính toán vị trí dựa trên bảng hải đồ thiên văn.', 1, 'Đây là phương pháp chính xác để xác định vị trí tàu bằng thiên văn.', '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(30, 18, 'Chỉ cần nhìn vào vị trí mặt trời.', 0, 'Phương pháp này không đủ chính xác để xác định vị trí tàu.', '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(31, 18, 'Dựa vào la bàn từ và hướng sao Bắc Đẩu.', 0, 'Phương pháp này chỉ xác định được hướng Bắc chứ không xác định được vị trí chính xác.', '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(32, 18, 'Dựa vào GPS, không cần thiên văn.', 0, 'GPS là phương pháp hiện đại nhưng câu hỏi yêu cầu xác định bằng phương pháp thiên văn.', '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(33, 19, 'Sử dụng sextant để đo góc cao của thiên thể và tính toán vị trí dựa trên bảng hải đồ thiên văn.', 1, 'Đây là phương pháp chính xác để xác định vị trí tàu bằng thiên văn.', '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(34, 19, 'Chỉ cần nhìn vào vị trí mặt trời.', 0, 'Phương pháp này không đủ chính xác để xác định vị trí tàu.', '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(35, 19, 'Dựa vào la bàn từ và hướng sao Bắc Đẩu.', 0, 'Phương pháp này chỉ xác định được hướng Bắc chứ không xác định được vị trí chính xác.', '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(36, 19, 'Dựa vào GPS, không cần thiên văn.', 0, 'GPS là phương pháp hiện đại nhưng câu hỏi yêu cầu xác định bằng phương pháp thiên văn.', '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(37, 20, 'Đi bên phải của luồng, giảm tốc độ và tuân thủ tín hiệu giao thông thủy.', 1, 'Theo quy tắc quốc tế phòng ngừa đâm va trên biển COLREG.', '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(38, 20, 'Đi giữa luồng để có đủ độ sâu.', 0, 'Điều này vi phạm quy tắc luồng lạch hẹp trong COLREG.', '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(39, 20, 'Tăng tốc để qua luồng nhanh chóng.', 0, 'Việc tăng tốc có thể gây nguy hiểm trong luồng hẹp.', '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(40, 20, 'Không cần tuân thủ quy tắc nào nếu là tàu lớn.', 0, 'Mọi tàu đều phải tuân thủ quy tắc hàng hải.', '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(41, 21, 'Đi bên phải của luồng, giảm tốc độ và tuân thủ tín hiệu giao thông thủy.', 1, 'Theo quy tắc quốc tế phòng ngừa đâm va trên biển COLREG.', '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(42, 21, 'Đi giữa luồng để có đủ độ sâu.', 0, 'Điều này vi phạm quy tắc luồng lạch hẹp trong COLREG.', '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(43, 21, 'Tăng tốc để qua luồng nhanh chóng.', 0, 'Việc tăng tốc có thể gây nguy hiểm trong luồng hẹp.', '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(44, 21, 'Không cần tuân thủ quy tắc nào nếu là tàu lớn.', 0, 'Mọi tàu đều phải tuân thủ quy tắc hàng hải.', '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(45, 22, 'Đi bên phải của luồng, giảm tốc độ và tuân thủ tín hiệu giao thông thủy.', 1, 'Theo quy tắc quốc tế phòng ngừa đâm va trên biển COLREG.', '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(46, 22, 'Đi giữa luồng để có đủ độ sâu.', 0, 'Điều này vi phạm quy tắc luồng lạch hẹp trong COLREG.', '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(47, 22, 'Tăng tốc để qua luồng nhanh chóng.', 0, 'Việc tăng tốc có thể gây nguy hiểm trong luồng hẹp.', '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(48, 22, 'Không cần tuân thủ quy tắc nào nếu là tàu lớn.', 0, 'Mọi tàu đều phải tuân thủ quy tắc hàng hải.', '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(49, 23, 'Đi bên phải của luồng, giảm tốc độ và tuân thủ tín hiệu giao thông thủy.', 1, 'Theo quy tắc quốc tế phòng ngừa đâm va trên biển COLREG.', '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(50, 23, 'Đi giữa luồng để có đủ độ sâu.', 0, 'Điều này vi phạm quy tắc luồng lạch hẹp trong COLREG.', '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(51, 23, 'Tăng tốc để qua luồng nhanh chóng.', 0, 'Việc tăng tốc có thể gây nguy hiểm trong luồng hẹp.', '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(52, 23, 'Không cần tuân thủ quy tắc nào nếu là tàu lớn.', 0, 'Mọi tàu đều phải tuân thủ quy tắc hàng hải.', '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(53, 24, 'Đi bên phải của luồng, giảm tốc độ và tuân thủ tín hiệu giao thông thủy.', 1, 'Theo quy tắc quốc tế phòng ngừa đâm va trên biển COLREG.', '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(54, 24, 'Đi giữa luồng để có đủ độ sâu.', 0, 'Điều này vi phạm quy tắc luồng lạch hẹp trong COLREG.', '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(55, 24, 'Tăng tốc để qua luồng nhanh chóng.', 0, 'Việc tăng tốc có thể gây nguy hiểm trong luồng hẹp.', '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(56, 24, 'Không cần tuân thủ quy tắc nào nếu là tàu lớn.', 0, 'Mọi tàu đều phải tuân thủ quy tắc hàng hải.', '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(57, 25, 'Đi bên phải của luồng, giảm tốc độ và tuân thủ tín hiệu giao thông thủy.', 1, 'Theo quy tắc quốc tế phòng ngừa đâm va trên biển COLREG.', '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(58, 25, 'Đi giữa luồng để có đủ độ sâu.', 0, 'Điều này vi phạm quy tắc luồng lạch hẹp trong COLREG.', '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(59, 25, 'Tăng tốc để qua luồng nhanh chóng.', 0, 'Việc tăng tốc có thể gây nguy hiểm trong luồng hẹp.', '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(60, 25, 'Không cần tuân thủ quy tắc nào nếu là tàu lớn.', 0, 'Mọi tàu đều phải tuân thủ quy tắc hàng hải.', '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(61, 26, 'Đi bên phải của luồng, giảm tốc độ và tuân thủ tín hiệu giao thông thủy.', 1, 'Theo quy tắc quốc tế phòng ngừa đâm va trên biển COLREG.', '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(62, 26, 'Đi giữa luồng để có đủ độ sâu.', 0, 'Điều này vi phạm quy tắc luồng lạch hẹp trong COLREG.', '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(63, 26, 'Tăng tốc để qua luồng nhanh chóng.', 0, 'Việc tăng tốc có thể gây nguy hiểm trong luồng hẹp.', '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(64, 26, 'Không cần tuân thủ quy tắc nào nếu là tàu lớn.', 0, 'Mọi tàu đều phải tuân thủ quy tắc hàng hải.', '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(65, 46, 'Nhiệt độ nước làm mát, áp suất dầu bôi trơn, tốc độ vòng quay, và nhiệt độ khí xả.', 1, 'Đây là những thông số quan trọng cần giám sát khi vận hành động cơ chính.', '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(66, 46, 'Chỉ cần theo dõi tốc độ vòng quay của động cơ.', 0, 'Không đủ thông số để đảm bảo động cơ hoạt động an toàn.', '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(67, 46, 'Màu sắc của khói thải từ ống khói.', 0, 'Đây là một dấu hiệu nhưng không phải thông số vận hành chuẩn.', '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(68, 46, 'Mức tiêu thụ nhiên liệu theo giờ.', 0, 'Đây là thông số quan trọng nhưng không phải thông số chính để giám sát an toàn động cơ.', '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(69, 47, 'Nhiệt độ nước làm mát, áp suất dầu bôi trơn, tốc độ vòng quay, và nhiệt độ khí xả.', 1, 'Đây là những thông số quan trọng cần giám sát khi vận hành động cơ chính.', '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(70, 47, 'Chỉ cần theo dõi tốc độ vòng quay của động cơ.', 0, 'Không đủ thông số để đảm bảo động cơ hoạt động an toàn.', '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(71, 47, 'Màu sắc của khói thải từ ống khói.', 0, 'Đây là một dấu hiệu nhưng không phải thông số vận hành chuẩn.', '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(72, 47, 'Mức tiêu thụ nhiên liệu theo giờ.', 0, 'Đây là thông số quan trọng nhưng không phải thông số chính để giám sát an toàn động cơ.', '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(73, 48, 'Nhiệt độ nước làm mát, áp suất dầu bôi trơn, tốc độ vòng quay, và nhiệt độ khí xả.', 1, 'Đây là những thông số quan trọng cần giám sát khi vận hành động cơ chính.', '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(74, 48, 'Chỉ cần theo dõi tốc độ vòng quay của động cơ.', 0, 'Không đủ thông số để đảm bảo động cơ hoạt động an toàn.', '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(75, 48, 'Màu sắc của khói thải từ ống khói.', 0, 'Đây là một dấu hiệu nhưng không phải thông số vận hành chuẩn.', '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(76, 48, 'Mức tiêu thụ nhiên liệu theo giờ.', 0, 'Đây là thông số quan trọng nhưng không phải thông số chính để giám sát an toàn động cơ.', '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(77, 49, 'Nhiệt độ nước làm mát, áp suất dầu bôi trơn, tốc độ vòng quay, và nhiệt độ khí xả.', 1, 'Đây là những thông số quan trọng cần giám sát khi vận hành động cơ chính.', '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(78, 49, 'Chỉ cần theo dõi tốc độ vòng quay của động cơ.', 0, 'Không đủ thông số để đảm bảo động cơ hoạt động an toàn.', '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(79, 49, 'Màu sắc của khói thải từ ống khói.', 0, 'Đây là một dấu hiệu nhưng không phải thông số vận hành chuẩn.', '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(80, 49, 'Mức tiêu thụ nhiên liệu theo giờ.', 0, 'Đây là thông số quan trọng nhưng không phải thông số chính để giám sát an toàn động cơ.', '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(81, 50, 'Nhiệt độ nước làm mát, áp suất dầu bôi trơn, tốc độ vòng quay, và nhiệt độ khí xả.', 1, 'Đây là những thông số quan trọng cần giám sát khi vận hành động cơ chính.', '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(82, 50, 'Chỉ cần theo dõi tốc độ vòng quay của động cơ.', 0, 'Không đủ thông số để đảm bảo động cơ hoạt động an toàn.', '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(83, 50, 'Màu sắc của khói thải từ ống khói.', 0, 'Đây là một dấu hiệu nhưng không phải thông số vận hành chuẩn.', '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(84, 50, 'Mức tiêu thụ nhiên liệu theo giờ.', 0, 'Đây là thông số quan trọng nhưng không phải thông số chính để giám sát an toàn động cơ.', '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(85, 51, 'Kiểm tra rò rỉ, vệ sinh két giãn nở, kiểm tra bơm nước, thay thế chất làm mát theo định kỳ.', 1, 'Đây là quy trình bảo dưỡng chuẩn cho hệ thống làm mát.', '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(86, 51, 'Chỉ cần thay nước làm mát mỗi năm một lần.', 0, 'Quy trình này không đầy đủ cho bảo dưỡng hệ thống làm mát.', '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(87, 51, 'Kiểm tra khi động cơ gặp sự cố quá nhiệt.', 0, 'Đây là xử lý sự cố, không phải bảo dưỡng định kỳ.', '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(88, 51, 'Bảo dưỡng khi kết thúc hành trình.', 0, 'Bảo dưỡng định kỳ phải theo lịch cụ thể, không phải chỉ sau mỗi hành trình.', '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(89, 52, 'Kiểm tra rò rỉ, vệ sinh két giãn nở, kiểm tra bơm nước, thay thế chất làm mát theo định kỳ.', 1, 'Đây là quy trình bảo dưỡng chuẩn cho hệ thống làm mát.', '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(90, 52, 'Chỉ cần thay nước làm mát mỗi năm một lần.', 0, 'Quy trình này không đầy đủ cho bảo dưỡng hệ thống làm mát.', '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(91, 52, 'Kiểm tra khi động cơ gặp sự cố quá nhiệt.', 0, 'Đây là xử lý sự cố, không phải bảo dưỡng định kỳ.', '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(92, 52, 'Bảo dưỡng khi kết thúc hành trình.', 0, 'Bảo dưỡng định kỳ phải theo lịch cụ thể, không phải chỉ sau mỗi hành trình.', '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(93, 53, 'Kiểm tra rò rỉ, vệ sinh két giãn nở, kiểm tra bơm nước, thay thế chất làm mát theo định kỳ.', 1, 'Đây là quy trình bảo dưỡng chuẩn cho hệ thống làm mát.', '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(94, 53, 'Chỉ cần thay nước làm mát mỗi năm một lần.', 0, 'Quy trình này không đầy đủ cho bảo dưỡng hệ thống làm mát.', '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(95, 53, 'Kiểm tra khi động cơ gặp sự cố quá nhiệt.', 0, 'Đây là xử lý sự cố, không phải bảo dưỡng định kỳ.', '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(96, 53, 'Bảo dưỡng khi kết thúc hành trình.', 0, 'Bảo dưỡng định kỳ phải theo lịch cụ thể, không phải chỉ sau mỗi hành trình.', '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(97, 54, 'Kiểm tra rò rỉ, vệ sinh két giãn nở, kiểm tra bơm nước, thay thế chất làm mát theo định kỳ.', 1, 'Đây là quy trình bảo dưỡng chuẩn cho hệ thống làm mát.', '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(98, 54, 'Chỉ cần thay nước làm mát mỗi năm một lần.', 0, 'Quy trình này không đầy đủ cho bảo dưỡng hệ thống làm mát.', '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(99, 54, 'Kiểm tra khi động cơ gặp sự cố quá nhiệt.', 0, 'Đây là xử lý sự cố, không phải bảo dưỡng định kỳ.', '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(100, 54, 'Bảo dưỡng khi kết thúc hành trình.', 0, 'Bảo dưỡng định kỳ phải theo lịch cụ thể, không phải chỉ sau mỗi hành trình.', '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(101, 55, 'Kiểm tra rò rỉ, vệ sinh két giãn nở, kiểm tra bơm nước, thay thế chất làm mát theo định kỳ.', 1, 'Đây là quy trình bảo dưỡng chuẩn cho hệ thống làm mát.', '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(102, 55, 'Chỉ cần thay nước làm mát mỗi năm một lần.', 0, 'Quy trình này không đầy đủ cho bảo dưỡng hệ thống làm mát.', '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(103, 55, 'Kiểm tra khi động cơ gặp sự cố quá nhiệt.', 0, 'Đây là xử lý sự cố, không phải bảo dưỡng định kỳ.', '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(104, 55, 'Bảo dưỡng khi kết thúc hành trình.', 0, 'Bảo dưỡng định kỳ phải theo lịch cụ thể, không phải chỉ sau mỗi hành trình.', '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(105, 66, 'Kiểm soát khí gas, hệ thống trơ, thiết bị chống tĩnh điện, và quy trình xếp dỡ đặc biệt.', 1, 'Đây là các quy trình an toàn đặc biệt khi vận chuyển dầu thô.', '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(106, 66, 'Chỉ cần hệ thống phòng cháy chữa cháy.', 0, 'Hệ thống PCCC là cần thiết nhưng không đủ cho an toàn tàu dầu.', '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(107, 66, 'Cùng quy trình an toàn như tàu chở hàng thông thường.', 0, 'Tàu dầu cần quy trình an toàn đặc biệt khác với tàu thông thường.', '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(108, 66, 'Kiểm tra độ kín của két chứa mỗi tháng.', 0, 'Đây chỉ là một phần nhỏ trong quy trình an toàn tàu dầu.', '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(109, 68, 'Máy đo nồng độ khí hydrocarbon, máy đo oxy, máy đo khí H2S, và hệ thống báo động khí gas tự động.', 1, 'Đây là những thiết bị cần thiết để giám sát khí gas trên tàu dầu.', '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(110, 68, 'Chỉ cần máy đo nồng độ oxy.', 0, 'Không đủ để kiểm soát các loại khí nguy hiểm khác.', '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(111, 68, 'Máy đo khí CO2 từ hệ thống chữa cháy.', 0, 'Đây là thiết bị cho hệ thống chữa cháy, không phải để kiểm soát khí gas từ hàng hóa.', '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(112, 68, 'Thiết bị đo áp suất trong két dầu.', 0, 'Đây là thiết bị đo áp suất, không phải thiết bị giám sát khí gas.', '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(132, 1, 'Hét lên \"Người rơi xuống biển\" và ném ngay phao cứu sinh về phía nạn nhân.', 0, NULL, '2025-05-02 00:17:58', '2025-05-02 00:17:58'),
-(133, 1, 'Điều động tàu quay lại vị trí nạn nhân ngay lập tức.', 0, NULL, '2025-05-02 00:17:58', '2025-05-02 00:17:58'),
-(134, 1, 'Báo cáo ngay cho thuyền trưởng.', 0, NULL, '2025-05-02 00:17:58', '2025-05-02 00:17:58');
-
--- --------------------------------------------------------
+LOCK TABLES `answers` WRITE;
+/*!40000 ALTER TABLE `answers` DISABLE KEYS */;
+INSERT INTO `answers` VALUES (1,1,'Hét lên \"Người rơi xuống biển\" và ném ngay phao cứu sinh về phía nạn nhân.',1,'Ném phao cứu sinh ngay lập tức giúp nạn nhân có điểm tựa và dễ dàng nhìn thấy vị trí từ xa.','2025-05-16 20:22:28','2025-05-16 20:22:28'),(2,1,'Điều động tàu quay lại vị trí nạn nhân ngay lập tức.',0,'Việc điều động tàu quay lại phải tuân theo quy trình và không phải là hành động đầu tiên.','2025-05-16 20:22:28','2025-05-16 20:22:28'),(3,1,'Báo cáo ngay cho thuyền trưởng.',0,'Báo cáo cho thuyền trưởng là cần thiết nhưng không phải hành động đầu tiên cần làm.','2025-05-16 20:22:28','2025-05-16 20:22:28'),(4,1,'Nhảy xuống biển để cứu nạn nhân.',0,'Hành động này rất nguy hiểm và có thể gây thêm nạn nhân.','2025-05-16 20:22:28','2025-05-16 20:22:28'),(5,2,'Phao áo, phao tròn, xuồng cứu sinh và bè cứu sinh.',1,'Đây là những thiết bị cứu sinh bắt buộc theo quy định SOLAS.','2025-05-16 20:22:28','2025-05-16 20:22:28'),(6,2,'Chỉ cần phao áo và xuồng cứu sinh là đủ.',0,'Thiếu các thiết bị cứu sinh bắt buộc khác theo quy định.','2025-05-16 20:22:28','2025-05-16 20:22:28'),(7,2,'Máy bay trực thăng cứu hộ.',0,'Đây không phải là thiết bị cứu sinh bắt buộc trên tàu.','2025-05-16 20:22:28','2025-05-16 20:22:28'),(8,2,'Tàu cứu hộ đi kèm.',0,'Đây không phải là thiết bị cứu sinh bắt buộc trên tàu.','2025-05-16 20:22:28','2025-05-16 20:22:28'),(9,13,'Sử dụng sextant để đo góc cao của thiên thể và tính toán vị trí dựa trên bảng hải đồ thiên văn.',1,'Đây là phương pháp chính xác để xác định vị trí tàu bằng thiên văn.','2025-05-16 20:22:28','2025-05-16 20:22:28'),(10,13,'Chỉ cần nhìn vào vị trí mặt trời.',0,'Phương pháp này không đủ chính xác để xác định vị trí tàu.','2025-05-16 20:22:28','2025-05-16 20:22:28'),(11,13,'Dựa vào la bàn từ và hướng sao Bắc Đẩu.',0,'Phương pháp này chỉ xác định được hướng Bắc chứ không xác định được vị trí chính xác.','2025-05-16 20:22:28','2025-05-16 20:22:28'),(12,13,'Dựa vào GPS, không cần thiên văn.',0,'GPS là phương pháp hiện đại nhưng câu hỏi yêu cầu xác định bằng phương pháp thiên văn.','2025-05-16 20:22:28','2025-05-16 20:22:28'),(13,14,'Sử dụng sextant để đo góc cao của thiên thể và tính toán vị trí dựa trên bảng hải đồ thiên văn.',1,'Đây là phương pháp chính xác để xác định vị trí tàu bằng thiên văn.','2025-05-16 20:22:28','2025-05-16 20:22:28'),(14,14,'Chỉ cần nhìn vào vị trí mặt trời.',0,'Phương pháp này không đủ chính xác để xác định vị trí tàu.','2025-05-16 20:22:28','2025-05-16 20:22:28'),(15,14,'Dựa vào la bàn từ và hướng sao Bắc Đẩu.',0,'Phương pháp này chỉ xác định được hướng Bắc chứ không xác định được vị trí chính xác.','2025-05-16 20:22:28','2025-05-16 20:22:28'),(16,14,'Dựa vào GPS, không cần thiên văn.',0,'GPS là phương pháp hiện đại nhưng câu hỏi yêu cầu xác định bằng phương pháp thiên văn.','2025-05-16 20:22:28','2025-05-16 20:22:28'),(17,15,'Sử dụng sextant để đo góc cao của thiên thể và tính toán vị trí dựa trên bảng hải đồ thiên văn.',1,'Đây là phương pháp chính xác để xác định vị trí tàu bằng thiên văn.','2025-05-16 20:22:28','2025-05-16 20:22:28'),(18,15,'Chỉ cần nhìn vào vị trí mặt trời.',0,'Phương pháp này không đủ chính xác để xác định vị trí tàu.','2025-05-16 20:22:28','2025-05-16 20:22:28'),(19,15,'Dựa vào la bàn từ và hướng sao Bắc Đẩu.',0,'Phương pháp này chỉ xác định được hướng Bắc chứ không xác định được vị trí chính xác.','2025-05-16 20:22:28','2025-05-16 20:22:28'),(20,15,'Dựa vào GPS, không cần thiên văn.',0,'GPS là phương pháp hiện đại nhưng câu hỏi yêu cầu xác định bằng phương pháp thiên văn.','2025-05-16 20:22:28','2025-05-16 20:22:28'),(21,16,'Sử dụng sextant để đo góc cao của thiên thể và tính toán vị trí dựa trên bảng hải đồ thiên văn.',1,'Đây là phương pháp chính xác để xác định vị trí tàu bằng thiên văn.','2025-05-16 20:22:28','2025-05-16 20:22:28'),(22,16,'Chỉ cần nhìn vào vị trí mặt trời.',0,'Phương pháp này không đủ chính xác để xác định vị trí tàu.','2025-05-16 20:22:28','2025-05-16 20:22:28'),(23,16,'Dựa vào la bàn từ và hướng sao Bắc Đẩu.',0,'Phương pháp này chỉ xác định được hướng Bắc chứ không xác định được vị trí chính xác.','2025-05-16 20:22:28','2025-05-16 20:22:28'),(24,16,'Dựa vào GPS, không cần thiên văn.',0,'GPS là phương pháp hiện đại nhưng câu hỏi yêu cầu xác định bằng phương pháp thiên văn.','2025-05-16 20:22:28','2025-05-16 20:22:28'),(25,17,'Sử dụng sextant để đo góc cao của thiên thể và tính toán vị trí dựa trên bảng hải đồ thiên văn.',1,'Đây là phương pháp chính xác để xác định vị trí tàu bằng thiên văn.','2025-05-16 20:22:28','2025-05-16 20:22:28'),(26,17,'Chỉ cần nhìn vào vị trí mặt trời.',0,'Phương pháp này không đủ chính xác để xác định vị trí tàu.','2025-05-16 20:22:28','2025-05-16 20:22:28'),(27,17,'Dựa vào la bàn từ và hướng sao Bắc Đẩu.',0,'Phương pháp này chỉ xác định được hướng Bắc chứ không xác định được vị trí chính xác.','2025-05-16 20:22:28','2025-05-16 20:22:28'),(28,17,'Dựa vào GPS, không cần thiên văn.',0,'GPS là phương pháp hiện đại nhưng câu hỏi yêu cầu xác định bằng phương pháp thiên văn.','2025-05-16 20:22:28','2025-05-16 20:22:28'),(29,18,'Sử dụng sextant để đo góc cao của thiên thể và tính toán vị trí dựa trên bảng hải đồ thiên văn.',1,'Đây là phương pháp chính xác để xác định vị trí tàu bằng thiên văn.','2025-05-16 20:22:28','2025-05-16 20:22:28'),(30,18,'Chỉ cần nhìn vào vị trí mặt trời.',0,'Phương pháp này không đủ chính xác để xác định vị trí tàu.','2025-05-16 20:22:28','2025-05-16 20:22:28'),(31,18,'Dựa vào la bàn từ và hướng sao Bắc Đẩu.',0,'Phương pháp này chỉ xác định được hướng Bắc chứ không xác định được vị trí chính xác.','2025-05-16 20:22:28','2025-05-16 20:22:28'),(32,18,'Dựa vào GPS, không cần thiên văn.',0,'GPS là phương pháp hiện đại nhưng câu hỏi yêu cầu xác định bằng phương pháp thiên văn.','2025-05-16 20:22:28','2025-05-16 20:22:28'),(33,19,'Sử dụng sextant để đo góc cao của thiên thể và tính toán vị trí dựa trên bảng hải đồ thiên văn.',1,'Đây là phương pháp chính xác để xác định vị trí tàu bằng thiên văn.','2025-05-16 20:22:28','2025-05-16 20:22:28'),(34,19,'Chỉ cần nhìn vào vị trí mặt trời.',0,'Phương pháp này không đủ chính xác để xác định vị trí tàu.','2025-05-16 20:22:28','2025-05-16 20:22:28'),(35,19,'Dựa vào la bàn từ và hướng sao Bắc Đẩu.',0,'Phương pháp này chỉ xác định được hướng Bắc chứ không xác định được vị trí chính xác.','2025-05-16 20:22:28','2025-05-16 20:22:28'),(36,19,'Dựa vào GPS, không cần thiên văn.',0,'GPS là phương pháp hiện đại nhưng câu hỏi yêu cầu xác định bằng phương pháp thiên văn.','2025-05-16 20:22:28','2025-05-16 20:22:28'),(37,20,'Đi bên phải của luồng, giảm tốc độ và tuân thủ tín hiệu giao thông thủy.',1,'Theo quy tắc quốc tế phòng ngừa đâm va trên biển COLREG.','2025-05-16 20:22:28','2025-05-16 20:22:28'),(38,20,'Đi giữa luồng để có đủ độ sâu.',0,'Điều này vi phạm quy tắc luồng lạch hẹp trong COLREG.','2025-05-16 20:22:28','2025-05-16 20:22:28'),(39,20,'Tăng tốc để qua luồng nhanh chóng.',0,'Việc tăng tốc có thể gây nguy hiểm trong luồng hẹp.','2025-05-16 20:22:28','2025-05-16 20:22:28'),(40,20,'Không cần tuân thủ quy tắc nào nếu là tàu lớn.',0,'Mọi tàu đều phải tuân thủ quy tắc hàng hải.','2025-05-16 20:22:28','2025-05-16 20:22:28'),(41,21,'Đi bên phải của luồng, giảm tốc độ và tuân thủ tín hiệu giao thông thủy.',1,'Theo quy tắc quốc tế phòng ngừa đâm va trên biển COLREG.','2025-05-16 20:22:28','2025-05-16 20:22:28'),(42,21,'Đi giữa luồng để có đủ độ sâu.',0,'Điều này vi phạm quy tắc luồng lạch hẹp trong COLREG.','2025-05-16 20:22:28','2025-05-16 20:22:28'),(43,21,'Tăng tốc để qua luồng nhanh chóng.',0,'Việc tăng tốc có thể gây nguy hiểm trong luồng hẹp.','2025-05-16 20:22:28','2025-05-16 20:22:28'),(44,21,'Không cần tuân thủ quy tắc nào nếu là tàu lớn.',0,'Mọi tàu đều phải tuân thủ quy tắc hàng hải.','2025-05-16 20:22:28','2025-05-16 20:22:28'),(45,22,'Đi bên phải của luồng, giảm tốc độ và tuân thủ tín hiệu giao thông thủy.',1,'Theo quy tắc quốc tế phòng ngừa đâm va trên biển COLREG.','2025-05-16 20:22:28','2025-05-16 20:22:28'),(46,22,'Đi giữa luồng để có đủ độ sâu.',0,'Điều này vi phạm quy tắc luồng lạch hẹp trong COLREG.','2025-05-16 20:22:28','2025-05-16 20:22:28'),(47,22,'Tăng tốc để qua luồng nhanh chóng.',0,'Việc tăng tốc có thể gây nguy hiểm trong luồng hẹp.','2025-05-16 20:22:28','2025-05-16 20:22:28'),(48,22,'Không cần tuân thủ quy tắc nào nếu là tàu lớn.',0,'Mọi tàu đều phải tuân thủ quy tắc hàng hải.','2025-05-16 20:22:28','2025-05-16 20:22:28'),(49,23,'Đi bên phải của luồng, giảm tốc độ và tuân thủ tín hiệu giao thông thủy.',1,'Theo quy tắc quốc tế phòng ngừa đâm va trên biển COLREG.','2025-05-16 20:22:28','2025-05-16 20:22:28'),(50,23,'Đi giữa luồng để có đủ độ sâu.',0,'Điều này vi phạm quy tắc luồng lạch hẹp trong COLREG.','2025-05-16 20:22:28','2025-05-16 20:22:28'),(51,23,'Tăng tốc để qua luồng nhanh chóng.',0,'Việc tăng tốc có thể gây nguy hiểm trong luồng hẹp.','2025-05-16 20:22:28','2025-05-16 20:22:28'),(52,23,'Không cần tuân thủ quy tắc nào nếu là tàu lớn.',0,'Mọi tàu đều phải tuân thủ quy tắc hàng hải.','2025-05-16 20:22:28','2025-05-16 20:22:28'),(53,24,'Đi bên phải của luồng, giảm tốc độ và tuân thủ tín hiệu giao thông thủy.',1,'Theo quy tắc quốc tế phòng ngừa đâm va trên biển COLREG.','2025-05-16 20:22:28','2025-05-16 20:22:28'),(54,24,'Đi giữa luồng để có đủ độ sâu.',0,'Điều này vi phạm quy tắc luồng lạch hẹp trong COLREG.','2025-05-16 20:22:28','2025-05-16 20:22:28'),(55,24,'Tăng tốc để qua luồng nhanh chóng.',0,'Việc tăng tốc có thể gây nguy hiểm trong luồng hẹp.','2025-05-16 20:22:28','2025-05-16 20:22:28'),(56,24,'Không cần tuân thủ quy tắc nào nếu là tàu lớn.',0,'Mọi tàu đều phải tuân thủ quy tắc hàng hải.','2025-05-16 20:22:28','2025-05-16 20:22:28'),(57,25,'Đi bên phải của luồng, giảm tốc độ và tuân thủ tín hiệu giao thông thủy.',1,'Theo quy tắc quốc tế phòng ngừa đâm va trên biển COLREG.','2025-05-16 20:22:28','2025-05-16 20:22:28'),(58,25,'Đi giữa luồng để có đủ độ sâu.',0,'Điều này vi phạm quy tắc luồng lạch hẹp trong COLREG.','2025-05-16 20:22:28','2025-05-16 20:22:28'),(59,25,'Tăng tốc để qua luồng nhanh chóng.',0,'Việc tăng tốc có thể gây nguy hiểm trong luồng hẹp.','2025-05-16 20:22:28','2025-05-16 20:22:28'),(60,25,'Không cần tuân thủ quy tắc nào nếu là tàu lớn.',0,'Mọi tàu đều phải tuân thủ quy tắc hàng hải.','2025-05-16 20:22:28','2025-05-16 20:22:28'),(61,26,'Đi bên phải của luồng, giảm tốc độ và tuân thủ tín hiệu giao thông thủy.',1,'Theo quy tắc quốc tế phòng ngừa đâm va trên biển COLREG.','2025-05-16 20:22:28','2025-05-16 20:22:28'),(62,26,'Đi giữa luồng để có đủ độ sâu.',0,'Điều này vi phạm quy tắc luồng lạch hẹp trong COLREG.','2025-05-16 20:22:28','2025-05-16 20:22:28'),(63,26,'Tăng tốc để qua luồng nhanh chóng.',0,'Việc tăng tốc có thể gây nguy hiểm trong luồng hẹp.','2025-05-16 20:22:28','2025-05-16 20:22:28'),(64,26,'Không cần tuân thủ quy tắc nào nếu là tàu lớn.',0,'Mọi tàu đều phải tuân thủ quy tắc hàng hải.','2025-05-16 20:22:28','2025-05-16 20:22:28'),(65,46,'Nhiệt độ nước làm mát, áp suất dầu bôi trơn, tốc độ vòng quay, và nhiệt độ khí xả.',1,'Đây là những thông số quan trọng cần giám sát khi vận hành động cơ chính.','2025-05-16 20:22:28','2025-05-16 20:22:28'),(66,46,'Chỉ cần theo dõi tốc độ vòng quay của động cơ.',0,'Không đủ thông số để đảm bảo động cơ hoạt động an toàn.','2025-05-16 20:22:28','2025-05-16 20:22:28'),(67,46,'Màu sắc của khói thải từ ống khói.',0,'Đây là một dấu hiệu nhưng không phải thông số vận hành chuẩn.','2025-05-16 20:22:28','2025-05-16 20:22:28'),(68,46,'Mức tiêu thụ nhiên liệu theo giờ.',0,'Đây là thông số quan trọng nhưng không phải thông số chính để giám sát an toàn động cơ.','2025-05-16 20:22:28','2025-05-16 20:22:28'),(69,47,'Nhiệt độ nước làm mát, áp suất dầu bôi trơn, tốc độ vòng quay, và nhiệt độ khí xả.',1,'Đây là những thông số quan trọng cần giám sát khi vận hành động cơ chính.','2025-05-16 20:22:28','2025-05-16 20:22:28'),(70,47,'Chỉ cần theo dõi tốc độ vòng quay của động cơ.',0,'Không đủ thông số để đảm bảo động cơ hoạt động an toàn.','2025-05-16 20:22:28','2025-05-16 20:22:28'),(71,47,'Màu sắc của khói thải từ ống khói.',0,'Đây là một dấu hiệu nhưng không phải thông số vận hành chuẩn.','2025-05-16 20:22:28','2025-05-16 20:22:28'),(72,47,'Mức tiêu thụ nhiên liệu theo giờ.',0,'Đây là thông số quan trọng nhưng không phải thông số chính để giám sát an toàn động cơ.','2025-05-16 20:22:28','2025-05-16 20:22:28'),(73,48,'Nhiệt độ nước làm mát, áp suất dầu bôi trơn, tốc độ vòng quay, và nhiệt độ khí xả.',1,'Đây là những thông số quan trọng cần giám sát khi vận hành động cơ chính.','2025-05-16 20:22:28','2025-05-16 20:22:28'),(74,48,'Chỉ cần theo dõi tốc độ vòng quay của động cơ.',0,'Không đủ thông số để đảm bảo động cơ hoạt động an toàn.','2025-05-16 20:22:28','2025-05-16 20:22:28'),(75,48,'Màu sắc của khói thải từ ống khói.',0,'Đây là một dấu hiệu nhưng không phải thông số vận hành chuẩn.','2025-05-16 20:22:28','2025-05-16 20:22:28'),(76,48,'Mức tiêu thụ nhiên liệu theo giờ.',0,'Đây là thông số quan trọng nhưng không phải thông số chính để giám sát an toàn động cơ.','2025-05-16 20:22:28','2025-05-16 20:22:28'),(77,49,'Nhiệt độ nước làm mát, áp suất dầu bôi trơn, tốc độ vòng quay, và nhiệt độ khí xả.',1,'Đây là những thông số quan trọng cần giám sát khi vận hành động cơ chính.','2025-05-16 20:22:28','2025-05-16 20:22:28'),(78,49,'Chỉ cần theo dõi tốc độ vòng quay của động cơ.',0,'Không đủ thông số để đảm bảo động cơ hoạt động an toàn.','2025-05-16 20:22:28','2025-05-16 20:22:28'),(79,49,'Màu sắc của khói thải từ ống khói.',0,'Đây là một dấu hiệu nhưng không phải thông số vận hành chuẩn.','2025-05-16 20:22:28','2025-05-16 20:22:28'),(80,49,'Mức tiêu thụ nhiên liệu theo giờ.',0,'Đây là thông số quan trọng nhưng không phải thông số chính để giám sát an toàn động cơ.','2025-05-16 20:22:28','2025-05-16 20:22:28'),(81,50,'Nhiệt độ nước làm mát, áp suất dầu bôi trơn, tốc độ vòng quay, và nhiệt độ khí xả.',1,'Đây là những thông số quan trọng cần giám sát khi vận hành động cơ chính.','2025-05-16 20:22:28','2025-05-16 20:22:28'),(82,50,'Chỉ cần theo dõi tốc độ vòng quay của động cơ.',0,'Không đủ thông số để đảm bảo động cơ hoạt động an toàn.','2025-05-16 20:22:28','2025-05-16 20:22:28'),(83,50,'Màu sắc của khói thải từ ống khói.',0,'Đây là một dấu hiệu nhưng không phải thông số vận hành chuẩn.','2025-05-16 20:22:28','2025-05-16 20:22:28'),(84,50,'Mức tiêu thụ nhiên liệu theo giờ.',0,'Đây là thông số quan trọng nhưng không phải thông số chính để giám sát an toàn động cơ.','2025-05-16 20:22:28','2025-05-16 20:22:28'),(85,51,'Kiểm tra rò rỉ, vệ sinh két giãn nở, kiểm tra bơm nước, thay thế chất làm mát theo định kỳ.',1,'Đây là quy trình bảo dưỡng chuẩn cho hệ thống làm mát.','2025-05-16 20:22:28','2025-05-16 20:22:28'),(86,51,'Chỉ cần thay nước làm mát mỗi năm một lần.',0,'Quy trình này không đầy đủ cho bảo dưỡng hệ thống làm mát.','2025-05-16 20:22:28','2025-05-16 20:22:28'),(87,51,'Kiểm tra khi động cơ gặp sự cố quá nhiệt.',0,'Đây là xử lý sự cố, không phải bảo dưỡng định kỳ.','2025-05-16 20:22:28','2025-05-16 20:22:28'),(88,51,'Bảo dưỡng khi kết thúc hành trình.',0,'Bảo dưỡng định kỳ phải theo lịch cụ thể, không phải chỉ sau mỗi hành trình.','2025-05-16 20:22:28','2025-05-16 20:22:28'),(89,52,'Kiểm tra rò rỉ, vệ sinh két giãn nở, kiểm tra bơm nước, thay thế chất làm mát theo định kỳ.',1,'Đây là quy trình bảo dưỡng chuẩn cho hệ thống làm mát.','2025-05-16 20:22:28','2025-05-16 20:22:28'),(90,52,'Chỉ cần thay nước làm mát mỗi năm một lần.',0,'Quy trình này không đầy đủ cho bảo dưỡng hệ thống làm mát.','2025-05-16 20:22:28','2025-05-16 20:22:28'),(91,52,'Kiểm tra khi động cơ gặp sự cố quá nhiệt.',0,'Đây là xử lý sự cố, không phải bảo dưỡng định kỳ.','2025-05-16 20:22:28','2025-05-16 20:22:28'),(92,52,'Bảo dưỡng khi kết thúc hành trình.',0,'Bảo dưỡng định kỳ phải theo lịch cụ thể, không phải chỉ sau mỗi hành trình.','2025-05-16 20:22:28','2025-05-16 20:22:28'),(93,53,'Kiểm tra rò rỉ, vệ sinh két giãn nở, kiểm tra bơm nước, thay thế chất làm mát theo định kỳ.',1,'Đây là quy trình bảo dưỡng chuẩn cho hệ thống làm mát.','2025-05-16 20:22:28','2025-05-16 20:22:28'),(94,53,'Chỉ cần thay nước làm mát mỗi năm một lần.',0,'Quy trình này không đầy đủ cho bảo dưỡng hệ thống làm mát.','2025-05-16 20:22:28','2025-05-16 20:22:28'),(95,53,'Kiểm tra khi động cơ gặp sự cố quá nhiệt.',0,'Đây là xử lý sự cố, không phải bảo dưỡng định kỳ.','2025-05-16 20:22:28','2025-05-16 20:22:28'),(96,53,'Bảo dưỡng khi kết thúc hành trình.',0,'Bảo dưỡng định kỳ phải theo lịch cụ thể, không phải chỉ sau mỗi hành trình.','2025-05-16 20:22:28','2025-05-16 20:22:28'),(97,54,'Kiểm tra rò rỉ, vệ sinh két giãn nở, kiểm tra bơm nước, thay thế chất làm mát theo định kỳ.',1,'Đây là quy trình bảo dưỡng chuẩn cho hệ thống làm mát.','2025-05-16 20:22:28','2025-05-16 20:22:28'),(98,54,'Chỉ cần thay nước làm mát mỗi năm một lần.',0,'Quy trình này không đầy đủ cho bảo dưỡng hệ thống làm mát.','2025-05-16 20:22:28','2025-05-16 20:22:28'),(99,54,'Kiểm tra khi động cơ gặp sự cố quá nhiệt.',0,'Đây là xử lý sự cố, không phải bảo dưỡng định kỳ.','2025-05-16 20:22:28','2025-05-16 20:22:28'),(100,54,'Bảo dưỡng khi kết thúc hành trình.',0,'Bảo dưỡng định kỳ phải theo lịch cụ thể, không phải chỉ sau mỗi hành trình.','2025-05-16 20:22:28','2025-05-16 20:22:28'),(101,55,'Kiểm tra rò rỉ, vệ sinh két giãn nở, kiểm tra bơm nước, thay thế chất làm mát theo định kỳ.',1,'Đây là quy trình bảo dưỡng chuẩn cho hệ thống làm mát.','2025-05-16 20:22:28','2025-05-16 20:22:28'),(102,55,'Chỉ cần thay nước làm mát mỗi năm một lần.',0,'Quy trình này không đầy đủ cho bảo dưỡng hệ thống làm mát.','2025-05-16 20:22:28','2025-05-16 20:22:28'),(103,55,'Kiểm tra khi động cơ gặp sự cố quá nhiệt.',0,'Đây là xử lý sự cố, không phải bảo dưỡng định kỳ.','2025-05-16 20:22:28','2025-05-16 20:22:28'),(104,55,'Bảo dưỡng khi kết thúc hành trình.',0,'Bảo dưỡng định kỳ phải theo lịch cụ thể, không phải chỉ sau mỗi hành trình.','2025-05-16 20:22:28','2025-05-16 20:22:28'),(105,66,'Kiểm soát khí gas, hệ thống trơ, thiết bị chống tĩnh điện, và quy trình xếp dỡ đặc biệt.',1,'Đây là các quy trình an toàn đặc biệt khi vận chuyển dầu thô.','2025-05-16 20:22:28','2025-05-16 20:22:28'),(106,66,'Chỉ cần hệ thống phòng cháy chữa cháy.',0,'Hệ thống PCCC là cần thiết nhưng không đủ cho an toàn tàu dầu.','2025-05-16 20:22:28','2025-05-16 20:22:28'),(107,66,'Cùng quy trình an toàn như tàu chở hàng thông thường.',0,'Tàu dầu cần quy trình an toàn đặc biệt khác với tàu thông thường.','2025-05-16 20:22:28','2025-05-16 20:22:28'),(108,66,'Kiểm tra độ kín của két chứa mỗi tháng.',0,'Đây chỉ là một phần nhỏ trong quy trình an toàn tàu dầu.','2025-05-16 20:22:28','2025-05-16 20:22:28'),(109,68,'Máy đo nồng độ khí hydrocarbon, máy đo oxy, máy đo khí H2S, và hệ thống báo động khí gas tự động.',1,'Đây là những thiết bị cần thiết để giám sát khí gas trên tàu dầu.','2025-05-16 20:22:28','2025-05-16 20:22:28'),(110,68,'Chỉ cần máy đo nồng độ oxy.',0,'Không đủ để kiểm soát các loại khí nguy hiểm khác.','2025-05-16 20:22:28','2025-05-16 20:22:28'),(111,68,'Máy đo khí CO2 từ hệ thống chữa cháy.',0,'Đây là thiết bị cho hệ thống chữa cháy, không phải để kiểm soát khí gas từ hàng hóa.','2025-05-16 20:22:28','2025-05-16 20:22:28'),(112,68,'Thiết bị đo áp suất trong két dầu.',0,'Đây là thiết bị đo áp suất, không phải thiết bị giám sát khí gas.','2025-05-16 20:22:28','2025-05-16 20:22:28');
+/*!40000 ALTER TABLE `answers` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
--- Cấu trúc bảng cho bảng `categories`
+-- Table structure for table `categories`
 --
 
+DROP TABLE IF EXISTS `categories`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `categories` (
-  `id` bigint UNSIGNED NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `slug` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `description` text COLLATE utf8mb4_unicode_ci,
-  `icon` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `color` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  `slug` varchar(255) NOT NULL,
+  `description` text DEFAULT NULL,
+  `icon` varchar(255) DEFAULT NULL,
+  `color` varchar(255) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `categories_slug_unique` (`slug`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Đang đổ dữ liệu cho bảng `categories`
+-- Dumping data for table `categories`
 --
 
-INSERT INTO `categories` (`id`, `name`, `slug`, `description`, `icon`, `color`, `created_at`, `updated_at`) VALUES
-(1, 'An toàn hàng hải', 'an-toan-hang-hai', 'Các câu hỏi về quy định, quy trình an toàn hàng hải', 'fa-shield-alt', '#4e73df', '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(2, 'Quy tắc tránh va', 'quy-tac-tranh-va', 'Các câu hỏi về quy tắc tránh va chạm trên biển', 'fa-life-ring', '#1cc88a', '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(3, 'Hàng hóa & Xếp dỡ', 'hang-hoa-xep-do', 'Các câu hỏi về xếp dỡ, vận chuyển hàng hóa', 'fa-boxes', '#36b9cc', '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(4, 'Thiết bị hàng hải', 'thiet-bi-hang-hai', 'Các câu hỏi về các thiết bị và dụng cụ hàng hải', 'fa-compass', '#f6c23e', '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(5, 'Động cơ & Máy móc', 'dong-co-may-moc', 'Các câu hỏi về động cơ và các thiết bị máy móc trên tàu', 'fa-cogs', '#e74a3b', '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(6, 'Dầu mỏ & Hóa chất', 'dau-mo-hoa-chat', 'Các câu hỏi về vận chuyển dầu, khí hóa lỏng và hóa chất', 'fa-oil-can', '#5a5c69', '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(7, 'Luật Biển Quốc tế', 'luat-bien-quoc-te', 'Các câu hỏi về luật biển và các công ước quốc tế', 'fa-gavel', '#6f42c1', '2025-04-29 23:47:15', '2025-04-29 23:47:15');
-
--- --------------------------------------------------------
+LOCK TABLES `categories` WRITE;
+/*!40000 ALTER TABLE `categories` DISABLE KEYS */;
+INSERT INTO `categories` VALUES (1,'An toàn hàng hải','an-toan-hang-hai','Các câu hỏi về quy định, quy trình an toàn hàng hải','fa-shield-alt','#4e73df','2025-05-16 20:22:32','2025-05-16 20:22:32'),(2,'Quy tắc tránh va','quy-tac-tranh-va','Các câu hỏi về quy tắc tránh va chạm trên biển','fa-life-ring','#1cc88a','2025-05-16 20:22:32','2025-05-16 20:22:32'),(3,'Hàng hóa & Xếp dỡ','hang-hoa-xep-do','Các câu hỏi về xếp dỡ, vận chuyển hàng hóa','fa-boxes','#36b9cc','2025-05-16 20:22:32','2025-05-16 20:22:32'),(4,'Thiết bị hàng hải','thiet-bi-hang-hai','Các câu hỏi về các thiết bị và dụng cụ hàng hải','fa-compass','#f6c23e','2025-05-16 20:22:32','2025-05-16 20:22:32'),(5,'Động cơ & Máy móc','dong-co-may-moc','Các câu hỏi về động cơ và các thiết bị máy móc trên tàu','fa-cogs','#e74a3b','2025-05-16 20:22:32','2025-05-16 20:22:32'),(6,'Dầu mỏ & Hóa chất','dau-mo-hoa-chat','Các câu hỏi về vận chuyển dầu, khí hóa lỏng và hóa chất','fa-oil-can','#5a5c69','2025-05-16 20:22:32','2025-05-16 20:22:32'),(7,'Luật Biển Quốc tế','luat-bien-quoc-te','Các câu hỏi về luật biển và các công ước quốc tế','fa-gavel','#6f42c1','2025-05-16 20:22:32','2025-05-16 20:22:32');
+/*!40000 ALTER TABLE `categories` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
--- Cấu trúc bảng cho bảng `certificates`
+-- Table structure for table `certificates`
 --
 
+DROP TABLE IF EXISTS `certificates`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `certificates` (
-  `id` bigint UNSIGNED NOT NULL,
-  `user_id` bigint UNSIGNED NOT NULL,
-  `test_id` bigint UNSIGNED DEFAULT NULL,
-  `test_attempt_id` bigint UNSIGNED DEFAULT NULL,
-  `certificate_number` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `description` text COLLATE utf8mb4_unicode_ci,
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` bigint(20) unsigned NOT NULL,
+  `test_id` bigint(20) unsigned DEFAULT NULL,
+  `test_attempt_id` bigint(20) unsigned DEFAULT NULL,
+  `certificate_number` varchar(255) NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `description` text DEFAULT NULL,
   `issue_date` date NOT NULL,
   `expiry_date` date DEFAULT NULL,
-  `status` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'active',
-  `issued_by` bigint UNSIGNED DEFAULT NULL,
-  `revocation_reason` text COLLATE utf8mb4_unicode_ci,
-  `certificate_file` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `status` varchar(255) NOT NULL DEFAULT 'active',
+  `issued_by` bigint(20) unsigned DEFAULT NULL,
+  `revocation_reason` text DEFAULT NULL,
+  `certificate_file` varchar(255) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `certificates_certificate_number_unique` (`certificate_number`),
+  KEY `certificates_user_id_foreign` (`user_id`),
+  KEY `certificates_test_id_foreign` (`test_id`),
+  KEY `certificates_test_attempt_id_foreign` (`test_attempt_id`),
+  KEY `certificates_issued_by_foreign` (`issued_by`),
+  CONSTRAINT `certificates_issued_by_foreign` FOREIGN KEY (`issued_by`) REFERENCES `users` (`id`) ON DELETE SET NULL,
+  CONSTRAINT `certificates_test_attempt_id_foreign` FOREIGN KEY (`test_attempt_id`) REFERENCES `test_attempts` (`id`) ON DELETE SET NULL,
+  CONSTRAINT `certificates_test_id_foreign` FOREIGN KEY (`test_id`) REFERENCES `tests` (`id`) ON DELETE SET NULL,
+  CONSTRAINT `certificates_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Đang đổ dữ liệu cho bảng `certificates`
+-- Dumping data for table `certificates`
 --
 
-INSERT INTO `certificates` (`id`, `user_id`, `test_id`, `test_attempt_id`, `certificate_number`, `title`, `description`, `issue_date`, `expiry_date`, `status`, `issued_by`, `revocation_reason`, `certificate_file`, `created_at`, `updated_at`) VALUES
-(1, 2, 1, NULL, 'CERT-2025-MGse86MX', 'Chứng chỉ Chứng chỉ Thuyền trưởng Tàu biển', 'Chứng nhận thuyền viên đã hoàn thành đánh giá và đạt yêu cầu của hệ thống đánh giá năng lực thuyền viên.', '2025-04-30', '2027-04-30', 'active', 1, NULL, NULL, '2025-04-30 06:38:15', '2025-04-30 06:38:15');
-
--- --------------------------------------------------------
+LOCK TABLES `certificates` WRITE;
+/*!40000 ALTER TABLE `certificates` DISABLE KEYS */;
+/*!40000 ALTER TABLE `certificates` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
--- Cấu trúc bảng cho bảng `failed_jobs`
+-- Table structure for table `failed_jobs`
 --
 
+DROP TABLE IF EXISTS `failed_jobs`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `failed_jobs` (
-  `id` bigint UNSIGNED NOT NULL,
-  `uuid` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `connection` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `queue` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `payload` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `exception` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `failed_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `uuid` varchar(255) NOT NULL,
+  `connection` text NOT NULL,
+  `queue` text NOT NULL,
+  `payload` longtext NOT NULL,
+  `exception` longtext NOT NULL,
+  `failed_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `failed_jobs_uuid_unique` (`uuid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Cấu trúc bảng cho bảng `migrations`
+-- Dumping data for table `failed_jobs`
 --
 
+LOCK TABLES `failed_jobs` WRITE;
+/*!40000 ALTER TABLE `failed_jobs` DISABLE KEYS */;
+/*!40000 ALTER TABLE `failed_jobs` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `migrations`
+--
+
+DROP TABLE IF EXISTS `migrations`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `migrations` (
-  `id` int UNSIGNED NOT NULL,
-  `migration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `batch` int NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `migration` varchar(255) NOT NULL,
+  `batch` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Đang đổ dữ liệu cho bảng `migrations`
+-- Dumping data for table `migrations`
 --
 
-INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
-(1, '2014_10_12_000000_create_users_table', 1),
-(2, '2014_10_12_100000_create_password_reset_tokens_table', 1),
-(3, '2019_08_19_000000_create_failed_jobs_table', 1),
-(4, '2019_12_14_000001_create_personal_access_tokens_table', 1),
-(5, '2025_03_16_164155_create_roles_table', 1),
-(6, '2025_03_16_164201_create_positions_table', 1),
-(7, '2025_03_16_164207_create_ship_types_table', 1),
-(8, '2025_03_16_164213_create_thuyen_viens_table', 1),
-(9, '2025_03_16_164218_create_questions_table', 1),
-(10, '2025_03_16_164221_create_answers_table', 1),
-(11, '2025_03_16_164225_create_tests_table', 1),
-(12, '2025_03_16_164228_create_test_questions_table', 1),
-(13, '2025_03_16_164232_create_test_attempts_table', 1),
-(14, '2025_03_16_164237_create_user_responses_table', 1),
-(15, '2025_03_16_164323_add_role_to_users_table', 1),
-(16, '2025_03_16_180550_add_ship_type_id_to_thuyen_viens_table', 1),
-(17, '2025_03_16_181114_add_category_to_questions_table', 1),
-(18, '2025_03_16_181217_add_category_to_tests_table', 1),
-(19, '2025_04_22_035710_add_temporary_fields_to_test_questions_table', 1),
-(20, '2025_04_22_051630_create_categories_table', 1),
-(21, '2025_04_22_051631_add_category_id_to_questions_and_tests', 1),
-(22, '2025_04_30_071608_add_fields_to_user_responses_table', 2),
-(23, '2025_04_30_084154_create_certificates_table', 3);
-
--- --------------------------------------------------------
+LOCK TABLES `migrations` WRITE;
+/*!40000 ALTER TABLE `migrations` DISABLE KEYS */;
+INSERT INTO `migrations` VALUES (1,'2014_10_12_000000_create_users_table',1),(2,'2014_10_12_100000_create_password_reset_tokens_table',1),(3,'2019_08_19_000000_create_failed_jobs_table',1),(4,'2019_12_14_000001_create_personal_access_tokens_table',1),(5,'2025_03_16_164155_create_roles_table',1),(6,'2025_03_16_164201_create_positions_table',1),(7,'2025_03_16_164207_create_ship_types_table',1),(8,'2025_03_16_164213_create_thuyen_viens_table',1),(9,'2025_03_16_164218_create_questions_table',1),(10,'2025_03_16_164221_create_answers_table',1),(11,'2025_03_16_164225_create_tests_table',1),(12,'2025_03_16_164228_create_test_questions_table',1),(13,'2025_03_16_164232_create_test_attempts_table',1),(14,'2025_03_16_164237_create_user_responses_table',1),(15,'2025_03_16_164323_add_role_to_users_table',1),(16,'2025_03_16_180550_add_ship_type_id_to_thuyen_viens_table',1),(17,'2025_03_16_181114_add_category_to_questions_table',1),(18,'2025_03_16_181217_add_category_to_tests_table',1),(19,'2025_04_22_035710_add_temporary_fields_to_test_questions_table',1),(20,'2025_04_22_051630_create_categories_table',1),(21,'2025_04_22_051631_add_category_id_to_questions_and_tests',1),(22,'2025_04_30_071608_add_fields_to_user_responses_table',1),(23,'2025_04_30_084154_create_certificates_table',1);
+/*!40000 ALTER TABLE `migrations` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
--- Cấu trúc bảng cho bảng `password_reset_tokens`
+-- Table structure for table `password_reset_tokens`
 --
 
+DROP TABLE IF EXISTS `password_reset_tokens`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `password_reset_tokens` (
-  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `token` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL
+  `email` varchar(255) NOT NULL,
+  `token` varchar(255) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Cấu trúc bảng cho bảng `personal_access_tokens`
+-- Dumping data for table `password_reset_tokens`
 --
 
+LOCK TABLES `password_reset_tokens` WRITE;
+/*!40000 ALTER TABLE `password_reset_tokens` DISABLE KEYS */;
+/*!40000 ALTER TABLE `password_reset_tokens` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `personal_access_tokens`
+--
+
+DROP TABLE IF EXISTS `personal_access_tokens`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `personal_access_tokens` (
-  `id` bigint UNSIGNED NOT NULL,
-  `tokenable_type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `tokenable_id` bigint UNSIGNED NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `token` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `abilities` text COLLATE utf8mb4_unicode_ci,
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `tokenable_type` varchar(255) NOT NULL,
+  `tokenable_id` bigint(20) unsigned NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `token` varchar(64) NOT NULL,
+  `abilities` text DEFAULT NULL,
   `last_used_at` timestamp NULL DEFAULT NULL,
   `expires_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `personal_access_tokens_token_unique` (`token`),
+  KEY `personal_access_tokens_tokenable_type_tokenable_id_index` (`tokenable_type`,`tokenable_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Cấu trúc bảng cho bảng `positions`
+-- Dumping data for table `personal_access_tokens`
 --
 
+LOCK TABLES `personal_access_tokens` WRITE;
+/*!40000 ALTER TABLE `personal_access_tokens` DISABLE KEYS */;
+/*!40000 ALTER TABLE `personal_access_tokens` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `positions`
+--
+
+DROP TABLE IF EXISTS `positions`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `positions` (
-  `id` bigint UNSIGNED NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `department` enum('Boong','Máy','Khác') COLLATE utf8mb4_unicode_ci NOT NULL,
-  `description` text COLLATE utf8mb4_unicode_ci,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Đang đổ dữ liệu cho bảng `positions`
---
-
-INSERT INTO `positions` (`id`, `name`, `department`, `description`, `created_at`, `updated_at`) VALUES
-(1, 'Thuyền trưởng (Captain / Master)', 'Boong', 'Chịu trách nhiệm tối cao về tàu, hàng hóa và thủy thủ đoàn. Quản lý hành trình, xử lý tình huống khẩn cấp, tuân thủ quy định an toàn hàng hải.', '2025-04-29 23:47:13', '2025-04-29 23:47:13'),
-(2, 'Thuyền phó 1 (Chief Officer)', 'Boong', 'Phụ trách hàng hải, an toàn và bảo trì boong.', '2025-04-29 23:47:13', '2025-04-29 23:47:13'),
-(3, 'Thuyền phó 2 (2nd Officer)', 'Boong', 'Chịu trách nhiệm về bản đồ, hành trình và thiết bị định vị.', '2025-04-29 23:47:13', '2025-04-29 23:47:13'),
-(4, 'Thuyền phó 3 (3rd Officer)', 'Boong', 'Giám sát an toàn sinh mạng, thiết bị cứu hộ và hỗ trợ hàng hải.', '2025-04-29 23:47:13', '2025-04-29 23:47:13'),
-(5, 'Thủy thủ thủ trưởng (Bosun)', 'Boong', 'Hỗ trợ điều hướng, bảo trì tàu, thực hiện các lệnh từ thuyền trưởng và thuyền phó.', '2025-04-29 23:47:13', '2025-04-29 23:47:13'),
-(6, 'Thủy thủ (Able Seaman)', 'Boong', 'Hỗ trợ điều hướng, bảo trì tàu, thực hiện các lệnh từ thuyền trưởng và thuyền phó.', '2025-04-29 23:47:13', '2025-04-29 23:47:13'),
-(7, 'Thủy thủ thực tập (Ordinary Seaman)', 'Boong', 'Học tập và hỗ trợ thủy thủ chính.', '2025-04-29 23:47:13', '2025-04-29 23:47:13'),
-(8, 'Máy trưởng (Chief Engineer)', 'Máy', 'Quản lý hệ thống động lực của tàu, bảo trì máy móc, đảm bảo hiệu suất vận hành.', '2025-04-29 23:47:13', '2025-04-29 23:47:13'),
-(9, 'Máy phó 1 (2nd Engineer)', 'Máy', 'Giám sát vận hành chính hệ thống máy.', '2025-04-29 23:47:13', '2025-04-29 23:47:13'),
-(10, 'Máy phó 2 (3rd Engineer)', 'Máy', 'Phụ trách động cơ phụ, hệ thống điện, nhiên liệu.', '2025-04-29 23:47:13', '2025-04-29 23:47:13'),
-(11, 'Máy phó 3 (4th Engineer)', 'Máy', 'Phụ trách động cơ phụ, hệ thống điện, nhiên liệu.', '2025-04-29 23:47:13', '2025-04-29 23:47:13'),
-(12, 'Thợ máy (Motorman)', 'Máy', 'Hỗ trợ bảo trì máy móc, kiểm tra hệ thống dầu, nước làm mát.', '2025-04-29 23:47:13', '2025-04-29 23:47:13'),
-(13, 'Điện trưởng (Electro-Technical Officer - ETO)', 'Khác', 'Bảo trì hệ thống điện tử và tự động hóa trên tàu.', '2025-04-29 23:47:13', '2025-04-29 23:47:13'),
-(14, 'Bếp trưởng (Cook)', 'Khác', 'Đảm bảo hậu cần, nấu ăn.', '2025-04-29 23:47:13', '2025-04-29 23:47:13'),
-(15, 'Phục vụ (Steward)', 'Khác', 'Đảm bảo hậu cần, vệ sinh.', '2025-04-29 23:47:13', '2025-04-29 23:47:13');
-
--- --------------------------------------------------------
-
---
--- Cấu trúc bảng cho bảng `questions`
---
-
-CREATE TABLE `questions` (
-  `id` bigint UNSIGNED NOT NULL,
-  `content` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `category` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `category_id` bigint UNSIGNED DEFAULT NULL,
-  `type` enum('Trắc nghiệm','Tự luận','Tình huống','Mô phỏng','Thực hành') COLLATE utf8mb4_unicode_ci NOT NULL,
-  `difficulty` enum('Dễ','Trung bình','Khó') COLLATE utf8mb4_unicode_ci NOT NULL,
-  `position_id` bigint UNSIGNED DEFAULT NULL,
-  `ship_type_id` bigint UNSIGNED DEFAULT NULL,
-  `created_by` bigint UNSIGNED NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Đang đổ dữ liệu cho bảng `questions`
---
-
-INSERT INTO `questions` (`id`, `content`, `category`, `category_id`, `type`, `difficulty`, `position_id`, `ship_type_id`, `created_by`, `created_at`, `updated_at`) VALUES
-(1, '<p>Khi gặp tình huống người rơi xuống biển, hành động đầu tiên cần làm là gì?1</p>', 'An toàn hàng hải', 1, 'Trắc nghiệm', 'Trung bình', NULL, NULL, 1, '2025-04-29 23:47:14', '2025-05-02 00:17:58'),
-(2, 'Các thiết bị cứu sinh bắt buộc trên tàu biển bao gồm những gì?', 'An toàn hàng hải', 1, 'Trắc nghiệm', 'Dễ', NULL, NULL, 1, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(3, 'Quy trình báo động khẩn cấp trên tàu biển được thực hiện như thế nào?', 'An toàn hàng hải', 1, 'Tự luận', 'Khó', NULL, NULL, 1, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(4, 'Các biện pháp an toàn cần thực hiện khi có bão trên biển?', 'An toàn hàng hải', 1, 'Tự luận', 'Trung bình', NULL, NULL, 1, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(5, 'Trong tình huống hỏa hoạn trên tàu, bạn sẽ thực hiện các bước nào theo thứ tự?', 'An toàn hàng hải', 1, 'Tình huống', 'Khó', NULL, NULL, 1, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(6, 'Các loại bản đồ hàng hải (sea chart) và cách sử dụng chúng?', 'An toàn hàng hải', 1, 'Tự luận', 'Trung bình', 1, NULL, 1, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(7, 'Các loại bản đồ hàng hải (sea chart) và cách sử dụng chúng?', 'An toàn hàng hải', 1, 'Tự luận', 'Trung bình', 2, NULL, 1, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(8, 'Các loại bản đồ hàng hải (sea chart) và cách sử dụng chúng?', 'An toàn hàng hải', 1, 'Tự luận', 'Trung bình', 3, NULL, 1, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(9, 'Các loại bản đồ hàng hải (sea chart) và cách sử dụng chúng?', 'An toàn hàng hải', 1, 'Tự luận', 'Trung bình', 4, NULL, 1, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(10, 'Các loại bản đồ hàng hải (sea chart) và cách sử dụng chúng?', 'An toàn hàng hải', 1, 'Tự luận', 'Trung bình', 5, NULL, 1, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(11, 'Các loại bản đồ hàng hải (sea chart) và cách sử dụng chúng?', 'An toàn hàng hải', 1, 'Tự luận', 'Trung bình', 6, NULL, 1, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(12, 'Các loại bản đồ hàng hải (sea chart) và cách sử dụng chúng?', 'An toàn hàng hải', 1, 'Tự luận', 'Trung bình', 7, NULL, 1, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(13, 'Cách xác định vị trí tàu trên biển bằng các phương pháp thiên văn?', 'An toàn hàng hải', 1, 'Trắc nghiệm', 'Khó', 1, NULL, 1, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(14, 'Cách xác định vị trí tàu trên biển bằng các phương pháp thiên văn?', 'An toàn hàng hải', 1, 'Trắc nghiệm', 'Khó', 2, NULL, 1, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(15, 'Cách xác định vị trí tàu trên biển bằng các phương pháp thiên văn?', 'An toàn hàng hải', 1, 'Trắc nghiệm', 'Khó', 3, NULL, 1, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(16, 'Cách xác định vị trí tàu trên biển bằng các phương pháp thiên văn?', 'An toàn hàng hải', 1, 'Trắc nghiệm', 'Khó', 4, NULL, 1, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(17, 'Cách xác định vị trí tàu trên biển bằng các phương pháp thiên văn?', 'An toàn hàng hải', 1, 'Trắc nghiệm', 'Khó', 5, NULL, 1, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(18, 'Cách xác định vị trí tàu trên biển bằng các phương pháp thiên văn?', 'An toàn hàng hải', 1, 'Trắc nghiệm', 'Khó', 6, NULL, 1, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(19, 'Cách xác định vị trí tàu trên biển bằng các phương pháp thiên văn?', 'An toàn hàng hải', 1, 'Trắc nghiệm', 'Khó', 7, NULL, 1, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(20, 'Các quy tắc điều động tàu trong luồng lạch hẹp là gì?', 'An toàn hàng hải', 1, 'Trắc nghiệm', 'Trung bình', 1, NULL, 1, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(21, 'Các quy tắc điều động tàu trong luồng lạch hẹp là gì?', 'An toàn hàng hải', 1, 'Trắc nghiệm', 'Trung bình', 2, NULL, 1, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(22, 'Các quy tắc điều động tàu trong luồng lạch hẹp là gì?', 'An toàn hàng hải', 1, 'Trắc nghiệm', 'Trung bình', 3, NULL, 1, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(23, 'Các quy tắc điều động tàu trong luồng lạch hẹp là gì?', 'An toàn hàng hải', 1, 'Trắc nghiệm', 'Trung bình', 4, NULL, 1, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(24, 'Các quy tắc điều động tàu trong luồng lạch hẹp là gì?', 'An toàn hàng hải', 1, 'Trắc nghiệm', 'Trung bình', 5, NULL, 1, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(25, 'Các quy tắc điều động tàu trong luồng lạch hẹp là gì?', 'An toàn hàng hải', 1, 'Trắc nghiệm', 'Trung bình', 6, NULL, 1, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(26, 'Các quy tắc điều động tàu trong luồng lạch hẹp là gì?', 'An toàn hàng hải', 1, 'Trắc nghiệm', 'Trung bình', 7, NULL, 1, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(27, 'Quy trình cập cảng an toàn bao gồm những bước nào?', 'An toàn hàng hải', 1, 'Tình huống', 'Khó', 1, NULL, 1, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(28, 'Quy trình cập cảng an toàn bao gồm những bước nào?', 'An toàn hàng hải', 1, 'Tình huống', 'Khó', 2, NULL, 1, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(29, 'Quy trình cập cảng an toàn bao gồm những bước nào?', 'An toàn hàng hải', 1, 'Tình huống', 'Khó', 3, NULL, 1, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(30, 'Quy trình cập cảng an toàn bao gồm những bước nào?', 'An toàn hàng hải', 1, 'Tình huống', 'Khó', 4, NULL, 1, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(31, 'Quy trình cập cảng an toàn bao gồm những bước nào?', 'An toàn hàng hải', 1, 'Tình huống', 'Khó', 5, NULL, 1, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(32, 'Quy trình cập cảng an toàn bao gồm những bước nào?', 'An toàn hàng hải', 1, 'Tình huống', 'Khó', 6, NULL, 1, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(33, 'Quy trình cập cảng an toàn bao gồm những bước nào?', 'An toàn hàng hải', 1, 'Tình huống', 'Khó', 7, NULL, 1, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(34, 'Các thiết bị định vị hàng hải hiện đại và cách sử dụng chúng?', 'An toàn hàng hải', 1, 'Thực hành', 'Trung bình', 1, NULL, 1, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(35, 'Các thiết bị định vị hàng hải hiện đại và cách sử dụng chúng?', 'An toàn hàng hải', 1, 'Thực hành', 'Trung bình', 2, NULL, 1, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(36, 'Các thiết bị định vị hàng hải hiện đại và cách sử dụng chúng?', 'An toàn hàng hải', 1, 'Thực hành', 'Trung bình', 3, NULL, 1, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(37, 'Các thiết bị định vị hàng hải hiện đại và cách sử dụng chúng?', 'An toàn hàng hải', 1, 'Thực hành', 'Trung bình', 4, NULL, 1, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(38, 'Các thiết bị định vị hàng hải hiện đại và cách sử dụng chúng?', 'An toàn hàng hải', 1, 'Thực hành', 'Trung bình', 5, NULL, 1, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(39, 'Các thiết bị định vị hàng hải hiện đại và cách sử dụng chúng?', 'An toàn hàng hải', 1, 'Thực hành', 'Trung bình', 6, NULL, 1, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(40, 'Các thiết bị định vị hàng hải hiện đại và cách sử dụng chúng?', 'An toàn hàng hải', 1, 'Thực hành', 'Trung bình', 7, NULL, 1, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(41, 'Cách kiểm tra và xử lý sự cố động cơ diesel tàu biển?', 'An toàn hàng hải', 1, 'Tự luận', 'Khó', 8, NULL, 1, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(42, 'Cách kiểm tra và xử lý sự cố động cơ diesel tàu biển?', 'An toàn hàng hải', 1, 'Tự luận', 'Khó', 9, NULL, 1, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(43, 'Cách kiểm tra và xử lý sự cố động cơ diesel tàu biển?', 'An toàn hàng hải', 1, 'Tự luận', 'Khó', 10, NULL, 1, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(44, 'Cách kiểm tra và xử lý sự cố động cơ diesel tàu biển?', 'An toàn hàng hải', 1, 'Tự luận', 'Khó', 11, NULL, 1, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(45, 'Cách kiểm tra và xử lý sự cố động cơ diesel tàu biển?', 'An toàn hàng hải', 1, 'Tự luận', 'Khó', 12, NULL, 1, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(46, 'Các thông số vận hành chuẩn của động cơ chính là gì?', 'An toàn hàng hải', 1, 'Trắc nghiệm', 'Trung bình', 8, NULL, 1, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(47, 'Các thông số vận hành chuẩn của động cơ chính là gì?', 'An toàn hàng hải', 1, 'Trắc nghiệm', 'Trung bình', 9, NULL, 1, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(48, 'Các thông số vận hành chuẩn của động cơ chính là gì?', 'An toàn hàng hải', 1, 'Trắc nghiệm', 'Trung bình', 10, NULL, 1, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(49, 'Các thông số vận hành chuẩn của động cơ chính là gì?', 'An toàn hàng hải', 1, 'Trắc nghiệm', 'Trung bình', 11, NULL, 1, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(50, 'Các thông số vận hành chuẩn của động cơ chính là gì?', 'An toàn hàng hải', 1, 'Trắc nghiệm', 'Trung bình', 12, NULL, 1, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(51, 'Quy trình bảo dưỡng định kỳ hệ thống làm mát động cơ?', 'An toàn hàng hải', 1, 'Trắc nghiệm', 'Dễ', 8, NULL, 1, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(52, 'Quy trình bảo dưỡng định kỳ hệ thống làm mát động cơ?', 'An toàn hàng hải', 1, 'Trắc nghiệm', 'Dễ', 9, NULL, 1, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(53, 'Quy trình bảo dưỡng định kỳ hệ thống làm mát động cơ?', 'An toàn hàng hải', 1, 'Trắc nghiệm', 'Dễ', 10, NULL, 1, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(54, 'Quy trình bảo dưỡng định kỳ hệ thống làm mát động cơ?', 'An toàn hàng hải', 1, 'Trắc nghiệm', 'Dễ', 11, NULL, 1, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(55, 'Quy trình bảo dưỡng định kỳ hệ thống làm mát động cơ?', 'An toàn hàng hải', 1, 'Trắc nghiệm', 'Dễ', 12, NULL, 1, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(56, 'Xử lý tình huống khi lọc dầu bị tắc nghẽn?', 'An toàn hàng hải', 1, 'Tình huống', 'Trung bình', 8, NULL, 1, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(57, 'Xử lý tình huống khi lọc dầu bị tắc nghẽn?', 'An toàn hàng hải', 1, 'Tình huống', 'Trung bình', 9, NULL, 1, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(58, 'Xử lý tình huống khi lọc dầu bị tắc nghẽn?', 'An toàn hàng hải', 1, 'Tình huống', 'Trung bình', 10, NULL, 1, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(59, 'Xử lý tình huống khi lọc dầu bị tắc nghẽn?', 'An toàn hàng hải', 1, 'Tình huống', 'Trung bình', 11, NULL, 1, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(60, 'Xử lý tình huống khi lọc dầu bị tắc nghẽn?', 'An toàn hàng hải', 1, 'Tình huống', 'Trung bình', 12, NULL, 1, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(61, 'Cách kiểm tra và hiệu chỉnh hệ thống điện trên tàu?', 'An toàn hàng hải', 1, 'Thực hành', 'Khó', 8, NULL, 1, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(62, 'Cách kiểm tra và hiệu chỉnh hệ thống điện trên tàu?', 'An toàn hàng hải', 1, 'Thực hành', 'Khó', 9, NULL, 1, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(63, 'Cách kiểm tra và hiệu chỉnh hệ thống điện trên tàu?', 'An toàn hàng hải', 1, 'Thực hành', 'Khó', 10, NULL, 1, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(64, 'Cách kiểm tra và hiệu chỉnh hệ thống điện trên tàu?', 'An toàn hàng hải', 1, 'Thực hành', 'Khó', 11, NULL, 1, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(65, 'Cách kiểm tra và hiệu chỉnh hệ thống điện trên tàu?', 'An toàn hàng hải', 1, 'Thực hành', 'Khó', 12, NULL, 1, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(66, 'Các quy trình an toàn đặc biệt khi vận chuyển dầu thô là gì?', 'An toàn hàng hải', 1, 'Trắc nghiệm', 'Khó', NULL, 3, 1, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(67, 'Cách ứng phó với tràn dầu trên biển?', 'An toàn hàng hải', 1, 'Tình huống', 'Khó', NULL, 3, 1, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(68, 'Các thiết bị đo và kiểm soát khí gas trên tàu dầu?', 'An toàn hàng hải', 1, 'Trắc nghiệm', 'Trung bình', NULL, 3, 1, '2025-04-29 23:47:14', '2025-04-29 23:47:14');
-
--- --------------------------------------------------------
-
---
--- Cấu trúc bảng cho bảng `roles`
---
-
-CREATE TABLE `roles` (
-  `id` bigint UNSIGNED NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `description` text COLLATE utf8mb4_unicode_ci,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Đang đổ dữ liệu cho bảng `roles`
---
-
-INSERT INTO `roles` (`id`, `name`, `description`, `created_at`, `updated_at`) VALUES
-(1, 'Admin', 'Quản trị viên hệ thống', '2025-04-29 23:47:13', '2025-04-29 23:47:13'),
-(2, 'Thuyền viên', 'Thuyền viên tham gia làm bài kiểm tra', '2025-04-29 23:47:13', '2025-04-29 23:47:13');
-
--- --------------------------------------------------------
-
---
--- Cấu trúc bảng cho bảng `ship_types`
---
-
-CREATE TABLE `ship_types` (
-  `id` bigint UNSIGNED NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `category` enum('Cargo','Passenger','Specialized') COLLATE utf8mb4_unicode_ci NOT NULL,
-  `description` text COLLATE utf8mb4_unicode_ci,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Đang đổ dữ liệu cho bảng `ship_types`
---
-
-INSERT INTO `ship_types` (`id`, `name`, `category`, `description`, `created_at`, `updated_at`) VALUES
-(1, 'Tàu hàng rời (Bulk Carrier)', 'Cargo', 'Chở than, ngũ cốc, quặng kim loại.', '2025-04-29 23:47:13', '2025-04-29 23:47:13'),
-(2, 'Tàu container (Container Ship)', 'Cargo', 'Chuyên vận chuyển container tiêu chuẩn.', '2025-04-29 23:47:13', '2025-04-29 23:47:13'),
-(3, 'Tàu chở dầu (Oil Tanker)', 'Cargo', 'Chở dầu thô và các sản phẩm dầu.', '2025-04-29 23:47:13', '2025-04-29 23:47:13'),
-(4, 'Tàu chở khí hóa lỏng (LNG/LPG Carrier)', 'Cargo', 'Chở khí tự nhiên hóa lỏng (LNG) hoặc khí dầu mỏ hóa lỏng (LPG).', '2025-04-29 23:47:13', '2025-04-29 23:47:13'),
-(5, 'Tàu chở hóa chất (Chemical Tanker)', 'Cargo', 'Chở hóa chất nguy hiểm.', '2025-04-29 23:47:13', '2025-04-29 23:47:13'),
-(6, 'Tàu du lịch (Cruise Ship)', 'Passenger', 'Phục vụ du khách, yêu cầu kỹ năng cứu hộ, phục vụ.', '2025-04-29 23:47:13', '2025-04-29 23:47:13'),
-(7, 'Tàu phà (Ferry)', 'Passenger', 'Vận chuyển người và xe cộ giữa các cảng.', '2025-04-29 23:47:13', '2025-04-29 23:47:13'),
-(8, 'Tàu kéo (Tugboat)', 'Specialized', 'Kéo và lai dắt tàu lớn vào cảng.', '2025-04-29 23:47:13', '2025-04-29 23:47:13'),
-(9, 'Tàu cứu hộ (Rescue Vessel)', 'Specialized', 'Thực hiện nhiệm vụ tìm kiếm cứu nạn trên biển.', '2025-04-29 23:47:13', '2025-04-29 23:47:13'),
-(10, 'Tàu nghiên cứu (Research Vessel)', 'Specialized', 'Phục vụ khảo sát khoa học biển.', '2025-04-29 23:47:13', '2025-04-29 23:47:13'),
-(11, 'Tàu nạo vét (Dredger)', 'Specialized', 'Nạo vét lòng sông, cảng biển.', '2025-04-29 23:47:13', '2025-04-29 23:47:13');
-
--- --------------------------------------------------------
-
---
--- Cấu trúc bảng cho bảng `tests`
---
-
-CREATE TABLE `tests` (
-  `id` bigint UNSIGNED NOT NULL,
-  `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `description` text COLLATE utf8mb4_unicode_ci,
-  `position_id` bigint UNSIGNED DEFAULT NULL,
-  `ship_type_id` bigint UNSIGNED DEFAULT NULL,
-  `duration` int NOT NULL DEFAULT '60',
-  `is_random` tinyint(1) NOT NULL DEFAULT '0',
-  `is_active` tinyint(1) NOT NULL DEFAULT '1',
-  `category` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `category_id` bigint UNSIGNED DEFAULT NULL,
-  `type` enum('certification','assessment','placement','practice') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'practice',
-  `difficulty` enum('Dễ','Trung bình','Khó') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'Trung bình',
-  `passing_score` int DEFAULT NULL,
-  `created_by` bigint UNSIGNED NOT NULL,
-  `random_questions_count` int DEFAULT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Đang đổ dữ liệu cho bảng `tests`
---
-
-INSERT INTO `tests` (`id`, `title`, `description`, `position_id`, `ship_type_id`, `duration`, `is_random`, `is_active`, `category`, `category_id`, `type`, `difficulty`, `passing_score`, `created_by`, `random_questions_count`, `created_at`, `updated_at`) VALUES
-(1, 'Chứng chỉ Thuyền trưởng Tàu biển', 'Bài kiểm tra cấp chứng chỉ Thuyền trưởng tàu biển theo tiêu chuẩn quốc tế. Đánh giá kiến thức hàng hải, luật biển, xử lý tình huống khẩn cấp, và kỹ năng quản lý.', 1, NULL, 120, 1, 1, 'Kiểm tra chứng chỉ', NULL, 'certification', 'Khó', 80, 1, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(2, 'Chứng chỉ Thuyền phó 1', 'Bài kiểm tra cấp chứng chỉ Thuyền phó 1 theo tiêu chuẩn quốc tế. Đánh giá kiến thức về hàng hải, xếp dỡ hàng hóa, an toàn hàng hải và xử lý tình huống khẩn cấp.', 2, NULL, 90, 1, 1, 'Kiểm tra chứng chỉ', NULL, 'certification', 'Khó', 75, 1, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(3, 'Chứng chỉ Máy trưởng Tàu biển', 'Bài kiểm tra cấp chứng chỉ Máy trưởng tàu biển theo tiêu chuẩn quốc tế. Đánh giá kiến thức về hệ thống máy tàu, bảo trì, sửa chữa, và xử lý sự cố động cơ.', 8, NULL, 120, 1, 1, 'Kiểm tra chứng chỉ', NULL, 'certification', 'Khó', 75, 1, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(4, 'Chứng chỉ Vận hành Tàu dầu', 'Bài kiểm tra chứng chỉ đặc biệt cho thuyền viên làm việc trên tàu dầu. Đánh giá kiến thức về an toàn đặc thù, quy trình xếp dỡ, và xử lý sự cố tràn dầu.', NULL, 3, 90, 1, 1, 'Kiểm tra chứng chỉ', NULL, 'certification', 'Trung bình', 70, 1, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(5, 'Đánh giá Năng lực Thuyền trưởng - Tàu Container', 'Bài kiểm tra đánh giá năng lực thuyền trưởng trên tàu container. Tập trung vào kiến thức điều động tàu, quy trình xếp container, và quản lý an toàn.', 1, 2, 60, 1, 1, 'Kiểm tra đánh giá năng lực', NULL, 'assessment', 'Trung bình', 70, 1, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(6, 'Đánh giá Năng lực Thuyền phó 1 - Tàu Hàng rời', 'Bài kiểm tra đánh giá năng lực thuyền phó 1 trên tàu hàng rời. Tập trung vào kiến thức xếp dỡ hàng rời, ổn định tàu, và an toàn khoang hàng.', 2, 1, 60, 1, 1, 'Kiểm tra đánh giá năng lực', NULL, 'assessment', 'Trung bình', 70, 1, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(7, 'Đánh giá Năng lực Máy trưởng - Tàu dầu', 'Bài kiểm tra đánh giá năng lực máy trưởng trên tàu dầu. Tập trung vào kiến thức về hệ thống bơm dầu, hệ thống kiểm soát khí gas, và an toàn buồng máy.', 8, 3, 60, 1, 1, 'Kiểm tra đánh giá năng lực', NULL, 'assessment', 'Trung bình', 70, 1, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(8, 'Kiểm tra Phân loại Năng lực Hàng hải', 'Bài kiểm tra phân loại trình độ kiến thức hàng hải chung. Giúp xác định mức độ hiểu biết và phân loại thuyền viên theo trình độ.', NULL, NULL, 45, 1, 1, 'Kiểm tra phân loại', NULL, 'placement', 'Trung bình', NULL, 1, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(9, 'Kiểm tra Phân loại Sỹ quan Boong', 'Bài kiểm tra phân loại trình độ kiến thức chuyên môn cho sỹ quan boong. Giúp xác định và phân loại sỹ quan theo năng lực thực tế.', NULL, NULL, 60, 1, 1, 'Kiểm tra phân loại', NULL, 'placement', 'Trung bình', NULL, 1, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(10, 'Kiểm tra Phân loại Sỹ quan Máy', 'Bài kiểm tra phân loại trình độ kiến thức chuyên môn cho sỹ quan máy. Giúp xác định và phân loại sỹ quan theo năng lực thực tế.', NULL, NULL, 60, 1, 1, 'Kiểm tra phân loại', NULL, 'placement', 'Trung bình', NULL, 1, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(11, 'Luyện tập An toàn Hàng hải', 'Bài luyện tập kiến thức và quy trình an toàn hàng hải cơ bản. Gồm các tình huống thường gặp và biện pháp xử lý.', NULL, NULL, 30, 1, 1, 'Kiểm tra luyện tập', NULL, 'practice', 'Dễ', NULL, 1, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(12, 'Luyện tập Xử lý Tình huống Khẩn cấp', 'Bài luyện tập kỹ năng xử lý các tình huống khẩn cấp trên tàu biển như cháy, va chạm, thủng tàu, người rơi xuống biển.', NULL, NULL, 30, 1, 1, 'Kiểm tra luyện tập', NULL, 'practice', 'Trung bình', NULL, 1, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(13, 'Luyện tập Điều động Tàu', 'Bài luyện tập kiến thức và kỹ năng điều động tàu trong các tình huống khác nhau như cập cảng, tránh va, và đi trong luồng hẹp.', 1, NULL, 30, 1, 1, 'Kiểm tra luyện tập', NULL, 'practice', 'Khó', NULL, 1, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(14, 'Luyện tập Hệ thống Máy tàu', 'Bài luyện tập kiến thức về vận hành, bảo dưỡng và xử lý sự cố hệ thống máy tàu biển.', 8, NULL, 30, 1, 1, 'Kiểm tra luyện tập', NULL, 'practice', 'Trung bình', NULL, 1, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14');
-
--- --------------------------------------------------------
-
---
--- Cấu trúc bảng cho bảng `test_attempts`
---
-
-CREATE TABLE `test_attempts` (
-  `id` bigint UNSIGNED NOT NULL,
-  `user_id` bigint UNSIGNED NOT NULL,
-  `test_id` bigint UNSIGNED NOT NULL,
-  `start_time` timestamp NULL DEFAULT NULL,
-  `end_time` timestamp NULL DEFAULT NULL,
-  `is_completed` tinyint(1) NOT NULL DEFAULT '0',
-  `needs_marking` tinyint(1) NOT NULL DEFAULT '0',
-  `is_marked` tinyint(1) NOT NULL DEFAULT '0',
-  `score` double(8,2) NOT NULL DEFAULT '0.00',
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Đang đổ dữ liệu cho bảng `test_attempts`
---
-
-INSERT INTO `test_attempts` (`id`, `user_id`, `test_id`, `start_time`, `end_time`, `is_completed`, `needs_marking`, `is_marked`, `score`, `created_at`, `updated_at`) VALUES
-(1, 2, 8, '2025-04-27 22:47:14', '2025-04-27 23:32:14', 1, 0, 0, 90.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(2, 2, 11, '2025-04-15 18:47:14', '2025-04-15 19:17:14', 1, 0, 0, 57.14, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(3, 2, 10, '2025-04-27 02:47:14', '2025-04-27 03:47:14', 1, 0, 0, 85.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(4, 3, 12, '2025-04-17 09:47:14', '2025-04-17 10:17:14', 1, 0, 0, 60.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(5, 3, 11, '2025-04-04 07:47:14', '2025-04-04 08:17:14', 1, 0, 0, 92.86, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(6, 3, 8, '2025-04-18 06:47:14', '2025-04-18 07:32:14', 1, 0, 0, 78.33, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(7, 3, 9, '2025-04-27 04:47:14', '2025-04-27 05:47:14', 1, 0, 0, 90.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(8, 4, 9, '2025-04-17 17:47:14', '2025-04-17 18:47:14', 1, 0, 0, 85.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(9, 4, 11, '2025-04-12 20:47:14', '2025-04-12 21:17:14', 1, 0, 0, 85.71, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(10, 5, 10, '2025-04-06 03:47:14', '2025-04-06 04:47:14', 1, 0, 0, 76.67, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(11, 5, 12, '2025-03-31 18:47:14', '2025-03-31 19:17:14', 1, 0, 0, 75.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(12, 5, 11, '2025-04-23 14:47:14', '2025-04-23 15:17:14', 1, 0, 0, 57.14, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(13, 6, 10, '2025-04-05 16:47:14', '2025-04-05 17:47:14', 1, 0, 0, 78.33, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(14, 6, 11, '2025-04-04 06:47:14', '2025-04-04 07:17:14', 1, 0, 0, 57.14, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(15, 7, 11, '2025-04-18 10:47:14', '2025-04-18 11:17:14', 1, 0, 0, 42.86, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(16, 7, 8, '2025-03-30 01:47:14', '2025-03-30 02:32:14', 1, 0, 0, 70.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(17, 7, 9, '2025-04-15 22:47:14', '2025-04-15 23:47:14', 1, 0, 0, 81.67, '2025-04-29 23:47:14', '2025-04-29 23:47:15'),
-(18, 7, 10, '2025-04-07 06:47:15', '2025-04-07 07:47:15', 1, 0, 0, 75.00, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(19, 8, 10, '2025-04-05 11:47:15', '2025-04-05 12:47:15', 1, 0, 0, 86.67, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(20, 8, 12, '2025-04-22 20:47:15', '2025-04-22 21:17:15', 1, 0, 0, 55.00, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(21, 8, 8, '2025-04-22 14:47:15', '2025-04-22 15:32:15', 1, 0, 0, 71.67, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(22, 8, 11, '2025-04-16 22:47:15', '2025-04-16 23:17:15', 1, 0, 0, 92.86, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(23, 8, 9, '2025-03-31 04:47:15', '2025-03-31 05:47:15', 1, 0, 0, 53.33, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(24, 9, 8, '2025-04-10 02:47:15', '2025-04-10 03:32:15', 1, 0, 0, 63.33, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(25, 9, 11, '2025-04-08 01:47:15', '2025-04-08 02:17:15', 1, 0, 0, 71.43, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(26, 9, 12, '2025-04-03 15:47:15', '2025-04-03 16:17:15', 1, 0, 0, 60.00, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(27, 9, 10, '2025-04-27 11:47:15', '2025-04-27 12:47:15', 1, 0, 0, 80.00, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(28, 9, 9, '2025-04-14 03:47:15', '2025-04-14 04:47:15', 1, 0, 0, 61.67, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(29, 10, 8, '2025-04-05 08:47:15', '2025-04-05 09:32:15', 1, 0, 0, 71.67, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(30, 10, 9, '2025-04-05 01:47:15', '2025-04-05 02:47:15', 1, 0, 0, 61.67, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(31, 10, 10, '2025-04-13 20:47:15', '2025-04-13 21:47:15', 1, 0, 0, 53.33, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(32, 10, 11, '2025-03-31 18:47:15', '2025-03-31 19:17:15', 1, 0, 0, 35.71, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(33, 10, 12, '2025-04-08 06:47:15', '2025-04-08 07:17:15', 1, 0, 0, 55.00, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(34, 11, 9, '2025-04-11 13:47:15', '2025-04-11 14:47:15', 1, 0, 0, 50.00, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(35, 11, 8, '2025-04-12 14:47:15', '2025-04-12 15:32:15', 1, 0, 0, 58.33, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(36, 5, 12, '2025-04-29 23:26:15', NULL, 0, 0, 0, 0.00, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(37, 6, 12, '2025-04-29 23:41:15', NULL, 0, 0, 0, 0.00, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(38, 8, 9, '2025-04-29 22:10:15', NULL, 0, 0, 0, 0.00, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(39, 2, 12, '2025-04-29 23:47:16', NULL, 0, 0, 0, 0.00, '2025-04-29 23:47:16', '2025-04-29 23:47:16'),
-(40, 2, 8, '2025-04-29 23:47:22', NULL, 0, 0, 0, 0.00, '2025-04-29 23:47:22', '2025-04-29 23:47:22'),
-(50, 2, 8, '2025-04-30 00:03:08', NULL, 0, 0, 0, 0.00, '2025-04-30 00:03:08', '2025-04-30 00:03:08'),
-(55, 2, 8, '2025-04-30 00:10:47', NULL, 0, 0, 0, 0.00, '2025-04-30 00:10:47', '2025-04-30 00:10:47'),
-(56, 2, 8, '2025-04-30 00:30:28', '2025-04-30 00:30:32', 1, 0, 1, 0.00, '2025-04-30 00:30:28', '2025-04-30 00:30:32'),
-(57, 2, 8, '2025-04-30 00:41:38', '2025-04-30 00:48:15', 1, 0, 1, 100.00, '2025-04-30 00:41:38', '2025-04-30 01:38:31'),
-(58, 2, 8, '2025-04-30 01:05:28', '2025-04-30 01:05:51', 1, 0, 1, 0.00, '2025-04-30 01:05:28', '2025-04-30 01:17:08'),
-(59, 2, 12, '2025-04-30 06:50:39', NULL, 0, 0, 0, 0.00, '2025-04-30 06:50:39', '2025-04-30 06:50:39'),
-(60, 2, 12, '2025-04-30 06:50:59', '2025-04-30 07:21:22', 1, 0, 1, 0.00, '2025-04-30 06:50:59', '2025-04-30 07:21:22');
-
--- --------------------------------------------------------
-
---
--- Cấu trúc bảng cho bảng `test_questions`
---
-
-CREATE TABLE `test_questions` (
-  `id` bigint UNSIGNED NOT NULL,
-  `test_id` bigint UNSIGNED NOT NULL,
-  `question_id` bigint UNSIGNED NOT NULL,
-  `order` int NOT NULL DEFAULT '0',
-  `is_temporary` tinyint(1) NOT NULL DEFAULT '0',
-  `test_attempt_id` bigint UNSIGNED DEFAULT NULL,
-  `points` double(8,2) NOT NULL DEFAULT '1.00',
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Đang đổ dữ liệu cho bảng `test_questions`
---
-
-INSERT INTO `test_questions` (`id`, `test_id`, `question_id`, `order`, `is_temporary`, `test_attempt_id`, `points`, `created_at`, `updated_at`) VALUES
-(1, 1, 13, 1, 0, NULL, 3.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(2, 1, 66, 2, 0, NULL, 3.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(3, 1, 67, 3, 0, NULL, 3.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(4, 1, 5, 4, 0, NULL, 3.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(5, 1, 27, 5, 0, NULL, 3.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(6, 1, 3, 6, 0, NULL, 3.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(7, 1, 1, 7, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(8, 1, 4, 8, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(9, 1, 2, 9, 0, NULL, 1.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(10, 1, 34, 10, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(11, 1, 6, 11, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(12, 1, 20, 12, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(13, 1, 68, 13, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(14, 2, 66, 1, 0, NULL, 3.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(15, 2, 67, 2, 0, NULL, 3.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(16, 2, 14, 3, 0, NULL, 3.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(17, 2, 28, 4, 0, NULL, 3.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(18, 2, 3, 5, 0, NULL, 3.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(19, 2, 5, 6, 0, NULL, 3.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(20, 2, 1, 7, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(21, 2, 35, 8, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(22, 2, 7, 9, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(23, 2, 2, 10, 0, NULL, 1.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(24, 2, 21, 11, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(25, 2, 68, 12, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(26, 2, 4, 13, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(27, 3, 66, 1, 0, NULL, 3.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(28, 3, 5, 2, 0, NULL, 3.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(29, 3, 61, 3, 0, NULL, 3.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(30, 3, 3, 4, 0, NULL, 3.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(31, 3, 67, 5, 0, NULL, 3.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(32, 3, 41, 6, 0, NULL, 3.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(33, 3, 56, 7, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(34, 3, 46, 8, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(35, 3, 68, 9, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(36, 3, 4, 10, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(37, 3, 2, 11, 0, NULL, 1.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(38, 3, 51, 12, 0, NULL, 1.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(39, 3, 1, 13, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(40, 4, 25, 1, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(41, 4, 9, 2, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(42, 4, 40, 3, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(43, 4, 26, 4, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(44, 4, 7, 5, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(45, 4, 36, 6, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(46, 4, 34, 7, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(47, 4, 37, 8, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(48, 4, 11, 9, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(49, 4, 58, 10, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(50, 4, 49, 11, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(51, 4, 4, 12, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(52, 4, 1, 13, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(53, 4, 38, 14, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(54, 4, 21, 15, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(55, 4, 57, 16, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(56, 4, 23, 17, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(57, 4, 39, 18, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(58, 4, 20, 19, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(59, 4, 8, 20, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(60, 4, 35, 21, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(61, 4, 22, 22, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(62, 4, 12, 23, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(63, 4, 47, 24, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(64, 4, 50, 25, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(65, 4, 68, 26, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(66, 4, 48, 27, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(67, 4, 56, 28, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(68, 4, 24, 29, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(69, 4, 6, 30, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(70, 4, 60, 31, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(71, 4, 46, 32, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(72, 4, 59, 33, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(73, 4, 10, 34, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(74, 4, 19, 35, 0, NULL, 3.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(75, 4, 51, 36, 0, NULL, 1.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(76, 4, 33, 37, 0, NULL, 3.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(77, 4, 32, 38, 0, NULL, 3.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(78, 4, 65, 39, 0, NULL, 3.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(79, 4, 31, 40, 0, NULL, 3.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(80, 5, 34, 1, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(81, 5, 20, 2, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(82, 5, 1, 3, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(83, 5, 6, 4, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(84, 5, 4, 5, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(85, 5, 5, 6, 0, NULL, 3.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(86, 5, 27, 7, 0, NULL, 3.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(87, 5, 13, 8, 0, NULL, 3.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(88, 5, 2, 9, 0, NULL, 1.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(89, 5, 3, 10, 0, NULL, 3.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(90, 6, 21, 1, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(91, 6, 35, 2, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(92, 6, 4, 3, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(93, 6, 7, 4, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(94, 6, 1, 5, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(95, 6, 14, 6, 0, NULL, 3.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(96, 6, 28, 7, 0, NULL, 3.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(97, 6, 3, 8, 0, NULL, 3.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(98, 6, 2, 9, 0, NULL, 1.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(99, 6, 5, 10, 0, NULL, 3.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(100, 7, 46, 1, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(101, 7, 56, 2, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(102, 7, 4, 3, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(103, 7, 68, 4, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(104, 7, 1, 5, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(105, 7, 67, 6, 0, NULL, 3.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(106, 7, 2, 7, 0, NULL, 1.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(107, 7, 41, 8, 0, NULL, 3.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(108, 7, 3, 9, 0, NULL, 3.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(109, 7, 66, 10, 0, NULL, 3.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(110, 7, 51, 11, 0, NULL, 1.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(111, 7, 5, 12, 0, NULL, 3.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(112, 7, 61, 13, 0, NULL, 3.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(113, 8, 20, 1, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(114, 8, 56, 2, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(115, 8, 34, 3, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(116, 8, 11, 4, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(117, 8, 26, 5, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(118, 8, 25, 6, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(119, 8, 22, 7, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(120, 8, 12, 8, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(121, 8, 24, 9, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(122, 8, 60, 10, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(123, 8, 39, 11, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(124, 8, 40, 12, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(125, 8, 49, 13, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(126, 8, 8, 14, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(127, 8, 35, 15, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(128, 8, 50, 16, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(129, 8, 48, 17, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(130, 8, 37, 18, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(131, 8, 36, 19, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(132, 8, 6, 20, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(133, 8, 47, 21, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(134, 8, 57, 22, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(135, 8, 7, 23, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(136, 8, 21, 24, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(137, 8, 1, 25, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(138, 8, 59, 26, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(139, 8, 58, 27, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(140, 8, 68, 28, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(141, 8, 38, 29, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(142, 8, 46, 30, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(143, 9, 60, 1, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(144, 9, 40, 2, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(145, 9, 8, 3, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(146, 9, 58, 4, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(147, 9, 57, 5, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(148, 9, 10, 6, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(149, 9, 24, 7, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(150, 9, 36, 8, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(151, 9, 35, 9, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(152, 9, 59, 10, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(153, 9, 39, 11, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(154, 9, 49, 12, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(155, 9, 48, 13, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(156, 9, 46, 14, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(157, 9, 1, 15, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(158, 9, 37, 16, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(159, 9, 25, 17, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(160, 9, 22, 18, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(161, 9, 47, 19, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(162, 9, 50, 20, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(163, 9, 38, 21, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(164, 9, 23, 22, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(165, 9, 7, 23, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(166, 9, 26, 24, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(167, 9, 34, 25, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(168, 9, 21, 26, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(169, 9, 9, 27, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(170, 9, 4, 28, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(171, 9, 56, 29, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(172, 9, 11, 30, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(173, 10, 6, 1, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(174, 10, 50, 2, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(175, 10, 34, 3, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(176, 10, 48, 4, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(177, 10, 46, 5, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(178, 10, 25, 6, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(179, 10, 49, 7, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(180, 10, 57, 8, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(181, 10, 56, 9, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(182, 10, 4, 10, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(183, 10, 26, 11, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(184, 10, 23, 12, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(185, 10, 40, 13, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(186, 10, 58, 14, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(187, 10, 47, 15, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(188, 10, 20, 16, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(189, 10, 39, 17, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(190, 10, 35, 18, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(191, 10, 60, 19, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(192, 10, 8, 20, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(193, 10, 9, 21, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(194, 10, 1, 22, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(195, 10, 22, 23, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(196, 10, 10, 24, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(197, 10, 68, 25, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(198, 10, 59, 26, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(199, 10, 11, 27, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(200, 10, 38, 28, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(201, 10, 21, 29, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(202, 10, 7, 30, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(203, 11, 55, 1, 0, NULL, 1.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(204, 11, 2, 2, 0, NULL, 1.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(205, 11, 53, 3, 0, NULL, 1.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(206, 11, 54, 4, 0, NULL, 1.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(207, 11, 51, 5, 0, NULL, 1.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(208, 11, 52, 6, 0, NULL, 1.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(209, 11, 38, 7, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(210, 11, 9, 8, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(211, 11, 24, 9, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(212, 11, 22, 10, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(213, 12, 68, 1, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(214, 12, 11, 2, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(215, 12, 39, 3, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(216, 12, 4, 4, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(217, 12, 37, 5, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(218, 12, 60, 6, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(219, 12, 22, 7, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(220, 12, 26, 8, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(221, 12, 6, 9, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(222, 12, 20, 10, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(223, 13, 27, 1, 0, NULL, 3.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(224, 13, 13, 2, 0, NULL, 3.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(225, 13, 3, 3, 0, NULL, 3.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(226, 13, 67, 4, 0, NULL, 3.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(227, 13, 5, 5, 0, NULL, 3.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(228, 13, 66, 6, 0, NULL, 3.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(229, 13, 6, 7, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(230, 13, 68, 8, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(231, 13, 20, 9, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(232, 13, 1, 10, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(233, 14, 4, 1, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(234, 14, 1, 2, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(235, 14, 68, 3, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(236, 14, 46, 4, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(237, 14, 56, 5, 0, NULL, 2.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(238, 14, 3, 6, 0, NULL, 3.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(239, 14, 66, 7, 0, NULL, 3.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(240, 14, 67, 8, 0, NULL, 3.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(241, 14, 2, 9, 0, NULL, 1.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(242, 14, 41, 10, 0, NULL, 3.00, '2025-04-29 23:47:14', '2025-04-29 23:47:14');
-
--- --------------------------------------------------------
-
---
--- Cấu trúc bảng cho bảng `thuyen_viens`
---
-
-CREATE TABLE `thuyen_viens` (
-  `id` bigint UNSIGNED NOT NULL,
-  `user_id` bigint UNSIGNED NOT NULL,
-  `position_id` bigint UNSIGNED DEFAULT NULL,
-  `ship_type_id` bigint UNSIGNED DEFAULT NULL,
-  `experience` int NOT NULL DEFAULT '0',
-  `age` int DEFAULT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Đang đổ dữ liệu cho bảng `thuyen_viens`
---
-
-INSERT INTO `thuyen_viens` (`id`, `user_id`, `position_id`, `ship_type_id`, `experience`, `age`, `created_at`, `updated_at`) VALUES
-(1, 2, NULL, NULL, 15, NULL, '2025-04-29 23:47:13', '2025-04-29 23:47:13'),
-(2, 3, NULL, NULL, 10, NULL, '2025-04-29 23:47:13', '2025-04-29 23:47:13'),
-(3, 4, NULL, NULL, 12, NULL, '2025-04-29 23:47:13', '2025-04-29 23:47:13'),
-(4, 5, NULL, NULL, 8, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(5, 6, NULL, NULL, 5, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(6, 7, NULL, NULL, 7, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(7, 8, NULL, NULL, 9, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(8, 9, NULL, NULL, 3, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(9, 10, NULL, NULL, 4, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(10, 11, NULL, NULL, 1, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14');
-
--- --------------------------------------------------------
-
---
--- Cấu trúc bảng cho bảng `users`
---
-
-CREATE TABLE `users` (
-  `id` bigint UNSIGNED NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `email_verified_at` timestamp NULL DEFAULT NULL,
-  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  `department` enum('Boong','Máy','Khác') NOT NULL,
+  `description` text DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  `role_id` bigint UNSIGNED DEFAULT NULL,
-  `seafarer_id` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `phone` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Đang đổ dữ liệu cho bảng `users`
+-- Dumping data for table `positions`
 --
 
-INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`, `role_id`, `seafarer_id`, `phone`) VALUES
-(1, 'Administrator', 'admin@thuyenvien.com', '2025-04-29 23:47:13', '$2y$10$IAoLmNwXT1YpAkdgXc/ggu8xKLai8EqsstejC2dSYz2PFhJm6MFKm', NULL, '2025-04-29 23:47:13', '2025-04-29 23:47:13', 1, NULL, NULL),
-(2, 'Nguyễn Văn A', 'nguyenvana@example.com', '2025-04-29 23:47:13', '$2y$10$IAoLmNwXT1YpAkdgXc/ggu8xKLai8EqsstejC2dSYz2PFhJm6MFKm', NULL, '2025-04-29 23:47:13', '2025-04-29 23:47:13', 2, 'SID001', '0901234567'),
-(3, 'Trần Văn B', 'tranvanb@example.com', '2025-04-29 23:47:13', '$2y$10$IAoLmNwXT1YpAkdgXc/ggu8xKLai8EqsstejC2dSYz2PFhJm6MFKm', NULL, '2025-04-29 23:47:13', '2025-04-29 23:47:13', 2, 'SID002', '0901234568'),
-(4, 'Lê Văn C', 'levanc@example.com', '2025-04-29 23:47:13', '$2y$10$IAoLmNwXT1YpAkdgXc/ggu8xKLai8EqsstejC2dSYz2PFhJm6MFKm', NULL, '2025-04-29 23:47:13', '2025-04-29 23:47:13', 2, 'SID003', '0901234569'),
-(5, 'Phạm Văn D', 'phamvand@example.com', '2025-04-29 23:47:14', '$2y$10$IAoLmNwXT1YpAkdgXc/ggu8xKLai8EqsstejC2dSYz2PFhJm6MFKm', NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14', 2, 'SID004', '0901234570'),
-(6, 'Hoàng Văn E', 'hoangvane@example.com', '2025-04-29 23:47:14', '$2y$10$IAoLmNwXT1YpAkdgXc/ggu8xKLai8EqsstejC2dSYz2PFhJm6MFKm', NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14', 2, 'SID005', '0901234571'),
-(7, 'Đỗ Văn F', 'dovanf@example.com', '2025-04-29 23:47:14', '$2y$10$IAoLmNwXT1YpAkdgXc/ggu8xKLai8EqsstejC2dSYz2PFhJm6MFKm', NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14', 2, 'SID006', '0901234572'),
-(8, 'Vũ Văn G', 'vuvang@example.com', '2025-04-29 23:47:14', '$2y$10$IAoLmNwXT1YpAkdgXc/ggu8xKLai8EqsstejC2dSYz2PFhJm6MFKm', NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14', 2, 'SID007', '0901234573'),
-(9, 'Ngô Văn H', 'ngovanh@example.com', '2025-04-29 23:47:14', '$2y$10$IAoLmNwXT1YpAkdgXc/ggu8xKLai8EqsstejC2dSYz2PFhJm6MFKm', NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14', 2, 'SID008', '0901234574'),
-(10, 'Dương Văn I', 'duongvani@example.com', '2025-04-29 23:47:14', '$2y$10$IAoLmNwXT1YpAkdgXc/ggu8xKLai8EqsstejC2dSYz2PFhJm6MFKm', NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14', 2, 'SID009', '0901234575'),
-(11, 'Bùi Văn K', 'buivank@example.com', '2025-04-29 23:47:14', '$2y$10$IAoLmNwXT1YpAkdgXc/ggu8xKLai8EqsstejC2dSYz2PFhJm6MFKm', NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14', 2, 'SID010', '0901234576');
-
--- --------------------------------------------------------
+LOCK TABLES `positions` WRITE;
+/*!40000 ALTER TABLE `positions` DISABLE KEYS */;
+INSERT INTO `positions` VALUES (1,'Thuyền trưởng (Captain / Master)','Boong','Chịu trách nhiệm tối cao về tàu, hàng hóa và thủy thủ đoàn. Quản lý hành trình, xử lý tình huống khẩn cấp, tuân thủ quy định an toàn hàng hải.','2025-05-16 20:22:27','2025-05-16 20:22:27'),(2,'Thuyền phó 1 (Chief Officer)','Boong','Phụ trách hàng hải, an toàn và bảo trì boong.','2025-05-16 20:22:27','2025-05-16 20:22:27'),(3,'Thuyền phó 2 (2nd Officer)','Boong','Chịu trách nhiệm về bản đồ, hành trình và thiết bị định vị.','2025-05-16 20:22:27','2025-05-16 20:22:27'),(4,'Thuyền phó 3 (3rd Officer)','Boong','Giám sát an toàn sinh mạng, thiết bị cứu hộ và hỗ trợ hàng hải.','2025-05-16 20:22:27','2025-05-16 20:22:27'),(5,'Thủy thủ thủ trưởng (Bosun)','Boong','Hỗ trợ điều hướng, bảo trì tàu, thực hiện các lệnh từ thuyền trưởng và thuyền phó.','2025-05-16 20:22:27','2025-05-16 20:22:27'),(6,'Thủy thủ (Able Seaman)','Boong','Hỗ trợ điều hướng, bảo trì tàu, thực hiện các lệnh từ thuyền trưởng và thuyền phó.','2025-05-16 20:22:27','2025-05-16 20:22:27'),(7,'Thủy thủ thực tập (Ordinary Seaman)','Boong','Học tập và hỗ trợ thủy thủ chính.','2025-05-16 20:22:27','2025-05-16 20:22:27'),(8,'Máy trưởng (Chief Engineer)','Máy','Quản lý hệ thống động lực của tàu, bảo trì máy móc, đảm bảo hiệu suất vận hành.','2025-05-16 20:22:27','2025-05-16 20:22:27'),(9,'Máy phó 1 (2nd Engineer)','Máy','Giám sát vận hành chính hệ thống máy.','2025-05-16 20:22:27','2025-05-16 20:22:27'),(10,'Máy phó 2 (3rd Engineer)','Máy','Phụ trách động cơ phụ, hệ thống điện, nhiên liệu.','2025-05-16 20:22:27','2025-05-16 20:22:27'),(11,'Máy phó 3 (4th Engineer)','Máy','Phụ trách động cơ phụ, hệ thống điện, nhiên liệu.','2025-05-16 20:22:27','2025-05-16 20:22:27'),(12,'Thợ máy (Motorman)','Máy','Hỗ trợ bảo trì máy móc, kiểm tra hệ thống dầu, nước làm mát.','2025-05-16 20:22:27','2025-05-16 20:22:27'),(13,'Điện trưởng (Electro-Technical Officer - ETO)','Khác','Bảo trì hệ thống điện tử và tự động hóa trên tàu.','2025-05-16 20:22:27','2025-05-16 20:22:27'),(14,'Bếp trưởng (Cook)','Khác','Đảm bảo hậu cần, nấu ăn.','2025-05-16 20:22:27','2025-05-16 20:22:27'),(15,'Phục vụ (Steward)','Khác','Đảm bảo hậu cần, vệ sinh.','2025-05-16 20:22:27','2025-05-16 20:22:27');
+/*!40000 ALTER TABLE `positions` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
--- Cấu trúc bảng cho bảng `user_responses`
+-- Table structure for table `questions`
 --
 
-CREATE TABLE `user_responses` (
-  `id` bigint UNSIGNED NOT NULL,
-  `test_attempt_id` bigint UNSIGNED NOT NULL,
-  `question_id` bigint UNSIGNED NOT NULL,
-  `answer_id` bigint UNSIGNED DEFAULT NULL,
-  `text_response` text COLLATE utf8mb4_unicode_ci,
-  `response_type` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `is_marked` tinyint(1) NOT NULL DEFAULT '0',
-  `score` double(8,2) NOT NULL DEFAULT '0.00',
-  `admin_comment` text COLLATE utf8mb4_unicode_ci,
+DROP TABLE IF EXISTS `questions`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `questions` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `content` text NOT NULL,
+  `category` varchar(255) DEFAULT NULL,
+  `category_id` bigint(20) unsigned DEFAULT NULL,
+  `type` enum('Trắc nghiệm','Tự luận','Tình huống','Mô phỏng','Thực hành') NOT NULL,
+  `difficulty` enum('Dễ','Trung bình','Khó') NOT NULL,
+  `position_id` bigint(20) unsigned DEFAULT NULL,
+  `ship_type_id` bigint(20) unsigned DEFAULT NULL,
+  `created_by` bigint(20) unsigned NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `questions_position_id_foreign` (`position_id`),
+  KEY `questions_ship_type_id_foreign` (`ship_type_id`),
+  KEY `questions_created_by_foreign` (`created_by`),
+  KEY `questions_category_id_foreign` (`category_id`),
+  CONSTRAINT `questions_category_id_foreign` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`) ON DELETE SET NULL,
+  CONSTRAINT `questions_created_by_foreign` FOREIGN KEY (`created_by`) REFERENCES `users` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `questions_position_id_foreign` FOREIGN KEY (`position_id`) REFERENCES `positions` (`id`) ON DELETE SET NULL,
+  CONSTRAINT `questions_ship_type_id_foreign` FOREIGN KEY (`ship_type_id`) REFERENCES `ship_types` (`id`) ON DELETE SET NULL
+) ENGINE=InnoDB AUTO_INCREMENT=69 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Đang đổ dữ liệu cho bảng `user_responses`
+-- Dumping data for table `questions`
 --
 
-INSERT INTO `user_responses` (`id`, `test_attempt_id`, `question_id`, `answer_id`, `text_response`, `response_type`, `is_marked`, `score`, `admin_comment`, `created_at`, `updated_at`) VALUES
-(1, 1, 20, 37, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(2, 1, 56, NULL, 'Câu trả lời mẫu cho câu hỏi 56', NULL, 1, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(3, 1, 34, NULL, 'Câu trả lời mẫu cho câu hỏi 34', NULL, 1, 0.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(4, 1, 11, NULL, 'Câu trả lời mẫu cho câu hỏi 11', NULL, 1, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(5, 1, 26, 61, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(6, 1, 25, 57, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(7, 1, 22, 45, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(8, 1, 12, NULL, 'Câu trả lời mẫu cho câu hỏi 12', NULL, 1, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(9, 1, 24, 53, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(10, 1, 60, NULL, 'Câu trả lời mẫu cho câu hỏi 60', NULL, 1, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(11, 1, 39, NULL, 'Câu trả lời mẫu cho câu hỏi 39', NULL, 1, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(12, 1, 40, NULL, 'Câu trả lời mẫu cho câu hỏi 40', NULL, 1, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(13, 1, 49, 78, NULL, NULL, 0, 0.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(14, 1, 8, NULL, 'Câu trả lời mẫu cho câu hỏi 8', NULL, 1, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(15, 1, 35, NULL, 'Câu trả lời mẫu cho câu hỏi 35', NULL, 1, 0.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(16, 1, 50, 81, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(17, 1, 48, 73, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(18, 1, 37, NULL, 'Câu trả lời mẫu cho câu hỏi 37', NULL, 1, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(19, 1, 36, NULL, 'Câu trả lời mẫu cho câu hỏi 36', NULL, 1, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(20, 1, 6, NULL, 'Câu trả lời mẫu cho câu hỏi 6', NULL, 1, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(21, 1, 47, 69, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(22, 1, 57, NULL, 'Câu trả lời mẫu cho câu hỏi 57', NULL, 1, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(23, 1, 7, NULL, 'Câu trả lời mẫu cho câu hỏi 7', NULL, 1, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(24, 1, 21, 41, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(25, 1, 1, NULL, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(26, 1, 59, NULL, 'Câu trả lời mẫu cho câu hỏi 59', NULL, 1, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(27, 1, 58, NULL, 'Câu trả lời mẫu cho câu hỏi 58', NULL, 1, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(28, 1, 68, 109, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(29, 1, 38, NULL, 'Câu trả lời mẫu cho câu hỏi 38', NULL, 1, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(30, 1, 46, 65, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(31, 2, 55, 101, NULL, NULL, 0, 1.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(32, 2, 2, 6, NULL, NULL, 0, 0.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(33, 2, 53, 94, NULL, NULL, 0, 0.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(34, 2, 54, 97, NULL, NULL, 0, 1.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(35, 2, 51, 85, NULL, NULL, 0, 1.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(36, 2, 52, 90, NULL, NULL, 0, 0.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(37, 2, 38, NULL, 'Câu trả lời mẫu cho câu hỏi 38', NULL, 1, 1.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(38, 2, 9, NULL, 'Câu trả lời mẫu cho câu hỏi 9', NULL, 1, 0.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(39, 2, 24, 53, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(40, 2, 22, 45, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(41, 3, 6, NULL, 'Câu trả lời mẫu cho câu hỏi 6', NULL, 1, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(42, 3, 50, 81, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(43, 3, 34, NULL, 'Câu trả lời mẫu cho câu hỏi 34', NULL, 1, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(44, 3, 48, 73, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(45, 3, 46, 65, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(46, 3, 25, 58, NULL, NULL, 0, 0.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(47, 3, 49, 77, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(48, 3, 57, NULL, 'Câu trả lời mẫu cho câu hỏi 57', NULL, 1, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(49, 3, 56, NULL, 'Câu trả lời mẫu cho câu hỏi 56', NULL, 1, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(50, 3, 4, NULL, 'Câu trả lời mẫu cho câu hỏi 4', NULL, 1, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(51, 3, 26, 61, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(52, 3, 23, 49, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(53, 3, 40, NULL, 'Câu trả lời mẫu cho câu hỏi 40', NULL, 1, 1.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(54, 3, 58, NULL, 'Câu trả lời mẫu cho câu hỏi 58', NULL, 1, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(55, 3, 47, 69, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(56, 3, 20, 39, NULL, NULL, 0, 0.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(57, 3, 39, NULL, 'Câu trả lời mẫu cho câu hỏi 39', NULL, 1, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(58, 3, 35, NULL, 'Câu trả lời mẫu cho câu hỏi 35', NULL, 1, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(59, 3, 60, NULL, 'Câu trả lời mẫu cho câu hỏi 60', NULL, 1, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(60, 3, 8, NULL, 'Câu trả lời mẫu cho câu hỏi 8', NULL, 1, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(61, 3, 9, NULL, 'Câu trả lời mẫu cho câu hỏi 9', NULL, 1, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(62, 3, 1, NULL, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(63, 3, 22, 46, NULL, NULL, 0, 0.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(64, 3, 10, NULL, 'Câu trả lời mẫu cho câu hỏi 10', NULL, 1, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(65, 3, 68, 109, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(66, 3, 59, NULL, 'Câu trả lời mẫu cho câu hỏi 59', NULL, 1, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(67, 3, 11, NULL, 'Câu trả lời mẫu cho câu hỏi 11', NULL, 1, 0.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(68, 3, 38, NULL, 'Câu trả lời mẫu cho câu hỏi 38', NULL, 1, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(69, 3, 21, 41, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(70, 3, 7, NULL, 'Câu trả lời mẫu cho câu hỏi 7', NULL, 1, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(71, 4, 68, 112, NULL, NULL, 0, 0.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(72, 4, 11, NULL, 'Câu trả lời mẫu cho câu hỏi 11', NULL, 1, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(73, 4, 39, NULL, 'Câu trả lời mẫu cho câu hỏi 39', NULL, 1, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(74, 4, 4, NULL, 'Câu trả lời mẫu cho câu hỏi 4', NULL, 1, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(75, 4, 37, NULL, 'Câu trả lời mẫu cho câu hỏi 37', NULL, 1, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(76, 4, 60, NULL, 'Câu trả lời mẫu cho câu hỏi 60', NULL, 1, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(77, 4, 22, 45, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(78, 4, 26, 64, NULL, NULL, 0, 0.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(79, 4, 6, NULL, 'Câu trả lời mẫu cho câu hỏi 6', NULL, 1, 0.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(80, 4, 20, 39, NULL, NULL, 0, 0.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(81, 5, 55, 104, NULL, NULL, 0, 0.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(82, 5, 2, 5, NULL, NULL, 0, 1.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(83, 5, 53, 93, NULL, NULL, 0, 1.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(84, 5, 54, 97, NULL, NULL, 0, 1.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(85, 5, 51, 85, NULL, NULL, 0, 1.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(86, 5, 52, 89, NULL, NULL, 0, 1.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(87, 5, 38, NULL, 'Câu trả lời mẫu cho câu hỏi 38', NULL, 1, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(88, 5, 9, NULL, 'Câu trả lời mẫu cho câu hỏi 9', NULL, 1, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(89, 5, 24, 53, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(90, 5, 22, 45, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(91, 6, 20, 38, NULL, NULL, 0, 0.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(92, 6, 56, NULL, 'Câu trả lời mẫu cho câu hỏi 56', NULL, 1, 0.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(93, 6, 34, NULL, 'Câu trả lời mẫu cho câu hỏi 34', NULL, 1, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(94, 6, 11, NULL, 'Câu trả lời mẫu cho câu hỏi 11', NULL, 1, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(95, 6, 26, 61, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(96, 6, 25, 57, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(97, 6, 22, 45, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(98, 6, 12, NULL, 'Câu trả lời mẫu cho câu hỏi 12', NULL, 1, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(99, 6, 24, 53, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(100, 6, 60, NULL, 'Câu trả lời mẫu cho câu hỏi 60', NULL, 1, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(101, 6, 39, NULL, 'Câu trả lời mẫu cho câu hỏi 39', NULL, 1, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(102, 6, 40, NULL, 'Câu trả lời mẫu cho câu hỏi 40', NULL, 1, 0.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(103, 6, 49, 77, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(104, 6, 8, NULL, 'Câu trả lời mẫu cho câu hỏi 8', NULL, 1, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(105, 6, 35, NULL, 'Câu trả lời mẫu cho câu hỏi 35', NULL, 1, 0.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(106, 6, 50, 81, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(107, 6, 48, 73, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(108, 6, 37, NULL, 'Câu trả lời mẫu cho câu hỏi 37', NULL, 1, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(109, 6, 36, NULL, 'Câu trả lời mẫu cho câu hỏi 36', NULL, 1, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(110, 6, 6, NULL, 'Câu trả lời mẫu cho câu hỏi 6', NULL, 1, 1.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(111, 6, 47, 69, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(112, 6, 57, NULL, 'Câu trả lời mẫu cho câu hỏi 57', NULL, 1, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(113, 6, 7, NULL, 'Câu trả lời mẫu cho câu hỏi 7', NULL, 1, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(114, 6, 21, 44, NULL, NULL, 0, 0.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(115, 6, 1, NULL, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(116, 6, 59, NULL, 'Câu trả lời mẫu cho câu hỏi 59', NULL, 1, 0.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(117, 6, 58, NULL, 'Câu trả lời mẫu cho câu hỏi 58', NULL, 1, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(118, 6, 68, 109, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(119, 6, 38, NULL, 'Câu trả lời mẫu cho câu hỏi 38', NULL, 1, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(120, 6, 46, 65, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(121, 7, 60, NULL, 'Câu trả lời mẫu cho câu hỏi 60', NULL, 1, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(122, 7, 40, NULL, 'Câu trả lời mẫu cho câu hỏi 40', NULL, 1, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(123, 7, 8, NULL, 'Câu trả lời mẫu cho câu hỏi 8', NULL, 1, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(124, 7, 58, NULL, 'Câu trả lời mẫu cho câu hỏi 58', NULL, 1, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(125, 7, 57, NULL, 'Câu trả lời mẫu cho câu hỏi 57', NULL, 1, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(126, 7, 10, NULL, 'Câu trả lời mẫu cho câu hỏi 10', NULL, 1, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(127, 7, 24, 53, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(128, 7, 36, NULL, 'Câu trả lời mẫu cho câu hỏi 36', NULL, 1, 1.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(129, 7, 35, NULL, 'Câu trả lời mẫu cho câu hỏi 35', NULL, 1, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(130, 7, 59, NULL, 'Câu trả lời mẫu cho câu hỏi 59', NULL, 1, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(131, 7, 39, NULL, 'Câu trả lời mẫu cho câu hỏi 39', NULL, 1, 0.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(132, 7, 49, 77, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(133, 7, 48, 73, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(134, 7, 46, 65, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(135, 7, 1, NULL, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(136, 7, 37, NULL, 'Câu trả lời mẫu cho câu hỏi 37', NULL, 1, 1.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(137, 7, 25, 57, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(138, 7, 22, 45, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(139, 7, 47, 69, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(140, 7, 50, 81, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(141, 7, 38, NULL, 'Câu trả lời mẫu cho câu hỏi 38', NULL, 1, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(142, 7, 23, 49, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(143, 7, 7, NULL, 'Câu trả lời mẫu cho câu hỏi 7', NULL, 1, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(144, 7, 26, 61, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(145, 7, 34, NULL, 'Câu trả lời mẫu cho câu hỏi 34', NULL, 1, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(146, 7, 21, 41, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(147, 7, 9, NULL, 'Câu trả lời mẫu cho câu hỏi 9', NULL, 1, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(148, 7, 4, NULL, 'Câu trả lời mẫu cho câu hỏi 4', NULL, 1, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(149, 7, 56, NULL, 'Câu trả lời mẫu cho câu hỏi 56', NULL, 1, 0.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(150, 7, 11, NULL, 'Câu trả lời mẫu cho câu hỏi 11', NULL, 1, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(151, 8, 60, NULL, 'Câu trả lời mẫu cho câu hỏi 60', NULL, 1, 1.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(152, 8, 40, NULL, 'Câu trả lời mẫu cho câu hỏi 40', NULL, 1, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(153, 8, 8, NULL, 'Câu trả lời mẫu cho câu hỏi 8', NULL, 1, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(154, 8, 58, NULL, 'Câu trả lời mẫu cho câu hỏi 58', NULL, 1, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(155, 8, 57, NULL, 'Câu trả lời mẫu cho câu hỏi 57', NULL, 1, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(156, 8, 10, NULL, 'Câu trả lời mẫu cho câu hỏi 10', NULL, 1, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(157, 8, 24, 54, NULL, NULL, 0, 0.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(158, 8, 36, NULL, 'Câu trả lời mẫu cho câu hỏi 36', NULL, 1, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(159, 8, 35, NULL, 'Câu trả lời mẫu cho câu hỏi 35', NULL, 1, 0.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(160, 8, 59, NULL, 'Câu trả lời mẫu cho câu hỏi 59', NULL, 1, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(161, 8, 39, NULL, 'Câu trả lời mẫu cho câu hỏi 39', NULL, 1, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(162, 8, 49, 80, NULL, NULL, 0, 0.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(163, 8, 48, 73, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(164, 8, 46, 65, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(165, 8, 1, NULL, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(166, 8, 37, NULL, 'Câu trả lời mẫu cho câu hỏi 37', NULL, 1, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(167, 8, 25, 57, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(168, 8, 22, 45, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(169, 8, 47, 69, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(170, 8, 50, 81, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(171, 8, 38, NULL, 'Câu trả lời mẫu cho câu hỏi 38', NULL, 1, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(172, 8, 23, 49, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(173, 8, 7, NULL, 'Câu trả lời mẫu cho câu hỏi 7', NULL, 1, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(174, 8, 26, 61, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(175, 8, 34, NULL, 'Câu trả lời mẫu cho câu hỏi 34', NULL, 1, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(176, 8, 21, 41, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(177, 8, 9, NULL, 'Câu trả lời mẫu cho câu hỏi 9', NULL, 1, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(178, 8, 4, NULL, 'Câu trả lời mẫu cho câu hỏi 4', NULL, 1, 0.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(179, 8, 56, NULL, 'Câu trả lời mẫu cho câu hỏi 56', NULL, 1, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(180, 8, 11, NULL, 'Câu trả lời mẫu cho câu hỏi 11', NULL, 1, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(181, 9, 55, 101, NULL, NULL, 0, 1.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(182, 9, 2, 5, NULL, NULL, 0, 1.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(183, 9, 53, 93, NULL, NULL, 0, 1.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(184, 9, 54, 97, NULL, NULL, 0, 1.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(185, 9, 51, 85, NULL, NULL, 0, 1.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(186, 9, 52, 89, NULL, NULL, 0, 1.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(187, 9, 38, NULL, 'Câu trả lời mẫu cho câu hỏi 38', NULL, 1, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(188, 9, 9, NULL, 'Câu trả lời mẫu cho câu hỏi 9', NULL, 1, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(189, 9, 24, 53, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(190, 9, 22, 47, NULL, NULL, 0, 0.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(191, 10, 6, NULL, 'Câu trả lời mẫu cho câu hỏi 6', NULL, 1, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(192, 10, 50, 81, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(193, 10, 34, NULL, 'Câu trả lời mẫu cho câu hỏi 34', NULL, 1, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(194, 10, 48, 74, NULL, NULL, 0, 0.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(195, 10, 46, 65, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(196, 10, 25, 57, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(197, 10, 49, 77, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(198, 10, 57, NULL, 'Câu trả lời mẫu cho câu hỏi 57', NULL, 1, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(199, 10, 56, NULL, 'Câu trả lời mẫu cho câu hỏi 56', NULL, 1, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(200, 10, 4, NULL, 'Câu trả lời mẫu cho câu hỏi 4', NULL, 1, 1.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(201, 10, 26, 61, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(202, 10, 23, 52, NULL, NULL, 0, 0.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(203, 10, 40, NULL, 'Câu trả lời mẫu cho câu hỏi 40', NULL, 1, 0.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(204, 10, 58, NULL, 'Câu trả lời mẫu cho câu hỏi 58', NULL, 1, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(205, 10, 47, 69, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(206, 10, 20, 37, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(207, 10, 39, NULL, 'Câu trả lời mẫu cho câu hỏi 39', NULL, 1, 1.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(208, 10, 35, NULL, 'Câu trả lời mẫu cho câu hỏi 35', NULL, 1, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(209, 10, 60, NULL, 'Câu trả lời mẫu cho câu hỏi 60', NULL, 1, 0.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(210, 10, 8, NULL, 'Câu trả lời mẫu cho câu hỏi 8', NULL, 1, 1.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(211, 10, 9, NULL, 'Câu trả lời mẫu cho câu hỏi 9', NULL, 1, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(212, 10, 1, NULL, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(213, 10, 22, 45, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(214, 10, 10, NULL, 'Câu trả lời mẫu cho câu hỏi 10', NULL, 1, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(215, 10, 68, 111, NULL, NULL, 0, 0.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(216, 10, 59, NULL, 'Câu trả lời mẫu cho câu hỏi 59', NULL, 1, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(217, 10, 11, NULL, 'Câu trả lời mẫu cho câu hỏi 11', NULL, 1, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(218, 10, 38, NULL, 'Câu trả lời mẫu cho câu hỏi 38', NULL, 1, 1.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(219, 10, 21, 41, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(220, 10, 7, NULL, 'Câu trả lời mẫu cho câu hỏi 7', NULL, 1, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(221, 11, 68, 109, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(222, 11, 11, NULL, 'Câu trả lời mẫu cho câu hỏi 11', NULL, 1, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(223, 11, 39, NULL, 'Câu trả lời mẫu cho câu hỏi 39', NULL, 1, 1.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(224, 11, 4, NULL, 'Câu trả lời mẫu cho câu hỏi 4', NULL, 1, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(225, 11, 37, NULL, 'Câu trả lời mẫu cho câu hỏi 37', NULL, 1, 0.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(226, 11, 60, NULL, 'Câu trả lời mẫu cho câu hỏi 60', NULL, 1, 0.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(227, 11, 22, 45, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(228, 11, 26, 61, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(229, 11, 6, NULL, 'Câu trả lời mẫu cho câu hỏi 6', NULL, 1, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(230, 11, 20, 37, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(231, 12, 55, 101, NULL, NULL, 0, 1.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(232, 12, 2, 7, NULL, NULL, 0, 0.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(233, 12, 53, 93, NULL, NULL, 0, 1.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(234, 12, 54, 98, NULL, NULL, 0, 0.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(235, 12, 51, 85, NULL, NULL, 0, 1.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(236, 12, 52, 92, NULL, NULL, 0, 0.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(237, 12, 38, NULL, 'Câu trả lời mẫu cho câu hỏi 38', NULL, 1, 1.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(238, 12, 9, NULL, 'Câu trả lời mẫu cho câu hỏi 9', NULL, 1, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(239, 12, 24, 56, NULL, NULL, 0, 0.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(240, 12, 22, 45, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(241, 13, 6, NULL, 'Câu trả lời mẫu cho câu hỏi 6', NULL, 1, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(242, 13, 50, 81, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(243, 13, 34, NULL, 'Câu trả lời mẫu cho câu hỏi 34', NULL, 1, 0.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(244, 13, 48, 73, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(245, 13, 46, 65, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(246, 13, 25, 60, NULL, NULL, 0, 0.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(247, 13, 49, 77, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(248, 13, 57, NULL, 'Câu trả lời mẫu cho câu hỏi 57', NULL, 1, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(249, 13, 56, NULL, 'Câu trả lời mẫu cho câu hỏi 56', NULL, 1, 1.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(250, 13, 4, NULL, 'Câu trả lời mẫu cho câu hỏi 4', NULL, 1, 1.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(251, 13, 26, 61, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(252, 13, 23, 49, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(253, 13, 40, NULL, 'Câu trả lời mẫu cho câu hỏi 40', NULL, 1, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(254, 13, 58, NULL, 'Câu trả lời mẫu cho câu hỏi 58', NULL, 1, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(255, 13, 47, 70, NULL, NULL, 0, 0.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(256, 13, 20, 37, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(257, 13, 39, NULL, 'Câu trả lời mẫu cho câu hỏi 39', NULL, 1, 1.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(258, 13, 35, NULL, 'Câu trả lời mẫu cho câu hỏi 35', NULL, 1, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(259, 13, 60, NULL, 'Câu trả lời mẫu cho câu hỏi 60', NULL, 1, 0.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(260, 13, 8, NULL, 'Câu trả lời mẫu cho câu hỏi 8', NULL, 1, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(261, 13, 9, NULL, 'Câu trả lời mẫu cho câu hỏi 9', NULL, 1, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(262, 13, 1, NULL, NULL, NULL, 0, 0.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(263, 13, 22, 45, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(264, 13, 10, NULL, 'Câu trả lời mẫu cho câu hỏi 10', NULL, 1, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(265, 13, 68, 109, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(266, 13, 59, NULL, 'Câu trả lời mẫu cho câu hỏi 59', NULL, 1, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(267, 13, 11, NULL, 'Câu trả lời mẫu cho câu hỏi 11', NULL, 1, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(268, 13, 38, NULL, 'Câu trả lời mẫu cho câu hỏi 38', NULL, 1, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(269, 13, 21, 41, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(270, 13, 7, NULL, 'Câu trả lời mẫu cho câu hỏi 7', NULL, 1, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(271, 14, 55, 102, NULL, NULL, 0, 0.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(272, 14, 2, 6, NULL, NULL, 0, 0.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(273, 14, 53, 94, NULL, NULL, 0, 0.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(274, 14, 54, 99, NULL, NULL, 0, 0.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(275, 14, 51, 87, NULL, NULL, 0, 0.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(276, 14, 52, 89, NULL, NULL, 0, 1.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(277, 14, 38, NULL, 'Câu trả lời mẫu cho câu hỏi 38', NULL, 1, 1.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(278, 14, 9, NULL, 'Câu trả lời mẫu cho câu hỏi 9', NULL, 1, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(279, 14, 24, 53, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(280, 14, 22, 45, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(281, 15, 55, 103, NULL, NULL, 0, 0.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(282, 15, 2, 5, NULL, NULL, 0, 1.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(283, 15, 53, 96, NULL, NULL, 0, 0.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(284, 15, 54, 99, NULL, NULL, 0, 0.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(285, 15, 51, 85, NULL, NULL, 0, 1.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(286, 15, 52, 92, NULL, NULL, 0, 0.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(287, 15, 38, NULL, 'Câu trả lời mẫu cho câu hỏi 38', NULL, 1, 0.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(288, 15, 9, NULL, 'Câu trả lời mẫu cho câu hỏi 9', NULL, 1, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(289, 15, 24, 53, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(290, 15, 22, 46, NULL, NULL, 0, 0.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(291, 16, 20, 37, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(292, 16, 56, NULL, 'Câu trả lời mẫu cho câu hỏi 56', NULL, 1, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(293, 16, 34, NULL, 'Câu trả lời mẫu cho câu hỏi 34', NULL, 1, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(294, 16, 11, NULL, 'Câu trả lời mẫu cho câu hỏi 11', NULL, 1, 1.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(295, 16, 26, 64, NULL, NULL, 0, 0.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(296, 16, 25, 57, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(297, 16, 22, 45, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(298, 16, 12, NULL, 'Câu trả lời mẫu cho câu hỏi 12', NULL, 1, 0.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(299, 16, 24, 53, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(300, 16, 60, NULL, 'Câu trả lời mẫu cho câu hỏi 60', NULL, 1, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(301, 16, 39, NULL, 'Câu trả lời mẫu cho câu hỏi 39', NULL, 1, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(302, 16, 40, NULL, 'Câu trả lời mẫu cho câu hỏi 40', NULL, 1, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(303, 16, 49, 79, NULL, NULL, 0, 0.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(304, 16, 8, NULL, 'Câu trả lời mẫu cho câu hỏi 8', NULL, 1, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(305, 16, 35, NULL, 'Câu trả lời mẫu cho câu hỏi 35', NULL, 1, 0.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(306, 16, 50, 84, NULL, NULL, 0, 0.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(307, 16, 48, 73, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(308, 16, 37, NULL, 'Câu trả lời mẫu cho câu hỏi 37', NULL, 1, 1.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(309, 16, 36, NULL, 'Câu trả lời mẫu cho câu hỏi 36', NULL, 1, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(310, 16, 6, NULL, 'Câu trả lời mẫu cho câu hỏi 6', NULL, 1, 1.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(311, 16, 47, 69, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(312, 16, 57, NULL, 'Câu trả lời mẫu cho câu hỏi 57', NULL, 1, 0.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(313, 16, 7, NULL, 'Câu trả lời mẫu cho câu hỏi 7', NULL, 1, 1.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(314, 16, 21, 41, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(315, 16, 1, NULL, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(316, 16, 59, NULL, 'Câu trả lời mẫu cho câu hỏi 59', NULL, 1, 0.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(317, 16, 58, NULL, 'Câu trả lời mẫu cho câu hỏi 58', NULL, 1, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(318, 16, 68, 109, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(319, 16, 38, NULL, 'Câu trả lời mẫu cho câu hỏi 38', NULL, 1, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(320, 16, 46, 65, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(321, 17, 60, NULL, 'Câu trả lời mẫu cho câu hỏi 60', NULL, 1, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(322, 17, 40, NULL, 'Câu trả lời mẫu cho câu hỏi 40', NULL, 1, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(323, 17, 8, NULL, 'Câu trả lời mẫu cho câu hỏi 8', NULL, 1, 1.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(324, 17, 58, NULL, 'Câu trả lời mẫu cho câu hỏi 58', NULL, 1, 0.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(325, 17, 57, NULL, 'Câu trả lời mẫu cho câu hỏi 57', NULL, 1, 0.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(326, 17, 10, NULL, 'Câu trả lời mẫu cho câu hỏi 10', NULL, 1, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(327, 17, 24, 53, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(328, 17, 36, NULL, 'Câu trả lời mẫu cho câu hỏi 36', NULL, 1, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(329, 17, 35, NULL, 'Câu trả lời mẫu cho câu hỏi 35', NULL, 1, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(330, 17, 59, NULL, 'Câu trả lời mẫu cho câu hỏi 59', NULL, 1, 0.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(331, 17, 39, NULL, 'Câu trả lời mẫu cho câu hỏi 39', NULL, 1, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(332, 17, 49, 77, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:14', '2025-04-29 23:47:14'),
-(333, 17, 48, 73, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(334, 17, 46, 65, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(335, 17, 1, NULL, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(336, 17, 37, NULL, 'Câu trả lời mẫu cho câu hỏi 37', NULL, 1, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(337, 17, 25, 59, NULL, NULL, 0, 0.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(338, 17, 22, 45, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(339, 17, 47, 69, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(340, 17, 50, 81, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(341, 17, 38, NULL, 'Câu trả lời mẫu cho câu hỏi 38', NULL, 1, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(342, 17, 23, 49, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(343, 17, 7, NULL, 'Câu trả lời mẫu cho câu hỏi 7', NULL, 1, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(344, 17, 26, 61, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(345, 17, 34, NULL, 'Câu trả lời mẫu cho câu hỏi 34', NULL, 1, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(346, 17, 21, 42, NULL, NULL, 0, 0.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(347, 17, 9, NULL, 'Câu trả lời mẫu cho câu hỏi 9', NULL, 1, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(348, 17, 4, NULL, 'Câu trả lời mẫu cho câu hỏi 4', NULL, 1, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(349, 17, 56, NULL, 'Câu trả lời mẫu cho câu hỏi 56', NULL, 1, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(350, 17, 11, NULL, 'Câu trả lời mẫu cho câu hỏi 11', NULL, 1, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(351, 18, 6, NULL, 'Câu trả lời mẫu cho câu hỏi 6', NULL, 1, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(352, 18, 50, 81, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(353, 18, 34, NULL, 'Câu trả lời mẫu cho câu hỏi 34', NULL, 1, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(354, 18, 48, 73, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(355, 18, 46, 65, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(356, 18, 25, 57, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(357, 18, 49, 77, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(358, 18, 57, NULL, 'Câu trả lời mẫu cho câu hỏi 57', NULL, 1, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(359, 18, 56, NULL, 'Câu trả lời mẫu cho câu hỏi 56', NULL, 1, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(360, 18, 4, NULL, 'Câu trả lời mẫu cho câu hỏi 4', NULL, 1, 0.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(361, 18, 26, 61, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(362, 18, 23, 49, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(363, 18, 40, NULL, 'Câu trả lời mẫu cho câu hỏi 40', NULL, 1, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(364, 18, 58, NULL, 'Câu trả lời mẫu cho câu hỏi 58', NULL, 1, 1.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(365, 18, 47, 69, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(366, 18, 20, 40, NULL, NULL, 0, 0.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(367, 18, 39, NULL, 'Câu trả lời mẫu cho câu hỏi 39', NULL, 1, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(368, 18, 35, NULL, 'Câu trả lời mẫu cho câu hỏi 35', NULL, 1, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(369, 18, 60, NULL, 'Câu trả lời mẫu cho câu hỏi 60', NULL, 1, 0.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(370, 18, 8, NULL, 'Câu trả lời mẫu cho câu hỏi 8', NULL, 1, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(371, 18, 9, NULL, 'Câu trả lời mẫu cho câu hỏi 9', NULL, 1, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(372, 18, 1, NULL, NULL, NULL, 0, 0.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(373, 18, 22, 46, NULL, NULL, 0, 0.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(374, 18, 10, NULL, 'Câu trả lời mẫu cho câu hỏi 10', NULL, 1, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(375, 18, 68, 109, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(376, 18, 59, NULL, 'Câu trả lời mẫu cho câu hỏi 59', NULL, 1, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(377, 18, 11, NULL, 'Câu trả lời mẫu cho câu hỏi 11', NULL, 1, 0.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(378, 18, 38, NULL, 'Câu trả lời mẫu cho câu hỏi 38', NULL, 1, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(379, 18, 21, 42, NULL, NULL, 0, 0.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(380, 18, 7, NULL, 'Câu trả lời mẫu cho câu hỏi 7', NULL, 1, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(381, 19, 6, NULL, 'Câu trả lời mẫu cho câu hỏi 6', NULL, 1, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(382, 19, 50, 81, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(383, 19, 34, NULL, 'Câu trả lời mẫu cho câu hỏi 34', NULL, 1, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(384, 19, 48, 73, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(385, 19, 46, 65, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(386, 19, 25, 57, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(387, 19, 49, 77, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(388, 19, 57, NULL, 'Câu trả lời mẫu cho câu hỏi 57', NULL, 1, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(389, 19, 56, NULL, 'Câu trả lời mẫu cho câu hỏi 56', NULL, 1, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(390, 19, 4, NULL, 'Câu trả lời mẫu cho câu hỏi 4', NULL, 1, 0.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(391, 19, 26, 61, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(392, 19, 23, 52, NULL, NULL, 0, 0.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(393, 19, 40, NULL, 'Câu trả lời mẫu cho câu hỏi 40', NULL, 1, 0.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(394, 19, 58, NULL, 'Câu trả lời mẫu cho câu hỏi 58', NULL, 1, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(395, 19, 47, 69, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(396, 19, 20, 37, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(397, 19, 39, NULL, 'Câu trả lời mẫu cho câu hỏi 39', NULL, 1, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(398, 19, 35, NULL, 'Câu trả lời mẫu cho câu hỏi 35', NULL, 1, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(399, 19, 60, NULL, 'Câu trả lời mẫu cho câu hỏi 60', NULL, 1, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(400, 19, 8, NULL, 'Câu trả lời mẫu cho câu hỏi 8', NULL, 1, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(401, 19, 9, NULL, 'Câu trả lời mẫu cho câu hỏi 9', NULL, 1, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(402, 19, 1, NULL, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(403, 19, 22, 45, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(404, 19, 10, NULL, 'Câu trả lời mẫu cho câu hỏi 10', NULL, 1, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(405, 19, 68, 109, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(406, 19, 59, NULL, 'Câu trả lời mẫu cho câu hỏi 59', NULL, 1, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(407, 19, 11, NULL, 'Câu trả lời mẫu cho câu hỏi 11', NULL, 1, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(408, 19, 38, NULL, 'Câu trả lời mẫu cho câu hỏi 38', NULL, 1, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(409, 19, 21, 43, NULL, NULL, 0, 0.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(410, 19, 7, NULL, 'Câu trả lời mẫu cho câu hỏi 7', NULL, 1, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(411, 20, 68, 110, NULL, NULL, 0, 0.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(412, 20, 11, NULL, 'Câu trả lời mẫu cho câu hỏi 11', NULL, 1, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(413, 20, 39, NULL, 'Câu trả lời mẫu cho câu hỏi 39', NULL, 1, 1.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(414, 20, 4, NULL, 'Câu trả lời mẫu cho câu hỏi 4', NULL, 1, 1.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(415, 20, 37, NULL, 'Câu trả lời mẫu cho câu hỏi 37', NULL, 1, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(416, 20, 60, NULL, 'Câu trả lời mẫu cho câu hỏi 60', NULL, 1, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(417, 20, 22, 45, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(418, 20, 26, 64, NULL, NULL, 0, 0.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(419, 20, 6, NULL, 'Câu trả lời mẫu cho câu hỏi 6', NULL, 1, 1.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(420, 20, 20, 38, NULL, NULL, 0, 0.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(421, 21, 20, 37, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(422, 21, 56, NULL, 'Câu trả lời mẫu cho câu hỏi 56', NULL, 1, 0.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(423, 21, 34, NULL, 'Câu trả lời mẫu cho câu hỏi 34', NULL, 1, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(424, 21, 11, NULL, 'Câu trả lời mẫu cho câu hỏi 11', NULL, 1, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(425, 21, 26, 61, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(426, 21, 25, 57, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(427, 21, 22, 45, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(428, 21, 12, NULL, 'Câu trả lời mẫu cho câu hỏi 12', NULL, 1, 0.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(429, 21, 24, 55, NULL, NULL, 0, 0.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(430, 21, 60, NULL, 'Câu trả lời mẫu cho câu hỏi 60', NULL, 1, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(431, 21, 39, NULL, 'Câu trả lời mẫu cho câu hỏi 39', NULL, 1, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(432, 21, 40, NULL, 'Câu trả lời mẫu cho câu hỏi 40', NULL, 1, 0.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(433, 21, 49, 77, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(434, 21, 8, NULL, 'Câu trả lời mẫu cho câu hỏi 8', NULL, 1, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(435, 21, 35, NULL, 'Câu trả lời mẫu cho câu hỏi 35', NULL, 1, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(436, 21, 50, 84, NULL, NULL, 0, 0.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(437, 21, 48, 73, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(438, 21, 37, NULL, 'Câu trả lời mẫu cho câu hỏi 37', NULL, 1, 0.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(439, 21, 36, NULL, 'Câu trả lời mẫu cho câu hỏi 36', NULL, 1, 0.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(440, 21, 6, NULL, 'Câu trả lời mẫu cho câu hỏi 6', NULL, 1, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(441, 21, 47, 69, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(442, 21, 57, NULL, 'Câu trả lời mẫu cho câu hỏi 57', NULL, 1, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(443, 21, 7, NULL, 'Câu trả lời mẫu cho câu hỏi 7', NULL, 1, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(444, 21, 21, 41, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(445, 21, 1, NULL, NULL, NULL, 0, 0.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(446, 21, 59, NULL, 'Câu trả lời mẫu cho câu hỏi 59', NULL, 1, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(447, 21, 58, NULL, 'Câu trả lời mẫu cho câu hỏi 58', NULL, 1, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(448, 21, 68, 109, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(449, 21, 38, NULL, 'Câu trả lời mẫu cho câu hỏi 38', NULL, 1, 1.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(450, 21, 46, 65, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(451, 22, 55, 101, NULL, NULL, 0, 1.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(452, 22, 2, 5, NULL, NULL, 0, 1.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(453, 22, 53, 93, NULL, NULL, 0, 1.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(454, 22, 54, 97, NULL, NULL, 0, 1.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(455, 22, 51, 88, NULL, NULL, 0, 0.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(456, 22, 52, 89, NULL, NULL, 0, 1.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(457, 22, 38, NULL, 'Câu trả lời mẫu cho câu hỏi 38', NULL, 1, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(458, 22, 9, NULL, 'Câu trả lời mẫu cho câu hỏi 9', NULL, 1, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(459, 22, 24, 53, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(460, 22, 22, 45, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(461, 23, 60, NULL, 'Câu trả lời mẫu cho câu hỏi 60', NULL, 1, 0.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(462, 23, 40, NULL, 'Câu trả lời mẫu cho câu hỏi 40', NULL, 1, 0.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(463, 23, 8, NULL, 'Câu trả lời mẫu cho câu hỏi 8', NULL, 1, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(464, 23, 58, NULL, 'Câu trả lời mẫu cho câu hỏi 58', NULL, 1, 0.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(465, 23, 57, NULL, 'Câu trả lời mẫu cho câu hỏi 57', NULL, 1, 1.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(466, 23, 10, NULL, 'Câu trả lời mẫu cho câu hỏi 10', NULL, 1, 0.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(467, 23, 24, 53, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(468, 23, 36, NULL, 'Câu trả lời mẫu cho câu hỏi 36', NULL, 1, 1.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(469, 23, 35, NULL, 'Câu trả lời mẫu cho câu hỏi 35', NULL, 1, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(470, 23, 59, NULL, 'Câu trả lời mẫu cho câu hỏi 59', NULL, 1, 0.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(471, 23, 39, NULL, 'Câu trả lời mẫu cho câu hỏi 39', NULL, 1, 1.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(472, 23, 49, 77, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(473, 23, 48, 74, NULL, NULL, 0, 0.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(474, 23, 46, 65, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15');
-INSERT INTO `user_responses` (`id`, `test_attempt_id`, `question_id`, `answer_id`, `text_response`, `response_type`, `is_marked`, `score`, `admin_comment`, `created_at`, `updated_at`) VALUES
-(475, 23, 1, NULL, NULL, NULL, 0, 0.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(476, 23, 37, NULL, 'Câu trả lời mẫu cho câu hỏi 37', NULL, 1, 1.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(477, 23, 25, 57, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(478, 23, 22, 45, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(479, 23, 47, 69, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(480, 23, 50, 82, NULL, NULL, 0, 0.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(481, 23, 38, NULL, 'Câu trả lời mẫu cho câu hỏi 38', NULL, 1, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(482, 23, 23, 49, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(483, 23, 7, NULL, 'Câu trả lời mẫu cho câu hỏi 7', NULL, 1, 0.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(484, 23, 26, 61, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(485, 23, 34, NULL, 'Câu trả lời mẫu cho câu hỏi 34', NULL, 1, 0.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(486, 23, 21, 44, NULL, NULL, 0, 0.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(487, 23, 9, NULL, 'Câu trả lời mẫu cho câu hỏi 9', NULL, 1, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(488, 23, 4, NULL, 'Câu trả lời mẫu cho câu hỏi 4', NULL, 1, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(489, 23, 56, NULL, 'Câu trả lời mẫu cho câu hỏi 56', NULL, 1, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(490, 23, 11, NULL, 'Câu trả lời mẫu cho câu hỏi 11', NULL, 1, 0.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(491, 24, 20, 37, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(492, 24, 56, NULL, 'Câu trả lời mẫu cho câu hỏi 56', NULL, 1, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(493, 24, 34, NULL, 'Câu trả lời mẫu cho câu hỏi 34', NULL, 1, 0.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(494, 24, 11, NULL, 'Câu trả lời mẫu cho câu hỏi 11', NULL, 1, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(495, 24, 26, 61, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(496, 24, 25, 57, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(497, 24, 22, 46, NULL, NULL, 0, 0.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(498, 24, 12, NULL, 'Câu trả lời mẫu cho câu hỏi 12', NULL, 1, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(499, 24, 24, 53, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(500, 24, 60, NULL, 'Câu trả lời mẫu cho câu hỏi 60', NULL, 1, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(501, 24, 39, NULL, 'Câu trả lời mẫu cho câu hỏi 39', NULL, 1, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(502, 24, 40, NULL, 'Câu trả lời mẫu cho câu hỏi 40', NULL, 1, 1.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(503, 24, 49, 77, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(504, 24, 8, NULL, 'Câu trả lời mẫu cho câu hỏi 8', NULL, 1, 1.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(505, 24, 35, NULL, 'Câu trả lời mẫu cho câu hỏi 35', NULL, 1, 1.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(506, 24, 50, 84, NULL, NULL, 0, 0.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(507, 24, 48, 76, NULL, NULL, 0, 0.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(508, 24, 37, NULL, 'Câu trả lời mẫu cho câu hỏi 37', NULL, 1, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(509, 24, 36, NULL, 'Câu trả lời mẫu cho câu hỏi 36', NULL, 1, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(510, 24, 6, NULL, 'Câu trả lời mẫu cho câu hỏi 6', NULL, 1, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(511, 24, 47, 71, NULL, NULL, 0, 0.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(512, 24, 57, NULL, 'Câu trả lời mẫu cho câu hỏi 57', NULL, 1, 1.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(513, 24, 7, NULL, 'Câu trả lời mẫu cho câu hỏi 7', NULL, 1, 1.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(514, 24, 21, 42, NULL, NULL, 0, 0.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(515, 24, 1, NULL, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(516, 24, 59, NULL, 'Câu trả lời mẫu cho câu hỏi 59', NULL, 1, 1.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(517, 24, 58, NULL, 'Câu trả lời mẫu cho câu hỏi 58', NULL, 1, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(518, 24, 68, 110, NULL, NULL, 0, 0.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(519, 24, 38, NULL, 'Câu trả lời mẫu cho câu hỏi 38', NULL, 1, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(520, 24, 46, 68, NULL, NULL, 0, 0.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(521, 25, 55, 101, NULL, NULL, 0, 1.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(522, 25, 2, 5, NULL, NULL, 0, 1.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(523, 25, 53, 93, NULL, NULL, 0, 1.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(524, 25, 54, 97, NULL, NULL, 0, 1.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(525, 25, 51, 88, NULL, NULL, 0, 0.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(526, 25, 52, 89, NULL, NULL, 0, 1.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(527, 25, 38, NULL, 'Câu trả lời mẫu cho câu hỏi 38', NULL, 1, 1.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(528, 25, 9, NULL, 'Câu trả lời mẫu cho câu hỏi 9', NULL, 1, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(529, 25, 24, 53, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(530, 25, 22, 46, NULL, NULL, 0, 0.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(531, 26, 68, 111, NULL, NULL, 0, 0.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(532, 26, 11, NULL, 'Câu trả lời mẫu cho câu hỏi 11', NULL, 1, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(533, 26, 39, NULL, 'Câu trả lời mẫu cho câu hỏi 39', NULL, 1, 0.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(534, 26, 4, NULL, 'Câu trả lời mẫu cho câu hỏi 4', NULL, 1, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(535, 26, 37, NULL, 'Câu trả lời mẫu cho câu hỏi 37', NULL, 1, 1.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(536, 26, 60, NULL, 'Câu trả lời mẫu cho câu hỏi 60', NULL, 1, 0.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(537, 26, 22, 45, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(538, 26, 26, 61, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(539, 26, 6, NULL, 'Câu trả lời mẫu cho câu hỏi 6', NULL, 1, 1.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(540, 26, 20, 37, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(541, 27, 6, NULL, 'Câu trả lời mẫu cho câu hỏi 6', NULL, 1, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(542, 27, 50, 81, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(543, 27, 34, NULL, 'Câu trả lời mẫu cho câu hỏi 34', NULL, 1, 1.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(544, 27, 48, 73, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(545, 27, 46, 65, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(546, 27, 25, 57, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(547, 27, 49, 80, NULL, NULL, 0, 0.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(548, 27, 57, NULL, 'Câu trả lời mẫu cho câu hỏi 57', NULL, 1, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(549, 27, 56, NULL, 'Câu trả lời mẫu cho câu hỏi 56', NULL, 1, 1.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(550, 27, 4, NULL, 'Câu trả lời mẫu cho câu hỏi 4', NULL, 1, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(551, 27, 26, 61, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(552, 27, 23, 49, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(553, 27, 40, NULL, 'Câu trả lời mẫu cho câu hỏi 40', NULL, 1, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(554, 27, 58, NULL, 'Câu trả lời mẫu cho câu hỏi 58', NULL, 1, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(555, 27, 47, 69, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(556, 27, 20, 37, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(557, 27, 39, NULL, 'Câu trả lời mẫu cho câu hỏi 39', NULL, 1, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(558, 27, 35, NULL, 'Câu trả lời mẫu cho câu hỏi 35', NULL, 1, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(559, 27, 60, NULL, 'Câu trả lời mẫu cho câu hỏi 60', NULL, 1, 1.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(560, 27, 8, NULL, 'Câu trả lời mẫu cho câu hỏi 8', NULL, 1, 1.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(561, 27, 9, NULL, 'Câu trả lời mẫu cho câu hỏi 9', NULL, 1, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(562, 27, 1, NULL, NULL, NULL, 0, 0.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(563, 27, 22, 48, NULL, NULL, 0, 0.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(564, 27, 10, NULL, 'Câu trả lời mẫu cho câu hỏi 10', NULL, 1, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(565, 27, 68, 112, NULL, NULL, 0, 0.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(566, 27, 59, NULL, 'Câu trả lời mẫu cho câu hỏi 59', NULL, 1, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(567, 27, 11, NULL, 'Câu trả lời mẫu cho câu hỏi 11', NULL, 1, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(568, 27, 38, NULL, 'Câu trả lời mẫu cho câu hỏi 38', NULL, 1, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(569, 27, 21, 41, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(570, 27, 7, NULL, 'Câu trả lời mẫu cho câu hỏi 7', NULL, 1, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(571, 28, 60, NULL, 'Câu trả lời mẫu cho câu hỏi 60', NULL, 1, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(572, 28, 40, NULL, 'Câu trả lời mẫu cho câu hỏi 40', NULL, 1, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(573, 28, 8, NULL, 'Câu trả lời mẫu cho câu hỏi 8', NULL, 1, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(574, 28, 58, NULL, 'Câu trả lời mẫu cho câu hỏi 58', NULL, 1, 1.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(575, 28, 57, NULL, 'Câu trả lời mẫu cho câu hỏi 57', NULL, 1, 0.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(576, 28, 10, NULL, 'Câu trả lời mẫu cho câu hỏi 10', NULL, 1, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(577, 28, 24, 54, NULL, NULL, 0, 0.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(578, 28, 36, NULL, 'Câu trả lời mẫu cho câu hỏi 36', NULL, 1, 1.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(579, 28, 35, NULL, 'Câu trả lời mẫu cho câu hỏi 35', NULL, 1, 1.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(580, 28, 59, NULL, 'Câu trả lời mẫu cho câu hỏi 59', NULL, 1, 0.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(581, 28, 39, NULL, 'Câu trả lời mẫu cho câu hỏi 39', NULL, 1, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(582, 28, 49, 77, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(583, 28, 48, 73, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(584, 28, 46, 65, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(585, 28, 1, NULL, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(586, 28, 37, NULL, 'Câu trả lời mẫu cho câu hỏi 37', NULL, 1, 0.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(587, 28, 25, 57, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(588, 28, 22, 48, NULL, NULL, 0, 0.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(589, 28, 47, 69, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(590, 28, 50, 81, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(591, 28, 38, NULL, 'Câu trả lời mẫu cho câu hỏi 38', NULL, 1, 0.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(592, 28, 23, 49, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(593, 28, 7, NULL, 'Câu trả lời mẫu cho câu hỏi 7', NULL, 1, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(594, 28, 26, 61, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(595, 28, 34, NULL, 'Câu trả lời mẫu cho câu hỏi 34', NULL, 1, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(596, 28, 21, 43, NULL, NULL, 0, 0.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(597, 28, 9, NULL, 'Câu trả lời mẫu cho câu hỏi 9', NULL, 1, 0.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(598, 28, 4, NULL, 'Câu trả lời mẫu cho câu hỏi 4', NULL, 1, 0.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(599, 28, 56, NULL, 'Câu trả lời mẫu cho câu hỏi 56', NULL, 1, 0.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(600, 28, 11, NULL, 'Câu trả lời mẫu cho câu hỏi 11', NULL, 1, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(601, 29, 20, 40, NULL, NULL, 0, 0.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(602, 29, 56, NULL, 'Câu trả lời mẫu cho câu hỏi 56', NULL, 1, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(603, 29, 34, NULL, 'Câu trả lời mẫu cho câu hỏi 34', NULL, 1, 0.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(604, 29, 11, NULL, 'Câu trả lời mẫu cho câu hỏi 11', NULL, 1, 0.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(605, 29, 26, 61, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(606, 29, 25, 57, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(607, 29, 22, 47, NULL, NULL, 0, 0.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(608, 29, 12, NULL, 'Câu trả lời mẫu cho câu hỏi 12', NULL, 1, 0.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(609, 29, 24, 56, NULL, NULL, 0, 0.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(610, 29, 60, NULL, 'Câu trả lời mẫu cho câu hỏi 60', NULL, 1, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(611, 29, 39, NULL, 'Câu trả lời mẫu cho câu hỏi 39', NULL, 1, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(612, 29, 40, NULL, 'Câu trả lời mẫu cho câu hỏi 40', NULL, 1, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(613, 29, 49, 77, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(614, 29, 8, NULL, 'Câu trả lời mẫu cho câu hỏi 8', NULL, 1, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(615, 29, 35, NULL, 'Câu trả lời mẫu cho câu hỏi 35', NULL, 1, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(616, 29, 50, 81, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(617, 29, 48, 73, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(618, 29, 37, NULL, 'Câu trả lời mẫu cho câu hỏi 37', NULL, 1, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(619, 29, 36, NULL, 'Câu trả lời mẫu cho câu hỏi 36', NULL, 1, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(620, 29, 6, NULL, 'Câu trả lời mẫu cho câu hỏi 6', NULL, 1, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(621, 29, 47, 69, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(622, 29, 57, NULL, 'Câu trả lời mẫu cho câu hỏi 57', NULL, 1, 1.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(623, 29, 7, NULL, 'Câu trả lời mẫu cho câu hỏi 7', NULL, 1, 0.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(624, 29, 21, 41, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(625, 29, 1, NULL, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(626, 29, 59, NULL, 'Câu trả lời mẫu cho câu hỏi 59', NULL, 1, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(627, 29, 58, NULL, 'Câu trả lời mẫu cho câu hỏi 58', NULL, 1, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(628, 29, 68, 109, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(629, 29, 38, NULL, 'Câu trả lời mẫu cho câu hỏi 38', NULL, 1, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(630, 29, 46, 68, NULL, NULL, 0, 0.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(631, 30, 60, NULL, 'Câu trả lời mẫu cho câu hỏi 60', NULL, 1, 0.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(632, 30, 40, NULL, 'Câu trả lời mẫu cho câu hỏi 40', NULL, 1, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(633, 30, 8, NULL, 'Câu trả lời mẫu cho câu hỏi 8', NULL, 1, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(634, 30, 58, NULL, 'Câu trả lời mẫu cho câu hỏi 58', NULL, 1, 1.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(635, 30, 57, NULL, 'Câu trả lời mẫu cho câu hỏi 57', NULL, 1, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(636, 30, 10, NULL, 'Câu trả lời mẫu cho câu hỏi 10', NULL, 1, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(637, 30, 24, 56, NULL, NULL, 0, 0.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(638, 30, 36, NULL, 'Câu trả lời mẫu cho câu hỏi 36', NULL, 1, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(639, 30, 35, NULL, 'Câu trả lời mẫu cho câu hỏi 35', NULL, 1, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(640, 30, 59, NULL, 'Câu trả lời mẫu cho câu hỏi 59', NULL, 1, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(641, 30, 39, NULL, 'Câu trả lời mẫu cho câu hỏi 39', NULL, 1, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(642, 30, 49, 80, NULL, NULL, 0, 0.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(643, 30, 48, 73, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(644, 30, 46, 66, NULL, NULL, 0, 0.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(645, 30, 1, NULL, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(646, 30, 37, NULL, 'Câu trả lời mẫu cho câu hỏi 37', NULL, 1, 0.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(647, 30, 25, 57, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(648, 30, 22, 45, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(649, 30, 47, 69, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(650, 30, 50, 83, NULL, NULL, 0, 0.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(651, 30, 38, NULL, 'Câu trả lời mẫu cho câu hỏi 38', NULL, 1, 0.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(652, 30, 23, 50, NULL, NULL, 0, 0.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(653, 30, 7, NULL, 'Câu trả lời mẫu cho câu hỏi 7', NULL, 1, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(654, 30, 26, 64, NULL, NULL, 0, 0.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(655, 30, 34, NULL, 'Câu trả lời mẫu cho câu hỏi 34', NULL, 1, 1.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(656, 30, 21, 41, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(657, 30, 9, NULL, 'Câu trả lời mẫu cho câu hỏi 9', NULL, 1, 1.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(658, 30, 4, NULL, 'Câu trả lời mẫu cho câu hỏi 4', NULL, 1, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(659, 30, 56, NULL, 'Câu trả lời mẫu cho câu hỏi 56', NULL, 1, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(660, 30, 11, NULL, 'Câu trả lời mẫu cho câu hỏi 11', NULL, 1, 0.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(661, 31, 6, NULL, 'Câu trả lời mẫu cho câu hỏi 6', NULL, 1, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(662, 31, 50, 81, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(663, 31, 34, NULL, 'Câu trả lời mẫu cho câu hỏi 34', NULL, 1, 0.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(664, 31, 48, 73, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(665, 31, 46, 65, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(666, 31, 25, 57, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(667, 31, 49, 77, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(668, 31, 57, NULL, 'Câu trả lời mẫu cho câu hỏi 57', NULL, 1, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(669, 31, 56, NULL, 'Câu trả lời mẫu cho câu hỏi 56', NULL, 1, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(670, 31, 4, NULL, 'Câu trả lời mẫu cho câu hỏi 4', NULL, 1, 0.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(671, 31, 26, 63, NULL, NULL, 0, 0.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(672, 31, 23, 51, NULL, NULL, 0, 0.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(673, 31, 40, NULL, 'Câu trả lời mẫu cho câu hỏi 40', NULL, 1, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(674, 31, 58, NULL, 'Câu trả lời mẫu cho câu hỏi 58', NULL, 1, 1.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(675, 31, 47, 70, NULL, NULL, 0, 0.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(676, 31, 20, 37, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(677, 31, 39, NULL, 'Câu trả lời mẫu cho câu hỏi 39', NULL, 1, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(678, 31, 35, NULL, 'Câu trả lời mẫu cho câu hỏi 35', NULL, 1, 0.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(679, 31, 60, NULL, 'Câu trả lời mẫu cho câu hỏi 60', NULL, 1, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(680, 31, 8, NULL, 'Câu trả lời mẫu cho câu hỏi 8', NULL, 1, 0.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(681, 31, 9, NULL, 'Câu trả lời mẫu cho câu hỏi 9', NULL, 1, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(682, 31, 1, NULL, NULL, NULL, 0, 0.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(683, 31, 22, 45, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(684, 31, 10, NULL, 'Câu trả lời mẫu cho câu hỏi 10', NULL, 1, 0.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(685, 31, 68, 109, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(686, 31, 59, NULL, 'Câu trả lời mẫu cho câu hỏi 59', NULL, 1, 1.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(687, 31, 11, NULL, 'Câu trả lời mẫu cho câu hỏi 11', NULL, 1, 0.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(688, 31, 38, NULL, 'Câu trả lời mẫu cho câu hỏi 38', NULL, 1, 0.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(689, 31, 21, 43, NULL, NULL, 0, 0.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(690, 31, 7, NULL, 'Câu trả lời mẫu cho câu hỏi 7', NULL, 1, 0.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(691, 32, 55, 102, NULL, NULL, 0, 0.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(692, 32, 2, 5, NULL, NULL, 0, 1.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(693, 32, 53, 95, NULL, NULL, 0, 0.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(694, 32, 54, 97, NULL, NULL, 0, 1.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(695, 32, 51, 85, NULL, NULL, 0, 1.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(696, 32, 52, 90, NULL, NULL, 0, 0.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(697, 32, 38, NULL, 'Câu trả lời mẫu cho câu hỏi 38', NULL, 1, 0.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(698, 32, 9, NULL, 'Câu trả lời mẫu cho câu hỏi 9', NULL, 1, 0.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(699, 32, 24, 53, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(700, 32, 22, 47, NULL, NULL, 0, 0.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(701, 33, 68, 109, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(702, 33, 11, NULL, 'Câu trả lời mẫu cho câu hỏi 11', NULL, 1, 1.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(703, 33, 39, NULL, 'Câu trả lời mẫu cho câu hỏi 39', NULL, 1, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(704, 33, 4, NULL, 'Câu trả lời mẫu cho câu hỏi 4', NULL, 1, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(705, 33, 37, NULL, 'Câu trả lời mẫu cho câu hỏi 37', NULL, 1, 0.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(706, 33, 60, NULL, 'Câu trả lời mẫu cho câu hỏi 60', NULL, 1, 0.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(707, 33, 22, 46, NULL, NULL, 0, 0.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(708, 33, 26, 61, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(709, 33, 6, NULL, 'Câu trả lời mẫu cho câu hỏi 6', NULL, 1, 0.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(710, 33, 20, 37, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(711, 34, 60, NULL, 'Câu trả lời mẫu cho câu hỏi 60', NULL, 1, 0.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(712, 34, 40, NULL, 'Câu trả lời mẫu cho câu hỏi 40', NULL, 1, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(713, 34, 8, NULL, 'Câu trả lời mẫu cho câu hỏi 8', NULL, 1, 0.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(714, 34, 58, NULL, 'Câu trả lời mẫu cho câu hỏi 58', NULL, 1, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(715, 34, 57, NULL, 'Câu trả lời mẫu cho câu hỏi 57', NULL, 1, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(716, 34, 10, NULL, 'Câu trả lời mẫu cho câu hỏi 10', NULL, 1, 0.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(717, 34, 24, 54, NULL, NULL, 0, 0.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(718, 34, 36, NULL, 'Câu trả lời mẫu cho câu hỏi 36', NULL, 1, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(719, 34, 35, NULL, 'Câu trả lời mẫu cho câu hỏi 35', NULL, 1, 0.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(720, 34, 59, NULL, 'Câu trả lời mẫu cho câu hỏi 59', NULL, 1, 1.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(721, 34, 39, NULL, 'Câu trả lời mẫu cho câu hỏi 39', NULL, 1, 1.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(722, 34, 49, 77, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(723, 34, 48, 74, NULL, NULL, 0, 0.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(724, 34, 46, 67, NULL, NULL, 0, 0.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(725, 34, 1, NULL, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(726, 34, 37, NULL, 'Câu trả lời mẫu cho câu hỏi 37', NULL, 1, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(727, 34, 25, 57, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(728, 34, 22, 48, NULL, NULL, 0, 0.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(729, 34, 47, 72, NULL, NULL, 0, 0.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(730, 34, 50, 83, NULL, NULL, 0, 0.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(731, 34, 38, NULL, 'Câu trả lời mẫu cho câu hỏi 38', NULL, 1, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(732, 34, 23, 49, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(733, 34, 7, NULL, 'Câu trả lời mẫu cho câu hỏi 7', NULL, 1, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(734, 34, 26, 63, NULL, NULL, 0, 0.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(735, 34, 34, NULL, 'Câu trả lời mẫu cho câu hỏi 34', NULL, 1, 1.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(736, 34, 21, 44, NULL, NULL, 0, 0.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(737, 34, 9, NULL, 'Câu trả lời mẫu cho câu hỏi 9', NULL, 1, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(738, 34, 4, NULL, 'Câu trả lời mẫu cho câu hỏi 4', NULL, 1, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(739, 34, 56, NULL, 'Câu trả lời mẫu cho câu hỏi 56', NULL, 1, 0.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(740, 34, 11, NULL, 'Câu trả lời mẫu cho câu hỏi 11', NULL, 1, 1.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(741, 35, 20, 37, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(742, 35, 56, NULL, 'Câu trả lời mẫu cho câu hỏi 56', NULL, 1, 1.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(743, 35, 34, NULL, 'Câu trả lời mẫu cho câu hỏi 34', NULL, 1, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(744, 35, 11, NULL, 'Câu trả lời mẫu cho câu hỏi 11', NULL, 1, 0.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(745, 35, 26, 61, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(746, 35, 25, 57, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(747, 35, 22, 47, NULL, NULL, 0, 0.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(748, 35, 12, NULL, 'Câu trả lời mẫu cho câu hỏi 12', NULL, 1, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(749, 35, 24, 56, NULL, NULL, 0, 0.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(750, 35, 60, NULL, 'Câu trả lời mẫu cho câu hỏi 60', NULL, 1, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(751, 35, 39, NULL, 'Câu trả lời mẫu cho câu hỏi 39', NULL, 1, 1.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(752, 35, 40, NULL, 'Câu trả lời mẫu cho câu hỏi 40', NULL, 1, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(753, 35, 49, 78, NULL, NULL, 0, 0.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(754, 35, 8, NULL, 'Câu trả lời mẫu cho câu hỏi 8', NULL, 1, 1.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(755, 35, 35, NULL, 'Câu trả lời mẫu cho câu hỏi 35', NULL, 1, 1.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(756, 35, 50, 81, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(757, 35, 48, 73, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(758, 35, 37, NULL, 'Câu trả lời mẫu cho câu hỏi 37', NULL, 1, 0.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(759, 35, 36, NULL, 'Câu trả lời mẫu cho câu hỏi 36', NULL, 1, 0.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(760, 35, 6, NULL, 'Câu trả lời mẫu cho câu hỏi 6', NULL, 1, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(761, 35, 47, 72, NULL, NULL, 0, 0.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(762, 35, 57, NULL, 'Câu trả lời mẫu cho câu hỏi 57', NULL, 1, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(763, 35, 7, NULL, 'Câu trả lời mẫu cho câu hỏi 7', NULL, 1, 0.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(764, 35, 21, 44, NULL, NULL, 0, 0.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(765, 35, 1, NULL, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(766, 35, 59, NULL, 'Câu trả lời mẫu cho câu hỏi 59', NULL, 1, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(767, 35, 58, NULL, 'Câu trả lời mẫu cho câu hỏi 58', NULL, 1, 1.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(768, 35, 68, 110, NULL, NULL, 0, 0.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(769, 35, 38, NULL, 'Câu trả lời mẫu cho câu hỏi 38', NULL, 1, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(770, 35, 46, 65, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(771, 36, 68, 112, NULL, NULL, 0, 0.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(772, 36, 11, NULL, 'Câu trả lời mẫu cho câu hỏi 11', NULL, 1, 1.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(773, 36, 39, NULL, 'Câu trả lời mẫu cho câu hỏi 39', NULL, 1, 1.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(774, 36, 4, NULL, 'Câu trả lời mẫu cho câu hỏi 4', NULL, 1, 1.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(775, 36, 37, NULL, 'Câu trả lời mẫu cho câu hỏi 37', NULL, 1, 0.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(776, 36, 60, NULL, 'Câu trả lời mẫu cho câu hỏi 60', NULL, 1, 1.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(777, 37, 68, 109, NULL, NULL, 0, 2.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(778, 37, 11, NULL, 'Câu trả lời mẫu cho câu hỏi 11', NULL, 1, 1.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(779, 37, 39, NULL, 'Câu trả lời mẫu cho câu hỏi 39', NULL, 1, 0.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(780, 37, 4, NULL, 'Câu trả lời mẫu cho câu hỏi 4', NULL, 1, 0.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(781, 38, 60, NULL, 'Câu trả lời mẫu cho câu hỏi 60', NULL, 1, 1.00, NULL, '2025-04-29 23:47:15', '2025-04-29 23:47:15'),
-(782, 57, 20, 37, NULL, NULL, 0, 1.00, NULL, '2025-04-30 00:43:07', '2025-04-30 00:43:07'),
-(783, 57, 20, 37, NULL, NULL, 0, 1.00, NULL, '2025-04-30 00:48:15', '2025-04-30 00:48:15'),
-(784, 57, 56, NULL, '{\"analysis\":\"oinjioufds\",\"solution\":\"d\\u00ecunisdbe\"}', 'situation', 0, 1.00, NULL, '2025-04-30 00:48:15', '2025-04-30 01:27:38'),
-(785, 57, 34, NULL, '{\"process\":\"dsfsdfdf\",\"result\":null,\"evidence_file\":null}', 'practical', 0, 1.00, NULL, '2025-04-30 00:48:15', '2025-04-30 01:27:38'),
-(786, 58, 56, NULL, '{\"analysis\":\"21bjh32j`ku\",\"solution\":\"bjhvyjhvjvh\"}', 'situation', 1, 0.00, NULL, '2025-04-30 01:05:51', '2025-04-30 01:17:08'),
-(787, 58, 34, NULL, '{\"process\":\"bkbkbk\",\"result\":\"kbjkhbhk\",\"evidence_file\":null}', 'practical', 1, 0.00, NULL, '2025-04-30 01:05:51', '2025-04-30 01:17:08'),
-(788, 58, 11, NULL, 'okokokok', NULL, 1, 0.00, NULL, '2025-04-30 01:05:51', '2025-04-30 01:17:08');
+LOCK TABLES `questions` WRITE;
+/*!40000 ALTER TABLE `questions` DISABLE KEYS */;
+INSERT INTO `questions` VALUES (1,'Khi gặp tình huống người rơi xuống biển, hành động đầu tiên cần làm là gì?','An toàn hàng hải',1,'Trắc nghiệm','Trung bình',NULL,NULL,1,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(2,'Các thiết bị cứu sinh bắt buộc trên tàu biển bao gồm những gì?','An toàn hàng hải',1,'Trắc nghiệm','Dễ',NULL,NULL,1,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(3,'Quy trình báo động khẩn cấp trên tàu biển được thực hiện như thế nào?','An toàn hàng hải',1,'Tự luận','Khó',NULL,NULL,1,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(4,'Các biện pháp an toàn cần thực hiện khi có bão trên biển?','An toàn hàng hải',1,'Tự luận','Trung bình',NULL,NULL,1,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(5,'Trong tình huống hỏa hoạn trên tàu, bạn sẽ thực hiện các bước nào theo thứ tự?','An toàn hàng hải',1,'Tình huống','Khó',NULL,NULL,1,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(6,'Các loại bản đồ hàng hải (sea chart) và cách sử dụng chúng?','An toàn hàng hải',1,'Tự luận','Trung bình',1,NULL,1,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(7,'Các loại bản đồ hàng hải (sea chart) và cách sử dụng chúng?','An toàn hàng hải',1,'Tự luận','Trung bình',2,NULL,1,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(8,'Các loại bản đồ hàng hải (sea chart) và cách sử dụng chúng?','An toàn hàng hải',1,'Tự luận','Trung bình',3,NULL,1,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(9,'Các loại bản đồ hàng hải (sea chart) và cách sử dụng chúng?','An toàn hàng hải',1,'Tự luận','Trung bình',4,NULL,1,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(10,'Các loại bản đồ hàng hải (sea chart) và cách sử dụng chúng?','An toàn hàng hải',1,'Tự luận','Trung bình',5,NULL,1,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(11,'Các loại bản đồ hàng hải (sea chart) và cách sử dụng chúng?','An toàn hàng hải',1,'Tự luận','Trung bình',6,NULL,1,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(12,'Các loại bản đồ hàng hải (sea chart) và cách sử dụng chúng?','An toàn hàng hải',1,'Tự luận','Trung bình',7,NULL,1,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(13,'Cách xác định vị trí tàu trên biển bằng các phương pháp thiên văn?','An toàn hàng hải',1,'Trắc nghiệm','Khó',1,NULL,1,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(14,'Cách xác định vị trí tàu trên biển bằng các phương pháp thiên văn?','An toàn hàng hải',1,'Trắc nghiệm','Khó',2,NULL,1,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(15,'Cách xác định vị trí tàu trên biển bằng các phương pháp thiên văn?','An toàn hàng hải',1,'Trắc nghiệm','Khó',3,NULL,1,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(16,'Cách xác định vị trí tàu trên biển bằng các phương pháp thiên văn?','An toàn hàng hải',1,'Trắc nghiệm','Khó',4,NULL,1,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(17,'Cách xác định vị trí tàu trên biển bằng các phương pháp thiên văn?','An toàn hàng hải',1,'Trắc nghiệm','Khó',5,NULL,1,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(18,'Cách xác định vị trí tàu trên biển bằng các phương pháp thiên văn?','An toàn hàng hải',1,'Trắc nghiệm','Khó',6,NULL,1,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(19,'Cách xác định vị trí tàu trên biển bằng các phương pháp thiên văn?','An toàn hàng hải',1,'Trắc nghiệm','Khó',7,NULL,1,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(20,'Các quy tắc điều động tàu trong luồng lạch hẹp là gì?','An toàn hàng hải',1,'Trắc nghiệm','Trung bình',1,NULL,1,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(21,'Các quy tắc điều động tàu trong luồng lạch hẹp là gì?','An toàn hàng hải',1,'Trắc nghiệm','Trung bình',2,NULL,1,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(22,'Các quy tắc điều động tàu trong luồng lạch hẹp là gì?','An toàn hàng hải',1,'Trắc nghiệm','Trung bình',3,NULL,1,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(23,'Các quy tắc điều động tàu trong luồng lạch hẹp là gì?','An toàn hàng hải',1,'Trắc nghiệm','Trung bình',4,NULL,1,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(24,'Các quy tắc điều động tàu trong luồng lạch hẹp là gì?','An toàn hàng hải',1,'Trắc nghiệm','Trung bình',5,NULL,1,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(25,'Các quy tắc điều động tàu trong luồng lạch hẹp là gì?','An toàn hàng hải',1,'Trắc nghiệm','Trung bình',6,NULL,1,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(26,'Các quy tắc điều động tàu trong luồng lạch hẹp là gì?','An toàn hàng hải',1,'Trắc nghiệm','Trung bình',7,NULL,1,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(27,'Quy trình cập cảng an toàn bao gồm những bước nào?','An toàn hàng hải',1,'Tình huống','Khó',1,NULL,1,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(28,'Quy trình cập cảng an toàn bao gồm những bước nào?','An toàn hàng hải',1,'Tình huống','Khó',2,NULL,1,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(29,'Quy trình cập cảng an toàn bao gồm những bước nào?','An toàn hàng hải',1,'Tình huống','Khó',3,NULL,1,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(30,'Quy trình cập cảng an toàn bao gồm những bước nào?','An toàn hàng hải',1,'Tình huống','Khó',4,NULL,1,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(31,'Quy trình cập cảng an toàn bao gồm những bước nào?','An toàn hàng hải',1,'Tình huống','Khó',5,NULL,1,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(32,'Quy trình cập cảng an toàn bao gồm những bước nào?','An toàn hàng hải',1,'Tình huống','Khó',6,NULL,1,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(33,'Quy trình cập cảng an toàn bao gồm những bước nào?','An toàn hàng hải',1,'Tình huống','Khó',7,NULL,1,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(34,'Các thiết bị định vị hàng hải hiện đại và cách sử dụng chúng?','An toàn hàng hải',1,'Thực hành','Trung bình',1,NULL,1,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(35,'Các thiết bị định vị hàng hải hiện đại và cách sử dụng chúng?','An toàn hàng hải',1,'Thực hành','Trung bình',2,NULL,1,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(36,'Các thiết bị định vị hàng hải hiện đại và cách sử dụng chúng?','An toàn hàng hải',1,'Thực hành','Trung bình',3,NULL,1,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(37,'Các thiết bị định vị hàng hải hiện đại và cách sử dụng chúng?','An toàn hàng hải',1,'Thực hành','Trung bình',4,NULL,1,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(38,'Các thiết bị định vị hàng hải hiện đại và cách sử dụng chúng?','An toàn hàng hải',1,'Thực hành','Trung bình',5,NULL,1,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(39,'Các thiết bị định vị hàng hải hiện đại và cách sử dụng chúng?','An toàn hàng hải',1,'Thực hành','Trung bình',6,NULL,1,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(40,'Các thiết bị định vị hàng hải hiện đại và cách sử dụng chúng?','An toàn hàng hải',1,'Thực hành','Trung bình',7,NULL,1,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(41,'Cách kiểm tra và xử lý sự cố động cơ diesel tàu biển?','An toàn hàng hải',1,'Tự luận','Khó',8,NULL,1,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(42,'Cách kiểm tra và xử lý sự cố động cơ diesel tàu biển?','An toàn hàng hải',1,'Tự luận','Khó',9,NULL,1,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(43,'Cách kiểm tra và xử lý sự cố động cơ diesel tàu biển?','An toàn hàng hải',1,'Tự luận','Khó',10,NULL,1,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(44,'Cách kiểm tra và xử lý sự cố động cơ diesel tàu biển?','An toàn hàng hải',1,'Tự luận','Khó',11,NULL,1,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(45,'Cách kiểm tra và xử lý sự cố động cơ diesel tàu biển?','An toàn hàng hải',1,'Tự luận','Khó',12,NULL,1,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(46,'Các thông số vận hành chuẩn của động cơ chính là gì?','An toàn hàng hải',1,'Trắc nghiệm','Trung bình',8,NULL,1,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(47,'Các thông số vận hành chuẩn của động cơ chính là gì?','An toàn hàng hải',1,'Trắc nghiệm','Trung bình',9,NULL,1,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(48,'Các thông số vận hành chuẩn của động cơ chính là gì?','An toàn hàng hải',1,'Trắc nghiệm','Trung bình',10,NULL,1,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(49,'Các thông số vận hành chuẩn của động cơ chính là gì?','An toàn hàng hải',1,'Trắc nghiệm','Trung bình',11,NULL,1,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(50,'Các thông số vận hành chuẩn của động cơ chính là gì?','An toàn hàng hải',1,'Trắc nghiệm','Trung bình',12,NULL,1,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(51,'Quy trình bảo dưỡng định kỳ hệ thống làm mát động cơ?','An toàn hàng hải',1,'Trắc nghiệm','Dễ',8,NULL,1,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(52,'Quy trình bảo dưỡng định kỳ hệ thống làm mát động cơ?','An toàn hàng hải',1,'Trắc nghiệm','Dễ',9,NULL,1,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(53,'Quy trình bảo dưỡng định kỳ hệ thống làm mát động cơ?','An toàn hàng hải',1,'Trắc nghiệm','Dễ',10,NULL,1,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(54,'Quy trình bảo dưỡng định kỳ hệ thống làm mát động cơ?','An toàn hàng hải',1,'Trắc nghiệm','Dễ',11,NULL,1,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(55,'Quy trình bảo dưỡng định kỳ hệ thống làm mát động cơ?','An toàn hàng hải',1,'Trắc nghiệm','Dễ',12,NULL,1,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(56,'Xử lý tình huống khi lọc dầu bị tắc nghẽn?','An toàn hàng hải',1,'Tình huống','Trung bình',8,NULL,1,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(57,'Xử lý tình huống khi lọc dầu bị tắc nghẽn?','An toàn hàng hải',1,'Tình huống','Trung bình',9,NULL,1,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(58,'Xử lý tình huống khi lọc dầu bị tắc nghẽn?','An toàn hàng hải',1,'Tình huống','Trung bình',10,NULL,1,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(59,'Xử lý tình huống khi lọc dầu bị tắc nghẽn?','An toàn hàng hải',1,'Tình huống','Trung bình',11,NULL,1,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(60,'Xử lý tình huống khi lọc dầu bị tắc nghẽn?','An toàn hàng hải',1,'Tình huống','Trung bình',12,NULL,1,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(61,'Cách kiểm tra và hiệu chỉnh hệ thống điện trên tàu?','An toàn hàng hải',1,'Thực hành','Khó',8,NULL,1,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(62,'Cách kiểm tra và hiệu chỉnh hệ thống điện trên tàu?','An toàn hàng hải',1,'Thực hành','Khó',9,NULL,1,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(63,'Cách kiểm tra và hiệu chỉnh hệ thống điện trên tàu?','An toàn hàng hải',1,'Thực hành','Khó',10,NULL,1,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(64,'Cách kiểm tra và hiệu chỉnh hệ thống điện trên tàu?','An toàn hàng hải',1,'Thực hành','Khó',11,NULL,1,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(65,'Cách kiểm tra và hiệu chỉnh hệ thống điện trên tàu?','An toàn hàng hải',1,'Thực hành','Khó',12,NULL,1,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(66,'Các quy trình an toàn đặc biệt khi vận chuyển dầu thô là gì?','An toàn hàng hải',1,'Trắc nghiệm','Khó',NULL,3,1,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(67,'Cách ứng phó với tràn dầu trên biển?','An toàn hàng hải',1,'Tình huống','Khó',NULL,3,1,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(68,'Các thiết bị đo và kiểm soát khí gas trên tàu dầu?','An toàn hàng hải',1,'Trắc nghiệm','Trung bình',NULL,3,1,'2025-05-16 20:22:28','2025-05-16 20:22:28');
+/*!40000 ALTER TABLE `questions` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
--- Chỉ mục cho các bảng đã đổ
+-- Table structure for table `roles`
 --
 
---
--- Chỉ mục cho bảng `answers`
---
-ALTER TABLE `answers`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `answers_question_id_foreign` (`question_id`);
+DROP TABLE IF EXISTS `roles`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `roles` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  `description` text DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `roles_name_unique` (`name`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Chỉ mục cho bảng `categories`
---
-ALTER TABLE `categories`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `categories_slug_unique` (`slug`);
-
---
--- Chỉ mục cho bảng `certificates`
---
-ALTER TABLE `certificates`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `certificates_certificate_number_unique` (`certificate_number`),
-  ADD KEY `certificates_user_id_foreign` (`user_id`),
-  ADD KEY `certificates_test_id_foreign` (`test_id`),
-  ADD KEY `certificates_test_attempt_id_foreign` (`test_attempt_id`),
-  ADD KEY `certificates_issued_by_foreign` (`issued_by`);
-
---
--- Chỉ mục cho bảng `failed_jobs`
---
-ALTER TABLE `failed_jobs`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `failed_jobs_uuid_unique` (`uuid`);
-
---
--- Chỉ mục cho bảng `migrations`
---
-ALTER TABLE `migrations`
-  ADD PRIMARY KEY (`id`);
-
---
--- Chỉ mục cho bảng `password_reset_tokens`
---
-ALTER TABLE `password_reset_tokens`
-  ADD PRIMARY KEY (`email`);
-
---
--- Chỉ mục cho bảng `personal_access_tokens`
---
-ALTER TABLE `personal_access_tokens`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `personal_access_tokens_token_unique` (`token`),
-  ADD KEY `personal_access_tokens_tokenable_type_tokenable_id_index` (`tokenable_type`,`tokenable_id`);
-
---
--- Chỉ mục cho bảng `positions`
---
-ALTER TABLE `positions`
-  ADD PRIMARY KEY (`id`);
-
---
--- Chỉ mục cho bảng `questions`
---
-ALTER TABLE `questions`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `questions_position_id_foreign` (`position_id`),
-  ADD KEY `questions_ship_type_id_foreign` (`ship_type_id`),
-  ADD KEY `questions_created_by_foreign` (`created_by`),
-  ADD KEY `questions_category_id_foreign` (`category_id`);
-
---
--- Chỉ mục cho bảng `roles`
---
-ALTER TABLE `roles`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `roles_name_unique` (`name`);
-
---
--- Chỉ mục cho bảng `ship_types`
---
-ALTER TABLE `ship_types`
-  ADD PRIMARY KEY (`id`);
-
---
--- Chỉ mục cho bảng `tests`
---
-ALTER TABLE `tests`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `tests_position_id_foreign` (`position_id`),
-  ADD KEY `tests_ship_type_id_foreign` (`ship_type_id`),
-  ADD KEY `tests_created_by_foreign` (`created_by`),
-  ADD KEY `tests_category_id_foreign` (`category_id`);
-
---
--- Chỉ mục cho bảng `test_attempts`
---
-ALTER TABLE `test_attempts`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `test_attempts_user_id_foreign` (`user_id`),
-  ADD KEY `test_attempts_test_id_foreign` (`test_id`);
-
---
--- Chỉ mục cho bảng `test_questions`
---
-ALTER TABLE `test_questions`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `test_questions_test_id_foreign` (`test_id`),
-  ADD KEY `test_questions_question_id_foreign` (`question_id`),
-  ADD KEY `test_questions_test_attempt_id_foreign` (`test_attempt_id`);
-
---
--- Chỉ mục cho bảng `thuyen_viens`
---
-ALTER TABLE `thuyen_viens`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `thuyen_viens_user_id_foreign` (`user_id`),
-  ADD KEY `thuyen_viens_position_id_foreign` (`position_id`),
-  ADD KEY `thuyen_viens_ship_type_id_foreign` (`ship_type_id`);
-
---
--- Chỉ mục cho bảng `users`
---
-ALTER TABLE `users`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `users_email_unique` (`email`),
-  ADD UNIQUE KEY `users_seafarer_id_unique` (`seafarer_id`),
-  ADD KEY `users_role_id_foreign` (`role_id`);
-
---
--- Chỉ mục cho bảng `user_responses`
---
-ALTER TABLE `user_responses`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `user_responses_test_attempt_id_foreign` (`test_attempt_id`),
-  ADD KEY `user_responses_question_id_foreign` (`question_id`),
-  ADD KEY `user_responses_answer_id_foreign` (`answer_id`);
-
---
--- AUTO_INCREMENT cho các bảng đã đổ
+-- Dumping data for table `roles`
 --
 
---
--- AUTO_INCREMENT cho bảng `answers`
---
-ALTER TABLE `answers`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=135;
+LOCK TABLES `roles` WRITE;
+/*!40000 ALTER TABLE `roles` DISABLE KEYS */;
+INSERT INTO `roles` VALUES (1,'Admin','Quản trị viên hệ thống','2025-05-16 20:22:27','2025-05-16 20:22:27'),(2,'Thuyền viên','Thuyền viên tham gia làm bài kiểm tra','2025-05-16 20:22:27','2025-05-16 20:22:27');
+/*!40000 ALTER TABLE `roles` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
--- AUTO_INCREMENT cho bảng `categories`
---
-ALTER TABLE `categories`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
-
---
--- AUTO_INCREMENT cho bảng `certificates`
---
-ALTER TABLE `certificates`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
--- AUTO_INCREMENT cho bảng `failed_jobs`
---
-ALTER TABLE `failed_jobs`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT cho bảng `migrations`
---
-ALTER TABLE `migrations`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
-
---
--- AUTO_INCREMENT cho bảng `personal_access_tokens`
---
-ALTER TABLE `personal_access_tokens`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT cho bảng `positions`
---
-ALTER TABLE `positions`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
-
---
--- AUTO_INCREMENT cho bảng `questions`
---
-ALTER TABLE `questions`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=69;
-
---
--- AUTO_INCREMENT cho bảng `roles`
---
-ALTER TABLE `roles`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
--- AUTO_INCREMENT cho bảng `ship_types`
---
-ALTER TABLE `ship_types`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
-
---
--- AUTO_INCREMENT cho bảng `tests`
---
-ALTER TABLE `tests`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
-
---
--- AUTO_INCREMENT cho bảng `test_attempts`
---
-ALTER TABLE `test_attempts`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=61;
-
---
--- AUTO_INCREMENT cho bảng `test_questions`
---
-ALTER TABLE `test_questions`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=243;
-
---
--- AUTO_INCREMENT cho bảng `thuyen_viens`
---
-ALTER TABLE `thuyen_viens`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
-
---
--- AUTO_INCREMENT cho bảng `users`
---
-ALTER TABLE `users`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
-
---
--- AUTO_INCREMENT cho bảng `user_responses`
---
-ALTER TABLE `user_responses`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=789;
-
---
--- Các ràng buộc cho các bảng đã đổ
+-- Table structure for table `ship_types`
 --
 
---
--- Các ràng buộc cho bảng `answers`
---
-ALTER TABLE `answers`
-  ADD CONSTRAINT `answers_question_id_foreign` FOREIGN KEY (`question_id`) REFERENCES `questions` (`id`) ON DELETE CASCADE;
+DROP TABLE IF EXISTS `ship_types`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `ship_types` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  `category` enum('Cargo','Passenger','Specialized') NOT NULL,
+  `description` text DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Các ràng buộc cho bảng `certificates`
+-- Dumping data for table `ship_types`
 --
-ALTER TABLE `certificates`
-  ADD CONSTRAINT `certificates_issued_by_foreign` FOREIGN KEY (`issued_by`) REFERENCES `users` (`id`) ON DELETE SET NULL,
-  ADD CONSTRAINT `certificates_test_attempt_id_foreign` FOREIGN KEY (`test_attempt_id`) REFERENCES `test_attempts` (`id`) ON DELETE SET NULL,
-  ADD CONSTRAINT `certificates_test_id_foreign` FOREIGN KEY (`test_id`) REFERENCES `tests` (`id`) ON DELETE SET NULL,
-  ADD CONSTRAINT `certificates_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
+
+LOCK TABLES `ship_types` WRITE;
+/*!40000 ALTER TABLE `ship_types` DISABLE KEYS */;
+INSERT INTO `ship_types` VALUES (1,'Tàu hàng rời (Bulk Carrier)','Cargo','Chở than, ngũ cốc, quặng kim loại.','2025-05-16 20:22:27','2025-05-16 20:22:27'),(2,'Tàu container (Container Ship)','Cargo','Chuyên vận chuyển container tiêu chuẩn.','2025-05-16 20:22:27','2025-05-16 20:22:27'),(3,'Tàu chở dầu (Oil Tanker)','Cargo','Chở dầu thô và các sản phẩm dầu.','2025-05-16 20:22:27','2025-05-16 20:22:27'),(4,'Tàu chở khí hóa lỏng (LNG/LPG Carrier)','Cargo','Chở khí tự nhiên hóa lỏng (LNG) hoặc khí dầu mỏ hóa lỏng (LPG).','2025-05-16 20:22:27','2025-05-16 20:22:27'),(5,'Tàu chở hóa chất (Chemical Tanker)','Cargo','Chở hóa chất nguy hiểm.','2025-05-16 20:22:27','2025-05-16 20:22:27'),(6,'Tàu du lịch (Cruise Ship)','Passenger','Phục vụ du khách, yêu cầu kỹ năng cứu hộ, phục vụ.','2025-05-16 20:22:27','2025-05-16 20:22:27'),(7,'Tàu phà (Ferry)','Passenger','Vận chuyển người và xe cộ giữa các cảng.','2025-05-16 20:22:27','2025-05-16 20:22:27'),(8,'Tàu kéo (Tugboat)','Specialized','Kéo và lai dắt tàu lớn vào cảng.','2025-05-16 20:22:27','2025-05-16 20:22:27'),(9,'Tàu cứu hộ (Rescue Vessel)','Specialized','Thực hiện nhiệm vụ tìm kiếm cứu nạn trên biển.','2025-05-16 20:22:27','2025-05-16 20:22:27'),(10,'Tàu nghiên cứu (Research Vessel)','Specialized','Phục vụ khảo sát khoa học biển.','2025-05-16 20:22:27','2025-05-16 20:22:27'),(11,'Tàu nạo vét (Dredger)','Specialized','Nạo vét lòng sông, cảng biển.','2025-05-16 20:22:27','2025-05-16 20:22:27');
+/*!40000 ALTER TABLE `ship_types` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
--- Các ràng buộc cho bảng `questions`
+-- Table structure for table `test_attempts`
 --
-ALTER TABLE `questions`
-  ADD CONSTRAINT `questions_category_id_foreign` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`) ON DELETE SET NULL,
-  ADD CONSTRAINT `questions_created_by_foreign` FOREIGN KEY (`created_by`) REFERENCES `users` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `questions_position_id_foreign` FOREIGN KEY (`position_id`) REFERENCES `positions` (`id`) ON DELETE SET NULL,
-  ADD CONSTRAINT `questions_ship_type_id_foreign` FOREIGN KEY (`ship_type_id`) REFERENCES `ship_types` (`id`) ON DELETE SET NULL;
+
+DROP TABLE IF EXISTS `test_attempts`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `test_attempts` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` bigint(20) unsigned NOT NULL,
+  `test_id` bigint(20) unsigned NOT NULL,
+  `start_time` timestamp NULL DEFAULT NULL,
+  `end_time` timestamp NULL DEFAULT NULL,
+  `is_completed` tinyint(1) NOT NULL DEFAULT 0,
+  `needs_marking` tinyint(1) NOT NULL DEFAULT 0,
+  `is_marked` tinyint(1) NOT NULL DEFAULT 0,
+  `score` double(8,2) NOT NULL DEFAULT 0.00,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `test_attempts_user_id_foreign` (`user_id`),
+  KEY `test_attempts_test_id_foreign` (`test_id`),
+  CONSTRAINT `test_attempts_test_id_foreign` FOREIGN KEY (`test_id`) REFERENCES `tests` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `test_attempts_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Các ràng buộc cho bảng `tests`
+-- Dumping data for table `test_attempts`
 --
-ALTER TABLE `tests`
-  ADD CONSTRAINT `tests_category_id_foreign` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`) ON DELETE SET NULL,
-  ADD CONSTRAINT `tests_created_by_foreign` FOREIGN KEY (`created_by`) REFERENCES `users` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `tests_position_id_foreign` FOREIGN KEY (`position_id`) REFERENCES `positions` (`id`) ON DELETE SET NULL,
-  ADD CONSTRAINT `tests_ship_type_id_foreign` FOREIGN KEY (`ship_type_id`) REFERENCES `ship_types` (`id`) ON DELETE SET NULL;
+
+LOCK TABLES `test_attempts` WRITE;
+/*!40000 ALTER TABLE `test_attempts` DISABLE KEYS */;
+INSERT INTO `test_attempts` VALUES (1,2,12,'2025-04-26 00:22:29','2025-04-26 00:52:29',1,0,0,90.00,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(2,2,10,'2025-04-20 08:22:29','2025-04-20 09:22:29',1,0,0,91.67,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(3,2,11,'2025-05-03 02:22:29','2025-05-03 02:52:29',1,0,0,93.75,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(4,2,9,'2025-04-20 10:22:29','2025-04-20 11:22:29',1,0,0,98.33,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(5,2,8,'2025-05-09 12:22:29','2025-05-09 13:07:29',1,0,0,95.00,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(6,3,12,'2025-04-30 19:22:29','2025-04-30 19:52:29',1,0,0,100.00,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(7,3,10,'2025-04-18 20:22:29','2025-04-18 21:22:29',1,0,0,88.33,'2025-05-16 20:22:29','2025-05-16 20:22:30'),(8,4,8,'2025-04-17 16:22:30','2025-04-17 17:07:30',1,0,0,58.33,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(9,4,11,'2025-05-08 17:22:30','2025-05-08 17:52:30',1,0,0,93.75,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(10,4,10,'2025-04-19 03:22:30','2025-04-19 04:22:30',1,0,0,85.00,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(11,4,9,'2025-05-02 19:22:30','2025-05-02 20:22:30',1,0,0,61.67,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(12,5,12,'2025-05-12 22:22:30','2025-05-12 22:52:30',1,0,0,55.00,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(13,5,10,'2025-04-27 08:22:30','2025-04-27 09:22:30',1,0,0,61.67,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(14,5,8,'2025-04-30 10:22:30','2025-04-30 11:07:30',1,0,0,73.33,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(15,6,12,'2025-04-18 22:22:30','2025-04-18 22:52:30',1,0,0,95.00,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(16,6,8,'2025-04-21 05:22:30','2025-04-21 06:07:30',1,0,0,70.00,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(17,6,9,'2025-05-05 19:22:30','2025-05-05 20:22:30',1,0,0,65.00,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(18,7,11,'2025-04-26 21:22:30','2025-04-26 21:52:30',1,0,0,81.25,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(19,7,8,'2025-04-17 02:22:30','2025-04-17 03:07:30',1,0,0,65.00,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(20,8,12,'2025-05-14 05:22:30','2025-05-14 05:52:30',1,0,0,75.00,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(21,8,8,'2025-05-01 02:22:30','2025-05-01 03:07:30',1,0,0,71.67,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(22,8,11,'2025-04-21 21:22:30','2025-04-21 21:52:30',1,0,0,93.75,'2025-05-16 20:22:30','2025-05-16 20:22:31'),(23,9,10,'2025-04-17 23:22:31','2025-04-18 00:22:31',1,0,0,88.33,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(24,9,8,'2025-04-28 19:22:31','2025-04-28 20:07:31',1,0,0,61.67,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(25,9,9,'2025-04-20 20:22:31','2025-04-20 21:22:31',1,0,0,75.00,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(26,10,10,'2025-05-09 01:22:31','2025-05-09 02:22:31',1,0,0,60.00,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(27,10,9,'2025-04-20 08:22:31','2025-04-20 09:22:31',1,0,0,53.33,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(28,11,11,'2025-04-21 10:22:31','2025-04-21 10:52:31',1,0,0,56.25,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(29,11,10,'2025-04-19 12:22:31','2025-04-19 13:22:31',1,0,0,71.67,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(30,11,12,'2025-04-19 13:22:31','2025-04-19 13:52:31',1,0,0,90.00,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(31,11,8,'2025-04-30 03:22:31','2025-04-30 04:07:31',1,0,0,80.00,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(32,11,9,'2025-05-08 21:22:31','2025-05-08 22:22:31',1,0,0,61.67,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(33,7,10,'2025-05-16 19:43:31',NULL,0,0,0,0.00,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(34,9,9,'2025-05-16 18:56:31',NULL,0,0,0,0.00,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(35,11,9,'2025-05-16 19:21:31',NULL,0,0,0,0.00,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(36,2,1,'2025-05-16 22:04:56',NULL,0,0,0,0.00,'2025-05-16 22:04:56','2025-05-16 22:04:56'),(37,2,1,'2025-05-16 22:05:15',NULL,0,0,0,0.00,'2025-05-16 22:05:15','2025-05-16 22:05:15'),(38,2,1,'2025-05-16 22:05:46',NULL,0,0,0,0.00,'2025-05-16 22:05:46','2025-05-16 22:05:46'),(39,2,1,'2025-05-16 22:06:11',NULL,0,0,0,0.00,'2025-05-16 22:06:11','2025-05-16 22:06:11'),(40,2,1,'2025-05-16 22:07:00','2025-05-16 22:08:50',1,0,1,30.77,'2025-05-16 22:07:00','2025-05-16 22:09:46');
+/*!40000 ALTER TABLE `test_attempts` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
--- Các ràng buộc cho bảng `test_attempts`
+-- Table structure for table `test_questions`
 --
-ALTER TABLE `test_attempts`
-  ADD CONSTRAINT `test_attempts_test_id_foreign` FOREIGN KEY (`test_id`) REFERENCES `tests` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `test_attempts_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
+
+DROP TABLE IF EXISTS `test_questions`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `test_questions` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `test_id` bigint(20) unsigned NOT NULL,
+  `question_id` bigint(20) unsigned NOT NULL,
+  `order` int(11) NOT NULL DEFAULT 0,
+  `is_temporary` tinyint(1) NOT NULL DEFAULT 0,
+  `test_attempt_id` bigint(20) unsigned DEFAULT NULL,
+  `points` double(8,2) NOT NULL DEFAULT 1.00,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `test_questions_test_id_foreign` (`test_id`),
+  KEY `test_questions_question_id_foreign` (`question_id`),
+  KEY `test_questions_test_attempt_id_foreign` (`test_attempt_id`),
+  CONSTRAINT `test_questions_question_id_foreign` FOREIGN KEY (`question_id`) REFERENCES `questions` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `test_questions_test_attempt_id_foreign` FOREIGN KEY (`test_attempt_id`) REFERENCES `test_attempts` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `test_questions_test_id_foreign` FOREIGN KEY (`test_id`) REFERENCES `tests` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=243 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Các ràng buộc cho bảng `test_questions`
+-- Dumping data for table `test_questions`
 --
-ALTER TABLE `test_questions`
-  ADD CONSTRAINT `test_questions_question_id_foreign` FOREIGN KEY (`question_id`) REFERENCES `questions` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `test_questions_test_attempt_id_foreign` FOREIGN KEY (`test_attempt_id`) REFERENCES `test_attempts` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `test_questions_test_id_foreign` FOREIGN KEY (`test_id`) REFERENCES `tests` (`id`) ON DELETE CASCADE;
+
+LOCK TABLES `test_questions` WRITE;
+/*!40000 ALTER TABLE `test_questions` DISABLE KEYS */;
+INSERT INTO `test_questions` VALUES (1,1,27,1,0,NULL,3.00,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(2,1,13,2,0,NULL,3.00,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(3,1,5,3,0,NULL,3.00,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(4,1,66,4,0,NULL,3.00,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(5,1,3,5,0,NULL,3.00,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(6,1,67,6,0,NULL,3.00,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(7,1,4,7,0,NULL,2.00,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(8,1,6,8,0,NULL,2.00,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(9,1,34,9,0,NULL,2.00,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(10,1,2,10,0,NULL,1.00,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(11,1,68,11,0,NULL,2.00,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(12,1,20,12,0,NULL,2.00,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(13,1,1,13,0,NULL,2.00,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(14,2,14,1,0,NULL,3.00,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(15,2,66,2,0,NULL,3.00,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(16,2,5,3,0,NULL,3.00,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(17,2,67,4,0,NULL,3.00,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(18,2,3,5,0,NULL,3.00,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(19,2,28,6,0,NULL,3.00,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(20,2,7,7,0,NULL,2.00,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(21,2,4,8,0,NULL,2.00,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(22,2,2,9,0,NULL,1.00,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(23,2,35,10,0,NULL,2.00,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(24,2,21,11,0,NULL,2.00,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(25,2,68,12,0,NULL,2.00,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(26,2,1,13,0,NULL,2.00,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(27,3,61,1,0,NULL,3.00,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(28,3,41,2,0,NULL,3.00,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(29,3,5,3,0,NULL,3.00,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(30,3,67,4,0,NULL,3.00,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(31,3,66,5,0,NULL,3.00,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(32,3,3,6,0,NULL,3.00,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(33,3,56,7,0,NULL,2.00,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(34,3,4,8,0,NULL,2.00,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(35,3,1,9,0,NULL,2.00,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(36,3,46,10,0,NULL,2.00,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(37,3,51,11,0,NULL,1.00,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(38,3,68,12,0,NULL,2.00,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(39,3,2,13,0,NULL,1.00,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(40,4,22,1,0,NULL,2.00,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(41,4,36,2,0,NULL,2.00,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(42,4,8,3,0,NULL,2.00,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(43,4,12,4,0,NULL,2.00,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(44,4,21,5,0,NULL,2.00,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(45,4,47,6,0,NULL,2.00,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(46,4,11,7,0,NULL,2.00,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(47,4,35,8,0,NULL,2.00,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(48,4,58,9,0,NULL,2.00,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(49,4,38,10,0,NULL,2.00,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(50,4,7,11,0,NULL,2.00,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(51,4,39,12,0,NULL,2.00,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(52,4,60,13,0,NULL,2.00,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(53,4,25,14,0,NULL,2.00,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(54,4,9,15,0,NULL,2.00,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(55,4,20,16,0,NULL,2.00,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(56,4,59,17,0,NULL,2.00,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(57,4,1,18,0,NULL,2.00,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(58,4,4,19,0,NULL,2.00,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(59,4,37,20,0,NULL,2.00,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(60,4,24,21,0,NULL,2.00,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(61,4,26,22,0,NULL,2.00,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(62,4,23,23,0,NULL,2.00,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(63,4,57,24,0,NULL,2.00,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(64,4,6,25,0,NULL,2.00,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(65,4,40,26,0,NULL,2.00,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(66,4,48,27,0,NULL,2.00,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(67,4,10,28,0,NULL,2.00,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(68,4,56,29,0,NULL,2.00,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(69,4,68,30,0,NULL,2.00,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(70,4,49,31,0,NULL,2.00,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(71,4,46,32,0,NULL,2.00,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(72,4,34,33,0,NULL,2.00,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(73,4,50,34,0,NULL,2.00,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(74,4,13,35,0,NULL,3.00,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(75,4,30,36,0,NULL,3.00,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(76,4,53,37,0,NULL,1.00,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(77,4,65,38,0,NULL,3.00,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(78,4,61,39,0,NULL,3.00,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(79,4,32,40,0,NULL,3.00,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(80,5,20,1,0,NULL,2.00,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(81,5,34,2,0,NULL,2.00,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(82,5,4,3,0,NULL,2.00,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(83,5,6,4,0,NULL,2.00,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(84,5,1,5,0,NULL,2.00,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(85,5,13,6,0,NULL,3.00,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(86,5,2,7,0,NULL,1.00,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(87,5,5,8,0,NULL,3.00,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(88,5,27,9,0,NULL,3.00,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(89,5,3,10,0,NULL,3.00,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(90,6,35,1,0,NULL,2.00,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(91,6,21,2,0,NULL,2.00,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(92,6,7,3,0,NULL,2.00,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(93,6,1,4,0,NULL,2.00,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(94,6,4,5,0,NULL,2.00,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(95,6,14,6,0,NULL,3.00,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(96,6,5,7,0,NULL,3.00,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(97,6,3,8,0,NULL,3.00,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(98,6,2,9,0,NULL,1.00,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(99,6,28,10,0,NULL,3.00,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(100,7,4,1,0,NULL,2.00,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(101,7,46,2,0,NULL,2.00,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(102,7,68,3,0,NULL,2.00,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(103,7,56,4,0,NULL,2.00,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(104,7,1,5,0,NULL,2.00,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(105,7,67,6,0,NULL,3.00,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(106,7,66,7,0,NULL,3.00,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(107,7,51,8,0,NULL,1.00,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(108,7,41,9,0,NULL,3.00,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(109,7,3,10,0,NULL,3.00,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(110,7,61,11,0,NULL,3.00,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(111,7,2,12,0,NULL,1.00,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(112,7,5,13,0,NULL,3.00,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(113,8,36,1,0,NULL,2.00,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(114,8,38,2,0,NULL,2.00,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(115,8,47,3,0,NULL,2.00,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(116,8,8,4,0,NULL,2.00,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(117,8,4,5,0,NULL,2.00,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(118,8,21,6,0,NULL,2.00,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(119,8,24,7,0,NULL,2.00,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(120,8,34,8,0,NULL,2.00,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(121,8,57,9,0,NULL,2.00,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(122,8,12,10,0,NULL,2.00,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(123,8,6,11,0,NULL,2.00,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(124,8,9,12,0,NULL,2.00,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(125,8,10,13,0,NULL,2.00,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(126,8,59,14,0,NULL,2.00,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(127,8,23,15,0,NULL,2.00,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(128,8,7,16,0,NULL,2.00,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(129,8,37,17,0,NULL,2.00,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(130,8,40,18,0,NULL,2.00,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(131,8,22,19,0,NULL,2.00,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(132,8,56,20,0,NULL,2.00,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(133,8,48,21,0,NULL,2.00,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(134,8,25,22,0,NULL,2.00,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(135,8,58,23,0,NULL,2.00,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(136,8,11,24,0,NULL,2.00,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(137,8,26,25,0,NULL,2.00,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(138,8,20,26,0,NULL,2.00,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(139,8,1,27,0,NULL,2.00,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(140,8,49,28,0,NULL,2.00,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(141,8,68,29,0,NULL,2.00,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(142,8,60,30,0,NULL,2.00,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(143,9,36,1,0,NULL,2.00,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(144,9,6,2,0,NULL,2.00,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(145,9,12,3,0,NULL,2.00,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(146,9,56,4,0,NULL,2.00,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(147,9,8,5,0,NULL,2.00,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(148,9,34,6,0,NULL,2.00,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(149,9,46,7,0,NULL,2.00,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(150,9,50,8,0,NULL,2.00,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(151,9,35,9,0,NULL,2.00,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(152,9,47,10,0,NULL,2.00,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(153,9,37,11,0,NULL,2.00,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(154,9,23,12,0,NULL,2.00,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(155,9,38,13,0,NULL,2.00,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(156,9,40,14,0,NULL,2.00,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(157,9,24,15,0,NULL,2.00,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(158,9,58,16,0,NULL,2.00,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(159,9,4,17,0,NULL,2.00,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(160,9,9,18,0,NULL,2.00,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(161,9,20,19,0,NULL,2.00,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(162,9,7,20,0,NULL,2.00,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(163,9,22,21,0,NULL,2.00,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(164,9,21,22,0,NULL,2.00,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(165,9,25,23,0,NULL,2.00,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(166,9,10,24,0,NULL,2.00,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(167,9,57,25,0,NULL,2.00,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(168,9,48,26,0,NULL,2.00,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(169,9,59,27,0,NULL,2.00,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(170,9,1,28,0,NULL,2.00,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(171,9,11,29,0,NULL,2.00,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(172,9,39,30,0,NULL,2.00,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(173,10,20,1,0,NULL,2.00,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(174,10,46,2,0,NULL,2.00,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(175,10,6,3,0,NULL,2.00,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(176,10,58,4,0,NULL,2.00,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(177,10,1,5,0,NULL,2.00,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(178,10,7,6,0,NULL,2.00,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(179,10,23,7,0,NULL,2.00,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(180,10,10,8,0,NULL,2.00,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(181,10,21,9,0,NULL,2.00,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(182,10,8,10,0,NULL,2.00,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(183,10,48,11,0,NULL,2.00,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(184,10,35,12,0,NULL,2.00,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(185,10,40,13,0,NULL,2.00,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(186,10,56,14,0,NULL,2.00,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(187,10,47,15,0,NULL,2.00,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(188,10,24,16,0,NULL,2.00,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(189,10,26,17,0,NULL,2.00,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(190,10,39,18,0,NULL,2.00,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(191,10,49,19,0,NULL,2.00,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(192,10,37,20,0,NULL,2.00,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(193,10,22,21,0,NULL,2.00,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(194,10,57,22,0,NULL,2.00,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(195,10,68,23,0,NULL,2.00,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(196,10,4,24,0,NULL,2.00,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(197,10,60,25,0,NULL,2.00,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(198,10,36,26,0,NULL,2.00,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(199,10,34,27,0,NULL,2.00,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(200,10,25,28,0,NULL,2.00,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(201,10,59,29,0,NULL,2.00,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(202,10,9,30,0,NULL,2.00,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(203,11,51,1,0,NULL,1.00,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(204,11,55,2,0,NULL,1.00,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(205,11,53,3,0,NULL,1.00,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(206,11,2,4,0,NULL,1.00,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(207,11,52,5,0,NULL,1.00,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(208,11,54,6,0,NULL,1.00,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(209,11,5,7,0,NULL,3.00,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(210,11,37,8,0,NULL,2.00,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(211,11,9,9,0,NULL,2.00,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(212,11,32,10,0,NULL,3.00,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(213,12,56,1,0,NULL,2.00,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(214,12,25,2,0,NULL,2.00,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(215,12,37,3,0,NULL,2.00,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(216,12,11,4,0,NULL,2.00,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(217,12,48,5,0,NULL,2.00,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(218,12,34,6,0,NULL,2.00,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(219,12,22,7,0,NULL,2.00,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(220,12,8,8,0,NULL,2.00,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(221,12,4,9,0,NULL,2.00,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(222,12,40,10,0,NULL,2.00,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(223,13,5,1,0,NULL,3.00,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(224,13,67,2,0,NULL,3.00,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(225,13,27,3,0,NULL,3.00,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(226,13,66,4,0,NULL,3.00,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(227,13,13,5,0,NULL,3.00,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(228,13,3,6,0,NULL,3.00,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(229,13,6,7,0,NULL,2.00,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(230,13,20,8,0,NULL,2.00,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(231,13,34,9,0,NULL,2.00,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(232,13,68,10,0,NULL,2.00,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(233,14,4,1,0,NULL,2.00,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(234,14,46,2,0,NULL,2.00,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(235,14,1,3,0,NULL,2.00,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(236,14,56,4,0,NULL,2.00,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(237,14,68,5,0,NULL,2.00,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(238,14,41,6,0,NULL,3.00,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(239,14,66,7,0,NULL,3.00,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(240,14,51,8,0,NULL,1.00,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(241,14,2,9,0,NULL,1.00,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(242,14,3,10,0,NULL,3.00,'2025-05-16 20:22:29','2025-05-16 20:22:29');
+/*!40000 ALTER TABLE `test_questions` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
--- Các ràng buộc cho bảng `thuyen_viens`
+-- Table structure for table `tests`
 --
-ALTER TABLE `thuyen_viens`
-  ADD CONSTRAINT `thuyen_viens_position_id_foreign` FOREIGN KEY (`position_id`) REFERENCES `positions` (`id`) ON DELETE SET NULL,
-  ADD CONSTRAINT `thuyen_viens_ship_type_id_foreign` FOREIGN KEY (`ship_type_id`) REFERENCES `ship_types` (`id`) ON DELETE SET NULL,
-  ADD CONSTRAINT `thuyen_viens_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
+
+DROP TABLE IF EXISTS `tests`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `tests` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `title` varchar(255) NOT NULL,
+  `description` text DEFAULT NULL,
+  `position_id` bigint(20) unsigned DEFAULT NULL,
+  `ship_type_id` bigint(20) unsigned DEFAULT NULL,
+  `duration` int(11) NOT NULL DEFAULT 60,
+  `is_random` tinyint(1) NOT NULL DEFAULT 0,
+  `is_active` tinyint(1) NOT NULL DEFAULT 1,
+  `category` varchar(255) DEFAULT NULL,
+  `category_id` bigint(20) unsigned DEFAULT NULL,
+  `type` enum('certification','assessment','placement','practice') NOT NULL DEFAULT 'practice',
+  `difficulty` enum('Dễ','Trung bình','Khó') NOT NULL DEFAULT 'Trung bình',
+  `passing_score` int(11) DEFAULT NULL,
+  `created_by` bigint(20) unsigned NOT NULL,
+  `random_questions_count` int(11) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `tests_position_id_foreign` (`position_id`),
+  KEY `tests_ship_type_id_foreign` (`ship_type_id`),
+  KEY `tests_created_by_foreign` (`created_by`),
+  KEY `tests_category_id_foreign` (`category_id`),
+  CONSTRAINT `tests_category_id_foreign` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`) ON DELETE SET NULL,
+  CONSTRAINT `tests_created_by_foreign` FOREIGN KEY (`created_by`) REFERENCES `users` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `tests_position_id_foreign` FOREIGN KEY (`position_id`) REFERENCES `positions` (`id`) ON DELETE SET NULL,
+  CONSTRAINT `tests_ship_type_id_foreign` FOREIGN KEY (`ship_type_id`) REFERENCES `ship_types` (`id`) ON DELETE SET NULL
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Các ràng buộc cho bảng `users`
+-- Dumping data for table `tests`
 --
-ALTER TABLE `users`
-  ADD CONSTRAINT `users_role_id_foreign` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`) ON DELETE SET NULL;
+
+LOCK TABLES `tests` WRITE;
+/*!40000 ALTER TABLE `tests` DISABLE KEYS */;
+INSERT INTO `tests` VALUES (1,'Chứng chỉ Thuyền trưởng Tàu biển','Bài kiểm tra cấp chứng chỉ Thuyền trưởng tàu biển theo tiêu chuẩn quốc tế. Đánh giá kiến thức hàng hải, luật biển, xử lý tình huống khẩn cấp, và kỹ năng quản lý.',1,NULL,120,1,1,'Kiểm tra chứng chỉ',NULL,'certification','Khó',80,1,NULL,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(2,'Chứng chỉ Thuyền phó 1','Bài kiểm tra cấp chứng chỉ Thuyền phó 1 theo tiêu chuẩn quốc tế. Đánh giá kiến thức về hàng hải, xếp dỡ hàng hóa, an toàn hàng hải và xử lý tình huống khẩn cấp.',2,NULL,90,1,1,'Kiểm tra chứng chỉ',NULL,'certification','Khó',75,1,NULL,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(3,'Chứng chỉ Máy trưởng Tàu biển','Bài kiểm tra cấp chứng chỉ Máy trưởng tàu biển theo tiêu chuẩn quốc tế. Đánh giá kiến thức về hệ thống máy tàu, bảo trì, sửa chữa, và xử lý sự cố động cơ.',8,NULL,120,1,1,'Kiểm tra chứng chỉ',NULL,'certification','Khó',75,1,NULL,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(4,'Chứng chỉ Vận hành Tàu dầu','Bài kiểm tra chứng chỉ đặc biệt cho thuyền viên làm việc trên tàu dầu. Đánh giá kiến thức về an toàn đặc thù, quy trình xếp dỡ, và xử lý sự cố tràn dầu.',NULL,3,90,1,1,'Kiểm tra chứng chỉ',NULL,'certification','Trung bình',70,1,NULL,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(5,'Đánh giá Năng lực Thuyền trưởng - Tàu Container','Bài kiểm tra đánh giá năng lực thuyền trưởng trên tàu container. Tập trung vào kiến thức điều động tàu, quy trình xếp container, và quản lý an toàn.',1,2,60,1,1,'Kiểm tra đánh giá năng lực',NULL,'assessment','Trung bình',70,1,NULL,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(6,'Đánh giá Năng lực Thuyền phó 1 - Tàu Hàng rời','Bài kiểm tra đánh giá năng lực thuyền phó 1 trên tàu hàng rời. Tập trung vào kiến thức xếp dỡ hàng rời, ổn định tàu, và an toàn khoang hàng.',2,1,60,1,1,'Kiểm tra đánh giá năng lực',NULL,'assessment','Trung bình',70,1,NULL,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(7,'Đánh giá Năng lực Máy trưởng - Tàu dầu','Bài kiểm tra đánh giá năng lực máy trưởng trên tàu dầu. Tập trung vào kiến thức về hệ thống bơm dầu, hệ thống kiểm soát khí gas, và an toàn buồng máy.',8,3,60,1,1,'Kiểm tra đánh giá năng lực',NULL,'assessment','Trung bình',70,1,NULL,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(8,'Kiểm tra Phân loại Năng lực Hàng hải','Bài kiểm tra phân loại trình độ kiến thức hàng hải chung. Giúp xác định mức độ hiểu biết và phân loại thuyền viên theo trình độ.',NULL,NULL,45,1,1,'Kiểm tra phân loại',NULL,'placement','Trung bình',NULL,1,NULL,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(9,'Kiểm tra Phân loại Sỹ quan Boong','Bài kiểm tra phân loại trình độ kiến thức chuyên môn cho sỹ quan boong. Giúp xác định và phân loại sỹ quan theo năng lực thực tế.',NULL,NULL,60,1,1,'Kiểm tra phân loại',NULL,'placement','Trung bình',NULL,1,NULL,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(10,'Kiểm tra Phân loại Sỹ quan Máy','Bài kiểm tra phân loại trình độ kiến thức chuyên môn cho sỹ quan máy. Giúp xác định và phân loại sỹ quan theo năng lực thực tế.',NULL,NULL,60,1,1,'Kiểm tra phân loại',NULL,'placement','Trung bình',NULL,1,NULL,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(11,'Luyện tập An toàn Hàng hải','Bài luyện tập kiến thức và quy trình an toàn hàng hải cơ bản. Gồm các tình huống thường gặp và biện pháp xử lý.',NULL,NULL,30,1,1,'Kiểm tra luyện tập',NULL,'practice','Dễ',NULL,1,NULL,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(12,'Luyện tập Xử lý Tình huống Khẩn cấp','Bài luyện tập kỹ năng xử lý các tình huống khẩn cấp trên tàu biển như cháy, va chạm, thủng tàu, người rơi xuống biển.',NULL,NULL,30,1,1,'Kiểm tra luyện tập',NULL,'practice','Trung bình',NULL,1,NULL,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(13,'Luyện tập Điều động Tàu','Bài luyện tập kiến thức và kỹ năng điều động tàu trong các tình huống khác nhau như cập cảng, tránh va, và đi trong luồng hẹp.',1,NULL,30,1,1,'Kiểm tra luyện tập',NULL,'practice','Khó',NULL,1,NULL,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(14,'Luyện tập Hệ thống Máy tàu','Bài luyện tập kiến thức về vận hành, bảo dưỡng và xử lý sự cố hệ thống máy tàu biển.',8,NULL,30,1,1,'Kiểm tra luyện tập',NULL,'practice','Trung bình',NULL,1,NULL,'2025-05-16 20:22:28','2025-05-16 20:22:28');
+/*!40000 ALTER TABLE `tests` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
--- Các ràng buộc cho bảng `user_responses`
+-- Table structure for table `thuyen_viens`
 --
-ALTER TABLE `user_responses`
-  ADD CONSTRAINT `user_responses_answer_id_foreign` FOREIGN KEY (`answer_id`) REFERENCES `answers` (`id`) ON DELETE SET NULL,
-  ADD CONSTRAINT `user_responses_question_id_foreign` FOREIGN KEY (`question_id`) REFERENCES `questions` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `user_responses_test_attempt_id_foreign` FOREIGN KEY (`test_attempt_id`) REFERENCES `test_attempts` (`id`) ON DELETE CASCADE;
-COMMIT;
 
+DROP TABLE IF EXISTS `thuyen_viens`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `thuyen_viens` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` bigint(20) unsigned NOT NULL,
+  `position_id` bigint(20) unsigned DEFAULT NULL,
+  `ship_type_id` bigint(20) unsigned DEFAULT NULL,
+  `experience` int(11) NOT NULL DEFAULT 0,
+  `age` int(11) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `thuyen_viens_user_id_foreign` (`user_id`),
+  KEY `thuyen_viens_position_id_foreign` (`position_id`),
+  KEY `thuyen_viens_ship_type_id_foreign` (`ship_type_id`),
+  CONSTRAINT `thuyen_viens_position_id_foreign` FOREIGN KEY (`position_id`) REFERENCES `positions` (`id`) ON DELETE SET NULL,
+  CONSTRAINT `thuyen_viens_ship_type_id_foreign` FOREIGN KEY (`ship_type_id`) REFERENCES `ship_types` (`id`) ON DELETE SET NULL,
+  CONSTRAINT `thuyen_viens_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `thuyen_viens`
+--
+
+LOCK TABLES `thuyen_viens` WRITE;
+/*!40000 ALTER TABLE `thuyen_viens` DISABLE KEYS */;
+INSERT INTO `thuyen_viens` VALUES (1,2,1,2,15,NULL,'2025-05-16 20:22:27','2025-05-16 20:22:27'),(2,3,1,3,10,NULL,'2025-05-16 20:22:27','2025-05-16 20:22:27'),(3,4,2,5,12,NULL,'2025-05-16 20:22:27','2025-05-16 20:22:27'),(4,5,3,2,8,NULL,'2025-05-16 20:22:27','2025-05-16 20:22:27'),(5,6,4,5,5,NULL,'2025-05-16 20:22:27','2025-05-16 20:22:27'),(6,7,5,5,7,NULL,'2025-05-16 20:22:27','2025-05-16 20:22:27'),(7,8,6,7,9,NULL,'2025-05-16 20:22:27','2025-05-16 20:22:27'),(8,9,9,8,3,NULL,'2025-05-16 20:22:27','2025-05-16 20:22:27'),(9,10,7,3,4,NULL,'2025-05-16 20:22:28','2025-05-16 20:22:28'),(10,11,8,4,1,NULL,'2025-05-16 20:22:28','2025-05-16 20:22:28');
+/*!40000 ALTER TABLE `thuyen_viens` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `user_responses`
+--
+
+DROP TABLE IF EXISTS `user_responses`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `user_responses` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `test_attempt_id` bigint(20) unsigned NOT NULL,
+  `question_id` bigint(20) unsigned NOT NULL,
+  `answer_id` bigint(20) unsigned DEFAULT NULL,
+  `text_response` text DEFAULT NULL,
+  `response_type` varchar(255) DEFAULT NULL,
+  `is_marked` tinyint(1) NOT NULL DEFAULT 0,
+  `score` double(8,2) NOT NULL DEFAULT 0.00,
+  `admin_comment` text DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `user_responses_test_attempt_id_foreign` (`test_attempt_id`),
+  KEY `user_responses_question_id_foreign` (`question_id`),
+  KEY `user_responses_answer_id_foreign` (`answer_id`),
+  CONSTRAINT `user_responses_answer_id_foreign` FOREIGN KEY (`answer_id`) REFERENCES `answers` (`id`) ON DELETE SET NULL,
+  CONSTRAINT `user_responses_question_id_foreign` FOREIGN KEY (`question_id`) REFERENCES `questions` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `user_responses_test_attempt_id_foreign` FOREIGN KEY (`test_attempt_id`) REFERENCES `test_attempts` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=795 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `user_responses`
+--
+
+LOCK TABLES `user_responses` WRITE;
+/*!40000 ALTER TABLE `user_responses` DISABLE KEYS */;
+INSERT INTO `user_responses` VALUES (1,1,56,NULL,'Câu trả lời mẫu cho câu hỏi 56',NULL,1,2.00,NULL,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(2,1,25,57,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(3,1,37,NULL,'Câu trả lời mẫu cho câu hỏi 37',NULL,1,2.00,NULL,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(4,1,11,NULL,'Câu trả lời mẫu cho câu hỏi 11',NULL,1,0.00,NULL,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(5,1,48,73,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(6,1,34,NULL,'Câu trả lời mẫu cho câu hỏi 34',NULL,1,2.00,NULL,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(7,1,22,45,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(8,1,8,NULL,'Câu trả lời mẫu cho câu hỏi 8',NULL,1,2.00,NULL,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(9,1,4,NULL,'Câu trả lời mẫu cho câu hỏi 4',NULL,1,2.00,NULL,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(10,1,40,NULL,'Câu trả lời mẫu cho câu hỏi 40',NULL,1,2.00,NULL,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(11,2,20,37,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(12,2,46,65,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(13,2,6,NULL,'Câu trả lời mẫu cho câu hỏi 6',NULL,1,2.00,NULL,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(14,2,58,NULL,'Câu trả lời mẫu cho câu hỏi 58',NULL,1,1.00,NULL,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(15,2,1,1,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(16,2,7,NULL,'Câu trả lời mẫu cho câu hỏi 7',NULL,1,2.00,NULL,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(17,2,23,49,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(18,2,10,NULL,'Câu trả lời mẫu cho câu hỏi 10',NULL,1,2.00,NULL,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(19,2,21,41,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(20,2,8,NULL,'Câu trả lời mẫu cho câu hỏi 8',NULL,1,2.00,NULL,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(21,2,48,73,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(22,2,35,NULL,'Câu trả lời mẫu cho câu hỏi 35',NULL,1,2.00,NULL,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(23,2,40,NULL,'Câu trả lời mẫu cho câu hỏi 40',NULL,1,2.00,NULL,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(24,2,56,NULL,'Câu trả lời mẫu cho câu hỏi 56',NULL,1,2.00,NULL,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(25,2,47,69,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(26,2,24,53,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(27,2,26,61,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(28,2,39,NULL,'Câu trả lời mẫu cho câu hỏi 39',NULL,1,2.00,NULL,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(29,2,49,77,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(30,2,37,NULL,'Câu trả lời mẫu cho câu hỏi 37',NULL,1,0.00,NULL,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(31,2,22,45,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(32,2,57,NULL,'Câu trả lời mẫu cho câu hỏi 57',NULL,1,2.00,NULL,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(33,2,68,109,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(34,2,4,NULL,'Câu trả lời mẫu cho câu hỏi 4',NULL,1,2.00,NULL,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(35,2,60,NULL,'Câu trả lời mẫu cho câu hỏi 60',NULL,1,0.00,NULL,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(36,2,36,NULL,'Câu trả lời mẫu cho câu hỏi 36',NULL,1,2.00,NULL,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(37,2,34,NULL,'Câu trả lời mẫu cho câu hỏi 34',NULL,1,2.00,NULL,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(38,2,25,57,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(39,2,59,NULL,'Câu trả lời mẫu cho câu hỏi 59',NULL,1,2.00,NULL,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(40,2,9,NULL,'Câu trả lời mẫu cho câu hỏi 9',NULL,1,2.00,NULL,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(41,3,51,85,NULL,NULL,0,1.00,NULL,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(42,3,55,101,NULL,NULL,0,1.00,NULL,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(43,3,53,96,NULL,NULL,0,0.00,NULL,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(44,3,2,5,NULL,NULL,0,1.00,NULL,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(45,3,52,89,NULL,NULL,0,1.00,NULL,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(46,3,54,97,NULL,NULL,0,1.00,NULL,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(47,3,5,NULL,'Câu trả lời mẫu cho câu hỏi 5',NULL,1,3.00,NULL,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(48,3,37,NULL,'Câu trả lời mẫu cho câu hỏi 37',NULL,1,2.00,NULL,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(49,3,9,NULL,'Câu trả lời mẫu cho câu hỏi 9',NULL,1,2.00,NULL,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(50,3,32,NULL,'Câu trả lời mẫu cho câu hỏi 32',NULL,1,3.00,NULL,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(51,4,36,NULL,'Câu trả lời mẫu cho câu hỏi 36',NULL,1,2.00,NULL,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(52,4,6,NULL,'Câu trả lời mẫu cho câu hỏi 6',NULL,1,2.00,NULL,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(53,4,12,NULL,'Câu trả lời mẫu cho câu hỏi 12',NULL,1,2.00,NULL,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(54,4,56,NULL,'Câu trả lời mẫu cho câu hỏi 56',NULL,1,2.00,NULL,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(55,4,8,NULL,'Câu trả lời mẫu cho câu hỏi 8',NULL,1,2.00,NULL,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(56,4,34,NULL,'Câu trả lời mẫu cho câu hỏi 34',NULL,1,2.00,NULL,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(57,4,46,65,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(58,4,50,81,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(59,4,35,NULL,'Câu trả lời mẫu cho câu hỏi 35',NULL,1,2.00,NULL,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(60,4,47,69,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(61,4,37,NULL,'Câu trả lời mẫu cho câu hỏi 37',NULL,1,1.00,NULL,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(62,4,23,49,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(63,4,38,NULL,'Câu trả lời mẫu cho câu hỏi 38',NULL,1,2.00,NULL,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(64,4,40,NULL,'Câu trả lời mẫu cho câu hỏi 40',NULL,1,2.00,NULL,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(65,4,24,53,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(66,4,58,NULL,'Câu trả lời mẫu cho câu hỏi 58',NULL,1,2.00,NULL,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(67,4,4,NULL,'Câu trả lời mẫu cho câu hỏi 4',NULL,1,2.00,NULL,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(68,4,9,NULL,'Câu trả lời mẫu cho câu hỏi 9',NULL,1,2.00,NULL,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(69,4,20,37,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(70,4,7,NULL,'Câu trả lời mẫu cho câu hỏi 7',NULL,1,2.00,NULL,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(71,4,22,45,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(72,4,21,41,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(73,4,25,57,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(74,4,10,NULL,'Câu trả lời mẫu cho câu hỏi 10',NULL,1,2.00,NULL,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(75,4,57,NULL,'Câu trả lời mẫu cho câu hỏi 57',NULL,1,2.00,NULL,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(76,4,48,73,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(77,4,59,NULL,'Câu trả lời mẫu cho câu hỏi 59',NULL,1,2.00,NULL,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(78,4,1,1,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(79,4,11,NULL,'Câu trả lời mẫu cho câu hỏi 11',NULL,1,2.00,NULL,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(80,4,39,NULL,'Câu trả lời mẫu cho câu hỏi 39',NULL,1,2.00,NULL,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(81,5,36,NULL,'Câu trả lời mẫu cho câu hỏi 36',NULL,1,2.00,NULL,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(82,5,38,NULL,'Câu trả lời mẫu cho câu hỏi 38',NULL,1,2.00,NULL,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(83,5,47,69,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(84,5,8,NULL,'Câu trả lời mẫu cho câu hỏi 8',NULL,1,1.00,NULL,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(85,5,4,NULL,'Câu trả lời mẫu cho câu hỏi 4',NULL,1,2.00,NULL,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(86,5,21,41,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(87,5,24,53,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(88,5,34,NULL,'Câu trả lời mẫu cho câu hỏi 34',NULL,1,2.00,NULL,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(89,5,57,NULL,'Câu trả lời mẫu cho câu hỏi 57',NULL,1,2.00,NULL,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(90,5,12,NULL,'Câu trả lời mẫu cho câu hỏi 12',NULL,1,2.00,NULL,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(91,5,6,NULL,'Câu trả lời mẫu cho câu hỏi 6',NULL,1,2.00,NULL,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(92,5,9,NULL,'Câu trả lời mẫu cho câu hỏi 9',NULL,1,2.00,NULL,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(93,5,10,NULL,'Câu trả lời mẫu cho câu hỏi 10',NULL,1,1.00,NULL,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(94,5,59,NULL,'Câu trả lời mẫu cho câu hỏi 59',NULL,1,2.00,NULL,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(95,5,23,49,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(96,5,7,NULL,'Câu trả lời mẫu cho câu hỏi 7',NULL,1,2.00,NULL,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(97,5,37,NULL,'Câu trả lời mẫu cho câu hỏi 37',NULL,1,2.00,NULL,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(98,5,40,NULL,'Câu trả lời mẫu cho câu hỏi 40',NULL,1,2.00,NULL,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(99,5,22,45,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(100,5,56,NULL,'Câu trả lời mẫu cho câu hỏi 56',NULL,1,2.00,NULL,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(101,5,48,73,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(102,5,25,57,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(103,5,58,NULL,'Câu trả lời mẫu cho câu hỏi 58',NULL,1,2.00,NULL,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(104,5,11,NULL,'Câu trả lời mẫu cho câu hỏi 11',NULL,1,1.00,NULL,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(105,5,26,61,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(106,5,20,37,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(107,5,1,1,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(108,5,49,77,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(109,5,68,109,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(110,5,60,NULL,'Câu trả lời mẫu cho câu hỏi 60',NULL,1,2.00,NULL,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(111,6,56,NULL,'Câu trả lời mẫu cho câu hỏi 56',NULL,1,2.00,NULL,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(112,6,25,57,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(113,6,37,NULL,'Câu trả lời mẫu cho câu hỏi 37',NULL,1,2.00,NULL,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(114,6,11,NULL,'Câu trả lời mẫu cho câu hỏi 11',NULL,1,2.00,NULL,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(115,6,48,73,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(116,6,34,NULL,'Câu trả lời mẫu cho câu hỏi 34',NULL,1,2.00,NULL,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(117,6,22,45,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(118,6,8,NULL,'Câu trả lời mẫu cho câu hỏi 8',NULL,1,2.00,NULL,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(119,6,4,NULL,'Câu trả lời mẫu cho câu hỏi 4',NULL,1,2.00,NULL,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(120,6,40,NULL,'Câu trả lời mẫu cho câu hỏi 40',NULL,1,2.00,NULL,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(121,7,20,37,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(122,7,46,65,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(123,7,6,NULL,'Câu trả lời mẫu cho câu hỏi 6',NULL,1,2.00,NULL,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(124,7,58,NULL,'Câu trả lời mẫu cho câu hỏi 58',NULL,1,1.00,NULL,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(125,7,1,3,NULL,NULL,0,0.00,NULL,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(126,7,7,NULL,'Câu trả lời mẫu cho câu hỏi 7',NULL,1,2.00,NULL,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(127,7,23,49,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(128,7,10,NULL,'Câu trả lời mẫu cho câu hỏi 10',NULL,1,2.00,NULL,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(129,7,21,41,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(130,7,8,NULL,'Câu trả lời mẫu cho câu hỏi 8',NULL,1,2.00,NULL,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(131,7,48,73,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(132,7,35,NULL,'Câu trả lời mẫu cho câu hỏi 35',NULL,1,1.00,NULL,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(133,7,40,NULL,'Câu trả lời mẫu cho câu hỏi 40',NULL,1,1.00,NULL,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(134,7,56,NULL,'Câu trả lời mẫu cho câu hỏi 56',NULL,1,2.00,NULL,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(135,7,47,69,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(136,7,24,53,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:29','2025-05-16 20:22:29'),(137,7,26,61,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(138,7,39,NULL,'Câu trả lời mẫu cho câu hỏi 39',NULL,1,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(139,7,49,77,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(140,7,37,NULL,'Câu trả lời mẫu cho câu hỏi 37',NULL,1,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(141,7,22,48,NULL,NULL,0,0.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(142,7,57,NULL,'Câu trả lời mẫu cho câu hỏi 57',NULL,1,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(143,7,68,109,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(144,7,4,NULL,'Câu trả lời mẫu cho câu hỏi 4',NULL,1,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(145,7,60,NULL,'Câu trả lời mẫu cho câu hỏi 60',NULL,1,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(146,7,36,NULL,'Câu trả lời mẫu cho câu hỏi 36',NULL,1,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(147,7,34,NULL,'Câu trả lời mẫu cho câu hỏi 34',NULL,1,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(148,7,25,57,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(149,7,59,NULL,'Câu trả lời mẫu cho câu hỏi 59',NULL,1,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(150,7,9,NULL,'Câu trả lời mẫu cho câu hỏi 9',NULL,1,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(151,8,36,NULL,'Câu trả lời mẫu cho câu hỏi 36',NULL,1,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(152,8,38,NULL,'Câu trả lời mẫu cho câu hỏi 38',NULL,1,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(153,8,47,69,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(154,8,8,NULL,'Câu trả lời mẫu cho câu hỏi 8',NULL,1,1.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(155,8,4,NULL,'Câu trả lời mẫu cho câu hỏi 4',NULL,1,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(156,8,21,41,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(157,8,24,53,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(158,8,34,NULL,'Câu trả lời mẫu cho câu hỏi 34',NULL,1,0.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(159,8,57,NULL,'Câu trả lời mẫu cho câu hỏi 57',NULL,1,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(160,8,12,NULL,'Câu trả lời mẫu cho câu hỏi 12',NULL,1,0.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(161,8,6,NULL,'Câu trả lời mẫu cho câu hỏi 6',NULL,1,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(162,8,9,NULL,'Câu trả lời mẫu cho câu hỏi 9',NULL,1,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(163,8,10,NULL,'Câu trả lời mẫu cho câu hỏi 10',NULL,1,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(164,8,59,NULL,'Câu trả lời mẫu cho câu hỏi 59',NULL,1,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(165,8,23,51,NULL,NULL,0,0.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(166,8,7,NULL,'Câu trả lời mẫu cho câu hỏi 7',NULL,1,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(167,8,37,NULL,'Câu trả lời mẫu cho câu hỏi 37',NULL,1,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(168,8,40,NULL,'Câu trả lời mẫu cho câu hỏi 40',NULL,1,0.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(169,8,22,45,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(170,8,56,NULL,'Câu trả lời mẫu cho câu hỏi 56',NULL,1,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(171,8,48,74,NULL,NULL,0,0.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(172,8,25,58,NULL,NULL,0,0.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(173,8,58,NULL,'Câu trả lời mẫu cho câu hỏi 58',NULL,1,0.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(174,8,11,NULL,'Câu trả lời mẫu cho câu hỏi 11',NULL,1,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(175,8,26,62,NULL,NULL,0,0.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(176,8,20,40,NULL,NULL,0,0.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(177,8,1,2,NULL,NULL,0,0.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(178,8,49,78,NULL,NULL,0,0.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(179,8,68,109,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(180,8,60,NULL,'Câu trả lời mẫu cho câu hỏi 60',NULL,1,0.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(181,9,51,85,NULL,NULL,0,1.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(182,9,55,101,NULL,NULL,0,1.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(183,9,53,93,NULL,NULL,0,1.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(184,9,2,5,NULL,NULL,0,1.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(185,9,52,89,NULL,NULL,0,1.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(186,9,54,97,NULL,NULL,0,1.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(187,9,5,NULL,'Câu trả lời mẫu cho câu hỏi 5',NULL,1,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(188,9,37,NULL,'Câu trả lời mẫu cho câu hỏi 37',NULL,1,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(189,9,9,NULL,'Câu trả lời mẫu cho câu hỏi 9',NULL,1,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(190,9,32,NULL,'Câu trả lời mẫu cho câu hỏi 32',NULL,1,3.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(191,10,20,37,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(192,10,46,68,NULL,NULL,0,0.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(193,10,6,NULL,'Câu trả lời mẫu cho câu hỏi 6',NULL,1,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(194,10,58,NULL,'Câu trả lời mẫu cho câu hỏi 58',NULL,1,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(195,10,1,1,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(196,10,7,NULL,'Câu trả lời mẫu cho câu hỏi 7',NULL,1,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(197,10,23,49,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(198,10,10,NULL,'Câu trả lời mẫu cho câu hỏi 10',NULL,1,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(199,10,21,41,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(200,10,8,NULL,'Câu trả lời mẫu cho câu hỏi 8',NULL,1,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(201,10,48,73,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(202,10,35,NULL,'Câu trả lời mẫu cho câu hỏi 35',NULL,1,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(203,10,40,NULL,'Câu trả lời mẫu cho câu hỏi 40',NULL,1,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(204,10,56,NULL,'Câu trả lời mẫu cho câu hỏi 56',NULL,1,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(205,10,47,69,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(206,10,24,56,NULL,NULL,0,0.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(207,10,26,61,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(208,10,39,NULL,'Câu trả lời mẫu cho câu hỏi 39',NULL,1,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(209,10,49,77,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(210,10,37,NULL,'Câu trả lời mẫu cho câu hỏi 37',NULL,1,1.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(211,10,22,46,NULL,NULL,0,0.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(212,10,57,NULL,'Câu trả lời mẫu cho câu hỏi 57',NULL,1,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(213,10,68,112,NULL,NULL,0,0.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(214,10,4,NULL,'Câu trả lời mẫu cho câu hỏi 4',NULL,1,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(215,10,60,NULL,'Câu trả lời mẫu cho câu hỏi 60',NULL,1,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(216,10,36,NULL,'Câu trả lời mẫu cho câu hỏi 36',NULL,1,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(217,10,34,NULL,'Câu trả lời mẫu cho câu hỏi 34',NULL,1,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(218,10,25,57,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(219,10,59,NULL,'Câu trả lời mẫu cho câu hỏi 59',NULL,1,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(220,10,9,NULL,'Câu trả lời mẫu cho câu hỏi 9',NULL,1,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(221,11,36,NULL,'Câu trả lời mẫu cho câu hỏi 36',NULL,1,1.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(222,11,6,NULL,'Câu trả lời mẫu cho câu hỏi 6',NULL,1,0.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(223,11,12,NULL,'Câu trả lời mẫu cho câu hỏi 12',NULL,1,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(224,11,56,NULL,'Câu trả lời mẫu cho câu hỏi 56',NULL,1,0.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(225,11,8,NULL,'Câu trả lời mẫu cho câu hỏi 8',NULL,1,1.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(226,11,34,NULL,'Câu trả lời mẫu cho câu hỏi 34',NULL,1,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(227,11,46,65,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(228,11,50,81,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(229,11,35,NULL,'Câu trả lời mẫu cho câu hỏi 35',NULL,1,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(230,11,47,70,NULL,NULL,0,0.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(231,11,37,NULL,'Câu trả lời mẫu cho câu hỏi 37',NULL,1,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(232,11,23,52,NULL,NULL,0,0.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(233,11,38,NULL,'Câu trả lời mẫu cho câu hỏi 38',NULL,1,0.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(234,11,40,NULL,'Câu trả lời mẫu cho câu hỏi 40',NULL,1,0.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(235,11,24,53,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(236,11,58,NULL,'Câu trả lời mẫu cho câu hỏi 58',NULL,1,0.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(237,11,4,NULL,'Câu trả lời mẫu cho câu hỏi 4',NULL,1,0.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(238,11,9,NULL,'Câu trả lời mẫu cho câu hỏi 9',NULL,1,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(239,11,20,37,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(240,11,7,NULL,'Câu trả lời mẫu cho câu hỏi 7',NULL,1,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(241,11,22,45,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(242,11,21,41,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(243,11,25,57,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(244,11,10,NULL,'Câu trả lời mẫu cho câu hỏi 10',NULL,1,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(245,11,57,NULL,'Câu trả lời mẫu cho câu hỏi 57',NULL,1,0.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(246,11,48,75,NULL,NULL,0,0.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(247,11,59,NULL,'Câu trả lời mẫu cho câu hỏi 59',NULL,1,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(248,11,1,1,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(249,11,11,NULL,'Câu trả lời mẫu cho câu hỏi 11',NULL,1,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(250,11,39,NULL,'Câu trả lời mẫu cho câu hỏi 39',NULL,1,1.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(251,12,56,NULL,'Câu trả lời mẫu cho câu hỏi 56',NULL,1,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(252,12,25,57,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(253,12,37,NULL,'Câu trả lời mẫu cho câu hỏi 37',NULL,1,0.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(254,12,11,NULL,'Câu trả lời mẫu cho câu hỏi 11',NULL,1,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(255,12,48,76,NULL,NULL,0,0.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(256,12,34,NULL,'Câu trả lời mẫu cho câu hỏi 34',NULL,1,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(257,12,22,47,NULL,NULL,0,0.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(258,12,8,NULL,'Câu trả lời mẫu cho câu hỏi 8',NULL,1,1.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(259,12,4,NULL,'Câu trả lời mẫu cho câu hỏi 4',NULL,1,0.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(260,12,40,NULL,'Câu trả lời mẫu cho câu hỏi 40',NULL,1,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(261,13,20,37,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(262,13,46,67,NULL,NULL,0,0.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(263,13,6,NULL,'Câu trả lời mẫu cho câu hỏi 6',NULL,1,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(264,13,58,NULL,'Câu trả lời mẫu cho câu hỏi 58',NULL,1,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(265,13,1,1,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(266,13,7,NULL,'Câu trả lời mẫu cho câu hỏi 7',NULL,1,0.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(267,13,23,49,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(268,13,10,NULL,'Câu trả lời mẫu cho câu hỏi 10',NULL,1,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(269,13,21,42,NULL,NULL,0,0.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(270,13,8,NULL,'Câu trả lời mẫu cho câu hỏi 8',NULL,1,0.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(271,13,48,73,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(272,13,35,NULL,'Câu trả lời mẫu cho câu hỏi 35',NULL,1,0.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(273,13,40,NULL,'Câu trả lời mẫu cho câu hỏi 40',NULL,1,0.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(274,13,56,NULL,'Câu trả lời mẫu cho câu hỏi 56',NULL,1,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(275,13,47,70,NULL,NULL,0,0.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(276,13,24,53,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(277,13,26,61,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(278,13,39,NULL,'Câu trả lời mẫu cho câu hỏi 39',NULL,1,0.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(279,13,49,77,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(280,13,37,NULL,'Câu trả lời mẫu cho câu hỏi 37',NULL,1,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(281,13,22,46,NULL,NULL,0,0.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(282,13,57,NULL,'Câu trả lời mẫu cho câu hỏi 57',NULL,1,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(283,13,68,111,NULL,NULL,0,0.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(284,13,4,NULL,'Câu trả lời mẫu cho câu hỏi 4',NULL,1,0.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(285,13,60,NULL,'Câu trả lời mẫu cho câu hỏi 60',NULL,1,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(286,13,36,NULL,'Câu trả lời mẫu cho câu hỏi 36',NULL,1,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(287,13,34,NULL,'Câu trả lời mẫu cho câu hỏi 34',NULL,1,1.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(288,13,25,57,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(289,13,59,NULL,'Câu trả lời mẫu cho câu hỏi 59',NULL,1,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(290,13,9,NULL,'Câu trả lời mẫu cho câu hỏi 9',NULL,1,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(291,14,36,NULL,'Câu trả lời mẫu cho câu hỏi 36',NULL,1,0.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(292,14,38,NULL,'Câu trả lời mẫu cho câu hỏi 38',NULL,1,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(293,14,47,69,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(294,14,8,NULL,'Câu trả lời mẫu cho câu hỏi 8',NULL,1,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(295,14,4,NULL,'Câu trả lời mẫu cho câu hỏi 4',NULL,1,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(296,14,21,41,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(297,14,24,55,NULL,NULL,0,0.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(298,14,34,NULL,'Câu trả lời mẫu cho câu hỏi 34',NULL,1,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(299,14,57,NULL,'Câu trả lời mẫu cho câu hỏi 57',NULL,1,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(300,14,12,NULL,'Câu trả lời mẫu cho câu hỏi 12',NULL,1,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(301,14,6,NULL,'Câu trả lời mẫu cho câu hỏi 6',NULL,1,1.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(302,14,9,NULL,'Câu trả lời mẫu cho câu hỏi 9',NULL,1,0.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(303,14,10,NULL,'Câu trả lời mẫu cho câu hỏi 10',NULL,1,0.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(304,14,59,NULL,'Câu trả lời mẫu cho câu hỏi 59',NULL,1,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(305,14,23,49,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(306,14,7,NULL,'Câu trả lời mẫu cho câu hỏi 7',NULL,1,0.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(307,14,37,NULL,'Câu trả lời mẫu cho câu hỏi 37',NULL,1,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(308,14,40,NULL,'Câu trả lời mẫu cho câu hỏi 40',NULL,1,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(309,14,22,45,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(310,14,56,NULL,'Câu trả lời mẫu cho câu hỏi 56',NULL,1,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(311,14,48,73,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(312,14,25,57,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(313,14,58,NULL,'Câu trả lời mẫu cho câu hỏi 58',NULL,1,1.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(314,14,11,NULL,'Câu trả lời mẫu cho câu hỏi 11',NULL,1,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(315,14,26,61,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(316,14,20,40,NULL,NULL,0,0.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(317,14,1,4,NULL,NULL,0,0.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(318,14,49,77,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(319,14,68,109,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(320,14,60,NULL,'Câu trả lời mẫu cho câu hỏi 60',NULL,1,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(321,15,56,NULL,'Câu trả lời mẫu cho câu hỏi 56',NULL,1,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(322,15,25,57,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(323,15,37,NULL,'Câu trả lời mẫu cho câu hỏi 37',NULL,1,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(324,15,11,NULL,'Câu trả lời mẫu cho câu hỏi 11',NULL,1,1.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(325,15,48,73,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(326,15,34,NULL,'Câu trả lời mẫu cho câu hỏi 34',NULL,1,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(327,15,22,45,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(328,15,8,NULL,'Câu trả lời mẫu cho câu hỏi 8',NULL,1,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(329,15,4,NULL,'Câu trả lời mẫu cho câu hỏi 4',NULL,1,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(330,15,40,NULL,'Câu trả lời mẫu cho câu hỏi 40',NULL,1,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(331,16,36,NULL,'Câu trả lời mẫu cho câu hỏi 36',NULL,1,0.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(332,16,38,NULL,'Câu trả lời mẫu cho câu hỏi 38',NULL,1,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(333,16,47,69,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(334,16,8,NULL,'Câu trả lời mẫu cho câu hỏi 8',NULL,1,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(335,16,4,NULL,'Câu trả lời mẫu cho câu hỏi 4',NULL,1,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(336,16,21,44,NULL,NULL,0,0.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(337,16,24,53,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(338,16,34,NULL,'Câu trả lời mẫu cho câu hỏi 34',NULL,1,1.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(339,16,57,NULL,'Câu trả lời mẫu cho câu hỏi 57',NULL,1,0.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(340,16,12,NULL,'Câu trả lời mẫu cho câu hỏi 12',NULL,1,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(341,16,6,NULL,'Câu trả lời mẫu cho câu hỏi 6',NULL,1,1.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(342,16,9,NULL,'Câu trả lời mẫu cho câu hỏi 9',NULL,1,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(343,16,10,NULL,'Câu trả lời mẫu cho câu hỏi 10',NULL,1,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(344,16,59,NULL,'Câu trả lời mẫu cho câu hỏi 59',NULL,1,0.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(345,16,23,49,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(346,16,7,NULL,'Câu trả lời mẫu cho câu hỏi 7',NULL,1,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(347,16,37,NULL,'Câu trả lời mẫu cho câu hỏi 37',NULL,1,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(348,16,40,NULL,'Câu trả lời mẫu cho câu hỏi 40',NULL,1,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(349,16,22,45,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(350,16,56,NULL,'Câu trả lời mẫu cho câu hỏi 56',NULL,1,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(351,16,48,73,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(352,16,25,57,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(353,16,58,NULL,'Câu trả lời mẫu cho câu hỏi 58',NULL,1,0.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(354,16,11,NULL,'Câu trả lời mẫu cho câu hỏi 11',NULL,1,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(355,16,26,61,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(356,16,20,38,NULL,NULL,0,0.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(357,16,1,1,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(358,16,49,80,NULL,NULL,0,0.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(359,16,68,109,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(360,16,60,NULL,'Câu trả lời mẫu cho câu hỏi 60',NULL,1,0.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(361,17,36,NULL,'Câu trả lời mẫu cho câu hỏi 36',NULL,1,0.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(362,17,6,NULL,'Câu trả lời mẫu cho câu hỏi 6',NULL,1,1.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(363,17,12,NULL,'Câu trả lời mẫu cho câu hỏi 12',NULL,1,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(364,17,56,NULL,'Câu trả lời mẫu cho câu hỏi 56',NULL,1,0.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(365,17,8,NULL,'Câu trả lời mẫu cho câu hỏi 8',NULL,1,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(366,17,34,NULL,'Câu trả lời mẫu cho câu hỏi 34',NULL,1,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(367,17,46,68,NULL,NULL,0,0.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(368,17,50,83,NULL,NULL,0,0.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(369,17,35,NULL,'Câu trả lời mẫu cho câu hỏi 35',NULL,1,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(370,17,47,71,NULL,NULL,0,0.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(371,17,37,NULL,'Câu trả lời mẫu cho câu hỏi 37',NULL,1,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(372,17,23,49,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(373,17,38,NULL,'Câu trả lời mẫu cho câu hỏi 38',NULL,1,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(374,17,40,NULL,'Câu trả lời mẫu cho câu hỏi 40',NULL,1,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(375,17,24,56,NULL,NULL,0,0.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(376,17,58,NULL,'Câu trả lời mẫu cho câu hỏi 58',NULL,1,0.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(377,17,4,NULL,'Câu trả lời mẫu cho câu hỏi 4',NULL,1,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(378,17,9,NULL,'Câu trả lời mẫu cho câu hỏi 9',NULL,1,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(379,17,20,38,NULL,NULL,0,0.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(380,17,7,NULL,'Câu trả lời mẫu cho câu hỏi 7',NULL,1,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(381,17,22,45,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(382,17,21,41,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(383,17,25,57,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(384,17,10,NULL,'Câu trả lời mẫu cho câu hỏi 10',NULL,1,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(385,17,57,NULL,'Câu trả lời mẫu cho câu hỏi 57',NULL,1,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(386,17,48,76,NULL,NULL,0,0.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(387,17,59,NULL,'Câu trả lời mẫu cho câu hỏi 59',NULL,1,0.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(388,17,1,1,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(389,17,11,NULL,'Câu trả lời mẫu cho câu hỏi 11',NULL,1,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(390,17,39,NULL,'Câu trả lời mẫu cho câu hỏi 39',NULL,1,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(391,18,51,85,NULL,NULL,0,1.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(392,18,55,101,NULL,NULL,0,1.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(393,18,53,93,NULL,NULL,0,1.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(394,18,2,5,NULL,NULL,0,1.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(395,18,52,91,NULL,NULL,0,0.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(396,18,54,97,NULL,NULL,0,1.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(397,18,5,NULL,'Câu trả lời mẫu cho câu hỏi 5',NULL,1,3.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(398,18,37,NULL,'Câu trả lời mẫu cho câu hỏi 37',NULL,1,0.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(399,18,9,NULL,'Câu trả lời mẫu cho câu hỏi 9',NULL,1,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(400,18,32,NULL,'Câu trả lời mẫu cho câu hỏi 32',NULL,1,3.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(401,19,36,NULL,'Câu trả lời mẫu cho câu hỏi 36',NULL,1,0.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(402,19,38,NULL,'Câu trả lời mẫu cho câu hỏi 38',NULL,1,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(403,19,47,69,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(404,19,8,NULL,'Câu trả lời mẫu cho câu hỏi 8',NULL,1,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(405,19,4,NULL,'Câu trả lời mẫu cho câu hỏi 4',NULL,1,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(406,19,21,44,NULL,NULL,0,0.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(407,19,24,53,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(408,19,34,NULL,'Câu trả lời mẫu cho câu hỏi 34',NULL,1,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(409,19,57,NULL,'Câu trả lời mẫu cho câu hỏi 57',NULL,1,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(410,19,12,NULL,'Câu trả lời mẫu cho câu hỏi 12',NULL,1,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(411,19,6,NULL,'Câu trả lời mẫu cho câu hỏi 6',NULL,1,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(412,19,9,NULL,'Câu trả lời mẫu cho câu hỏi 9',NULL,1,0.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(413,19,10,NULL,'Câu trả lời mẫu cho câu hỏi 10',NULL,1,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(414,19,59,NULL,'Câu trả lời mẫu cho câu hỏi 59',NULL,1,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(415,19,23,49,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(416,19,7,NULL,'Câu trả lời mẫu cho câu hỏi 7',NULL,1,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(417,19,37,NULL,'Câu trả lời mẫu cho câu hỏi 37',NULL,1,0.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(418,19,40,NULL,'Câu trả lời mẫu cho câu hỏi 40',NULL,1,1.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(419,19,22,46,NULL,NULL,0,0.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(420,19,56,NULL,'Câu trả lời mẫu cho câu hỏi 56',NULL,1,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(421,19,48,76,NULL,NULL,0,0.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(422,19,25,57,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(423,19,58,NULL,'Câu trả lời mẫu cho câu hỏi 58',NULL,1,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(424,19,11,NULL,'Câu trả lời mẫu cho câu hỏi 11',NULL,1,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(425,19,26,64,NULL,NULL,0,0.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(426,19,20,39,NULL,NULL,0,0.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(427,19,1,2,NULL,NULL,0,0.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(428,19,49,78,NULL,NULL,0,0.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(429,19,68,109,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(430,19,60,NULL,'Câu trả lời mẫu cho câu hỏi 60',NULL,1,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(431,20,56,NULL,'Câu trả lời mẫu cho câu hỏi 56',NULL,1,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(432,20,25,57,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(433,20,37,NULL,'Câu trả lời mẫu cho câu hỏi 37',NULL,1,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(434,20,11,NULL,'Câu trả lời mẫu cho câu hỏi 11',NULL,1,0.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(435,20,48,73,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(436,20,34,NULL,'Câu trả lời mẫu cho câu hỏi 34',NULL,1,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(437,20,22,48,NULL,NULL,0,0.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(438,20,8,NULL,'Câu trả lời mẫu cho câu hỏi 8',NULL,1,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(439,20,4,NULL,'Câu trả lời mẫu cho câu hỏi 4',NULL,1,1.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(440,20,40,NULL,'Câu trả lời mẫu cho câu hỏi 40',NULL,1,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(441,21,36,NULL,'Câu trả lời mẫu cho câu hỏi 36',NULL,1,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(442,21,38,NULL,'Câu trả lời mẫu cho câu hỏi 38',NULL,1,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(443,21,47,71,NULL,NULL,0,0.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(444,21,8,NULL,'Câu trả lời mẫu cho câu hỏi 8',NULL,1,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(445,21,4,NULL,'Câu trả lời mẫu cho câu hỏi 4',NULL,1,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(446,21,21,42,NULL,NULL,0,0.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(447,21,24,55,NULL,NULL,0,0.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(448,21,34,NULL,'Câu trả lời mẫu cho câu hỏi 34',NULL,1,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(449,21,57,NULL,'Câu trả lời mẫu cho câu hỏi 57',NULL,1,1.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(450,21,12,NULL,'Câu trả lời mẫu cho câu hỏi 12',NULL,1,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(451,21,6,NULL,'Câu trả lời mẫu cho câu hỏi 6',NULL,1,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(452,21,9,NULL,'Câu trả lời mẫu cho câu hỏi 9',NULL,1,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(453,21,10,NULL,'Câu trả lời mẫu cho câu hỏi 10',NULL,1,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(454,21,59,NULL,'Câu trả lời mẫu cho câu hỏi 59',NULL,1,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(455,21,23,51,NULL,NULL,0,0.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(456,21,7,NULL,'Câu trả lời mẫu cho câu hỏi 7',NULL,1,0.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(457,21,37,NULL,'Câu trả lời mẫu cho câu hỏi 37',NULL,1,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(458,21,40,NULL,'Câu trả lời mẫu cho câu hỏi 40',NULL,1,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(459,21,22,46,NULL,NULL,0,0.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(460,21,56,NULL,'Câu trả lời mẫu cho câu hỏi 56',NULL,1,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(461,21,48,74,NULL,NULL,0,0.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(462,21,25,57,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(463,21,58,NULL,'Câu trả lời mẫu cho câu hỏi 58',NULL,1,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(464,21,11,NULL,'Câu trả lời mẫu cho câu hỏi 11',NULL,1,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(465,21,26,61,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(466,21,20,39,NULL,NULL,0,0.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(467,21,1,1,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(468,21,49,77,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(469,21,68,109,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(470,21,60,NULL,'Câu trả lời mẫu cho câu hỏi 60',NULL,1,2.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(471,22,51,85,NULL,NULL,0,1.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(472,22,55,101,NULL,NULL,0,1.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(473,22,53,93,NULL,NULL,0,1.00,NULL,'2025-05-16 20:22:30','2025-05-16 20:22:30'),(474,22,2,5,NULL,NULL,0,1.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(475,22,52,89,NULL,NULL,0,1.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(476,22,54,97,NULL,NULL,0,1.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(477,22,5,NULL,'Câu trả lời mẫu cho câu hỏi 5',NULL,1,3.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(478,22,37,NULL,'Câu trả lời mẫu cho câu hỏi 37',NULL,1,2.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(479,22,9,NULL,'Câu trả lời mẫu cho câu hỏi 9',NULL,1,2.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(480,22,32,NULL,'Câu trả lời mẫu cho câu hỏi 32',NULL,1,2.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(481,23,20,40,NULL,NULL,0,0.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(482,23,46,65,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(483,23,6,NULL,'Câu trả lời mẫu cho câu hỏi 6',NULL,1,2.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(484,23,58,NULL,'Câu trả lời mẫu cho câu hỏi 58',NULL,1,2.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(485,23,1,1,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(486,23,7,NULL,'Câu trả lời mẫu cho câu hỏi 7',NULL,1,2.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(487,23,23,49,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(488,23,10,NULL,'Câu trả lời mẫu cho câu hỏi 10',NULL,1,2.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(489,23,21,43,NULL,NULL,0,0.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(490,23,8,NULL,'Câu trả lời mẫu cho câu hỏi 8',NULL,1,2.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(491,23,48,74,NULL,NULL,0,0.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(492,23,35,NULL,'Câu trả lời mẫu cho câu hỏi 35',NULL,1,1.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(493,23,40,NULL,'Câu trả lời mẫu cho câu hỏi 40',NULL,1,2.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(494,23,56,NULL,'Câu trả lời mẫu cho câu hỏi 56',NULL,1,2.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(495,23,47,69,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(496,23,24,53,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(497,23,26,61,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(498,23,39,NULL,'Câu trả lời mẫu cho câu hỏi 39',NULL,1,2.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(499,23,49,77,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(500,23,37,NULL,'Câu trả lời mẫu cho câu hỏi 37',NULL,1,2.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(501,23,22,45,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(502,23,57,NULL,'Câu trả lời mẫu cho câu hỏi 57',NULL,1,2.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(503,23,68,109,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(504,23,4,NULL,'Câu trả lời mẫu cho câu hỏi 4',NULL,1,2.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(505,23,60,NULL,'Câu trả lời mẫu cho câu hỏi 60',NULL,1,2.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(506,23,36,NULL,'Câu trả lời mẫu cho câu hỏi 36',NULL,1,2.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(507,23,34,NULL,'Câu trả lời mẫu cho câu hỏi 34',NULL,1,2.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(508,23,25,57,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(509,23,59,NULL,'Câu trả lời mẫu cho câu hỏi 59',NULL,1,2.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(510,23,9,NULL,'Câu trả lời mẫu cho câu hỏi 9',NULL,1,2.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(511,24,36,NULL,'Câu trả lời mẫu cho câu hỏi 36',NULL,1,1.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(512,24,38,NULL,'Câu trả lời mẫu cho câu hỏi 38',NULL,1,2.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(513,24,47,69,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(514,24,8,NULL,'Câu trả lời mẫu cho câu hỏi 8',NULL,1,1.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(515,24,4,NULL,'Câu trả lời mẫu cho câu hỏi 4',NULL,1,1.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(516,24,21,44,NULL,NULL,0,0.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(517,24,24,53,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(518,24,34,NULL,'Câu trả lời mẫu cho câu hỏi 34',NULL,1,2.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(519,24,57,NULL,'Câu trả lời mẫu cho câu hỏi 57',NULL,1,2.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(520,24,12,NULL,'Câu trả lời mẫu cho câu hỏi 12',NULL,1,2.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(521,24,6,NULL,'Câu trả lời mẫu cho câu hỏi 6',NULL,1,0.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(522,24,9,NULL,'Câu trả lời mẫu cho câu hỏi 9',NULL,1,2.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(523,24,10,NULL,'Câu trả lời mẫu cho câu hỏi 10',NULL,1,1.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(524,24,59,NULL,'Câu trả lời mẫu cho câu hỏi 59',NULL,1,2.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(525,24,23,49,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(526,24,7,NULL,'Câu trả lời mẫu cho câu hỏi 7',NULL,1,2.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(527,24,37,NULL,'Câu trả lời mẫu cho câu hỏi 37',NULL,1,2.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(528,24,40,NULL,'Câu trả lời mẫu cho câu hỏi 40',NULL,1,0.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(529,24,22,45,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(530,24,56,NULL,'Câu trả lời mẫu cho câu hỏi 56',NULL,1,2.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(531,24,48,76,NULL,NULL,0,0.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(532,24,25,60,NULL,NULL,0,0.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(533,24,58,NULL,'Câu trả lời mẫu cho câu hỏi 58',NULL,1,2.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(534,24,11,NULL,'Câu trả lời mẫu cho câu hỏi 11',NULL,1,1.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(535,24,26,63,NULL,NULL,0,0.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(536,24,20,37,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(537,24,1,4,NULL,NULL,0,0.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(538,24,49,79,NULL,NULL,0,0.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(539,24,68,110,NULL,NULL,0,0.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(540,24,60,NULL,'Câu trả lời mẫu cho câu hỏi 60',NULL,1,2.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(541,25,36,NULL,'Câu trả lời mẫu cho câu hỏi 36',NULL,1,0.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(542,25,6,NULL,'Câu trả lời mẫu cho câu hỏi 6',NULL,1,1.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(543,25,12,NULL,'Câu trả lời mẫu cho câu hỏi 12',NULL,1,1.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(544,25,56,NULL,'Câu trả lời mẫu cho câu hỏi 56',NULL,1,0.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(545,25,8,NULL,'Câu trả lời mẫu cho câu hỏi 8',NULL,1,0.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(546,25,34,NULL,'Câu trả lời mẫu cho câu hỏi 34',NULL,1,0.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(547,25,46,65,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(548,25,50,84,NULL,NULL,0,0.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(549,25,35,NULL,'Câu trả lời mẫu cho câu hỏi 35',NULL,1,2.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(550,25,47,69,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(551,25,37,NULL,'Câu trả lời mẫu cho câu hỏi 37',NULL,1,2.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(552,25,23,52,NULL,NULL,0,0.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(553,25,38,NULL,'Câu trả lời mẫu cho câu hỏi 38',NULL,1,2.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(554,25,40,NULL,'Câu trả lời mẫu cho câu hỏi 40',NULL,1,2.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(555,25,24,53,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(556,25,58,NULL,'Câu trả lời mẫu cho câu hỏi 58',NULL,1,2.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(557,25,4,NULL,'Câu trả lời mẫu cho câu hỏi 4',NULL,1,2.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(558,25,9,NULL,'Câu trả lời mẫu cho câu hỏi 9',NULL,1,2.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(559,25,20,37,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(560,25,7,NULL,'Câu trả lời mẫu cho câu hỏi 7',NULL,1,2.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(561,25,22,45,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(562,25,21,41,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(563,25,25,57,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(564,25,10,NULL,'Câu trả lời mẫu cho câu hỏi 10',NULL,1,1.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(565,25,57,NULL,'Câu trả lời mẫu cho câu hỏi 57',NULL,1,2.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(566,25,48,73,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(567,25,59,NULL,'Câu trả lời mẫu cho câu hỏi 59',NULL,1,2.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(568,25,1,1,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(569,25,11,NULL,'Câu trả lời mẫu cho câu hỏi 11',NULL,1,2.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(570,25,39,NULL,'Câu trả lời mẫu cho câu hỏi 39',NULL,1,2.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(571,26,20,40,NULL,NULL,0,0.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(572,26,46,65,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(573,26,6,NULL,'Câu trả lời mẫu cho câu hỏi 6',NULL,1,2.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(574,26,58,NULL,'Câu trả lời mẫu cho câu hỏi 58',NULL,1,1.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(575,26,1,1,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(576,26,7,NULL,'Câu trả lời mẫu cho câu hỏi 7',NULL,1,2.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(577,26,23,51,NULL,NULL,0,0.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(578,26,10,NULL,'Câu trả lời mẫu cho câu hỏi 10',NULL,1,2.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(579,26,21,44,NULL,NULL,0,0.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(580,26,8,NULL,'Câu trả lời mẫu cho câu hỏi 8',NULL,1,0.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(581,26,48,75,NULL,NULL,0,0.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(582,26,35,NULL,'Câu trả lời mẫu cho câu hỏi 35',NULL,1,2.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(583,26,40,NULL,'Câu trả lời mẫu cho câu hỏi 40',NULL,1,0.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(584,26,56,NULL,'Câu trả lời mẫu cho câu hỏi 56',NULL,1,1.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(585,26,47,69,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(586,26,24,53,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(587,26,26,62,NULL,NULL,0,0.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(588,26,39,NULL,'Câu trả lời mẫu cho câu hỏi 39',NULL,1,0.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(589,26,49,80,NULL,NULL,0,0.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(590,26,37,NULL,'Câu trả lời mẫu cho câu hỏi 37',NULL,1,2.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(591,26,22,47,NULL,NULL,0,0.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(592,26,57,NULL,'Câu trả lời mẫu cho câu hỏi 57',NULL,1,2.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(593,26,68,109,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(594,26,4,NULL,'Câu trả lời mẫu cho câu hỏi 4',NULL,1,2.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(595,26,60,NULL,'Câu trả lời mẫu cho câu hỏi 60',NULL,1,1.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(596,26,36,NULL,'Câu trả lời mẫu cho câu hỏi 36',NULL,1,2.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(597,26,34,NULL,'Câu trả lời mẫu cho câu hỏi 34',NULL,1,2.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(598,26,25,57,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(599,26,59,NULL,'Câu trả lời mẫu cho câu hỏi 59',NULL,1,2.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(600,26,9,NULL,'Câu trả lời mẫu cho câu hỏi 9',NULL,1,1.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(601,27,36,NULL,'Câu trả lời mẫu cho câu hỏi 36',NULL,1,0.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(602,27,6,NULL,'Câu trả lời mẫu cho câu hỏi 6',NULL,1,2.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(603,27,12,NULL,'Câu trả lời mẫu cho câu hỏi 12',NULL,1,0.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(604,27,56,NULL,'Câu trả lời mẫu cho câu hỏi 56',NULL,1,1.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(605,27,8,NULL,'Câu trả lời mẫu cho câu hỏi 8',NULL,1,0.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(606,27,34,NULL,'Câu trả lời mẫu cho câu hỏi 34',NULL,1,2.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(607,27,46,66,NULL,NULL,0,0.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(608,27,50,81,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(609,27,35,NULL,'Câu trả lời mẫu cho câu hỏi 35',NULL,1,0.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(610,27,47,72,NULL,NULL,0,0.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(611,27,37,NULL,'Câu trả lời mẫu cho câu hỏi 37',NULL,1,2.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(612,27,23,49,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(613,27,38,NULL,'Câu trả lời mẫu cho câu hỏi 38',NULL,1,2.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(614,27,40,NULL,'Câu trả lời mẫu cho câu hỏi 40',NULL,1,2.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(615,27,24,55,NULL,NULL,0,0.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(616,27,58,NULL,'Câu trả lời mẫu cho câu hỏi 58',NULL,1,2.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(617,27,4,NULL,'Câu trả lời mẫu cho câu hỏi 4',NULL,1,2.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(618,27,9,NULL,'Câu trả lời mẫu cho câu hỏi 9',NULL,1,1.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(619,27,20,39,NULL,NULL,0,0.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(620,27,7,NULL,'Câu trả lời mẫu cho câu hỏi 7',NULL,1,0.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(621,27,22,46,NULL,NULL,0,0.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(622,27,21,42,NULL,NULL,0,0.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(623,27,25,60,NULL,NULL,0,0.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(624,27,10,NULL,'Câu trả lời mẫu cho câu hỏi 10',NULL,1,2.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(625,27,57,NULL,'Câu trả lời mẫu cho câu hỏi 57',NULL,1,2.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(626,27,48,75,NULL,NULL,0,0.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(627,27,59,NULL,'Câu trả lời mẫu cho câu hỏi 59',NULL,1,2.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(628,27,1,1,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(629,27,11,NULL,'Câu trả lời mẫu cho câu hỏi 11',NULL,1,2.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(630,27,39,NULL,'Câu trả lời mẫu cho câu hỏi 39',NULL,1,2.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(631,28,51,85,NULL,NULL,0,1.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(632,28,55,101,NULL,NULL,0,1.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(633,28,53,93,NULL,NULL,0,1.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(634,28,2,5,NULL,NULL,0,1.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(635,28,52,92,NULL,NULL,0,0.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(636,28,54,99,NULL,NULL,0,0.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(637,28,5,NULL,'Câu trả lời mẫu cho câu hỏi 5',NULL,1,2.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(638,28,37,NULL,'Câu trả lời mẫu cho câu hỏi 37',NULL,1,0.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(639,28,9,NULL,'Câu trả lời mẫu cho câu hỏi 9',NULL,1,0.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(640,28,32,NULL,'Câu trả lời mẫu cho câu hỏi 32',NULL,1,3.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(641,29,20,37,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(642,29,46,65,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(643,29,6,NULL,'Câu trả lời mẫu cho câu hỏi 6',NULL,1,2.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(644,29,58,NULL,'Câu trả lời mẫu cho câu hỏi 58',NULL,1,0.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(645,29,1,1,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(646,29,7,NULL,'Câu trả lời mẫu cho câu hỏi 7',NULL,1,2.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(647,29,23,49,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(648,29,10,NULL,'Câu trả lời mẫu cho câu hỏi 10',NULL,1,0.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(649,29,21,43,NULL,NULL,0,0.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(650,29,8,NULL,'Câu trả lời mẫu cho câu hỏi 8',NULL,1,0.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(651,29,48,73,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(652,29,35,NULL,'Câu trả lời mẫu cho câu hỏi 35',NULL,1,2.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(653,29,40,NULL,'Câu trả lời mẫu cho câu hỏi 40',NULL,1,2.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(654,29,56,NULL,'Câu trả lời mẫu cho câu hỏi 56',NULL,1,2.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(655,29,47,72,NULL,NULL,0,0.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(656,29,24,53,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(657,29,26,61,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(658,29,39,NULL,'Câu trả lời mẫu cho câu hỏi 39',NULL,1,2.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(659,29,49,77,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(660,29,37,NULL,'Câu trả lời mẫu cho câu hỏi 37',NULL,1,2.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(661,29,22,47,NULL,NULL,0,0.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(662,29,57,NULL,'Câu trả lời mẫu cho câu hỏi 57',NULL,1,2.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(663,29,68,109,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(664,29,4,NULL,'Câu trả lời mẫu cho câu hỏi 4',NULL,1,1.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(665,29,60,NULL,'Câu trả lời mẫu cho câu hỏi 60',NULL,1,2.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(666,29,36,NULL,'Câu trả lời mẫu cho câu hỏi 36',NULL,1,2.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(667,29,34,NULL,'Câu trả lời mẫu cho câu hỏi 34',NULL,1,2.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(668,29,25,58,NULL,NULL,0,0.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(669,29,59,NULL,'Câu trả lời mẫu cho câu hỏi 59',NULL,1,0.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(670,29,9,NULL,'Câu trả lời mẫu cho câu hỏi 9',NULL,1,2.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(671,30,56,NULL,'Câu trả lời mẫu cho câu hỏi 56',NULL,1,2.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(672,30,25,57,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(673,30,37,NULL,'Câu trả lời mẫu cho câu hỏi 37',NULL,1,2.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(674,30,11,NULL,'Câu trả lời mẫu cho câu hỏi 11',NULL,1,2.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(675,30,48,73,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(676,30,34,NULL,'Câu trả lời mẫu cho câu hỏi 34',NULL,1,2.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(677,30,22,45,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(678,30,8,NULL,'Câu trả lời mẫu cho câu hỏi 8',NULL,1,0.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(679,30,4,NULL,'Câu trả lời mẫu cho câu hỏi 4',NULL,1,2.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(680,30,40,NULL,'Câu trả lời mẫu cho câu hỏi 40',NULL,1,2.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(681,31,36,NULL,'Câu trả lời mẫu cho câu hỏi 36',NULL,1,2.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(682,31,38,NULL,'Câu trả lời mẫu cho câu hỏi 38',NULL,1,2.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(683,31,47,69,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(684,31,8,NULL,'Câu trả lời mẫu cho câu hỏi 8',NULL,1,2.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(685,31,4,NULL,'Câu trả lời mẫu cho câu hỏi 4',NULL,1,2.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(686,31,21,42,NULL,NULL,0,0.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(687,31,24,53,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(688,31,34,NULL,'Câu trả lời mẫu cho câu hỏi 34',NULL,1,2.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(689,31,57,NULL,'Câu trả lời mẫu cho câu hỏi 57',NULL,1,2.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(690,31,12,NULL,'Câu trả lời mẫu cho câu hỏi 12',NULL,1,2.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(691,31,6,NULL,'Câu trả lời mẫu cho câu hỏi 6',NULL,1,2.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(692,31,9,NULL,'Câu trả lời mẫu cho câu hỏi 9',NULL,1,2.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(693,31,10,NULL,'Câu trả lời mẫu cho câu hỏi 10',NULL,1,0.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(694,31,59,NULL,'Câu trả lời mẫu cho câu hỏi 59',NULL,1,2.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(695,31,23,50,NULL,NULL,0,0.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(696,31,7,NULL,'Câu trả lời mẫu cho câu hỏi 7',NULL,1,2.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(697,31,37,NULL,'Câu trả lời mẫu cho câu hỏi 37',NULL,1,2.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(698,31,40,NULL,'Câu trả lời mẫu cho câu hỏi 40',NULL,1,1.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(699,31,22,45,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(700,31,56,NULL,'Câu trả lời mẫu cho câu hỏi 56',NULL,1,0.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(701,31,48,73,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(702,31,25,58,NULL,NULL,0,0.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(703,31,58,NULL,'Câu trả lời mẫu cho câu hỏi 58',NULL,1,2.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(704,31,11,NULL,'Câu trả lời mẫu cho câu hỏi 11',NULL,1,1.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(705,31,26,61,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(706,31,20,37,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(707,31,1,1,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(708,31,49,77,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(709,31,68,109,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(710,31,60,NULL,'Câu trả lời mẫu cho câu hỏi 60',NULL,1,2.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(711,32,36,NULL,'Câu trả lời mẫu cho câu hỏi 36',NULL,1,0.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(712,32,6,NULL,'Câu trả lời mẫu cho câu hỏi 6',NULL,1,2.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(713,32,12,NULL,'Câu trả lời mẫu cho câu hỏi 12',NULL,1,0.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(714,32,56,NULL,'Câu trả lời mẫu cho câu hỏi 56',NULL,1,2.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(715,32,8,NULL,'Câu trả lời mẫu cho câu hỏi 8',NULL,1,0.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(716,32,34,NULL,'Câu trả lời mẫu cho câu hỏi 34',NULL,1,1.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(717,32,46,65,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(718,32,50,81,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(719,32,35,NULL,'Câu trả lời mẫu cho câu hỏi 35',NULL,1,1.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(720,32,47,69,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(721,32,37,NULL,'Câu trả lời mẫu cho câu hỏi 37',NULL,1,2.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(722,32,23,49,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(723,32,38,NULL,'Câu trả lời mẫu cho câu hỏi 38',NULL,1,2.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(724,32,40,NULL,'Câu trả lời mẫu cho câu hỏi 40',NULL,1,2.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(725,32,24,54,NULL,NULL,0,0.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(726,32,58,NULL,'Câu trả lời mẫu cho câu hỏi 58',NULL,1,2.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(727,32,4,NULL,'Câu trả lời mẫu cho câu hỏi 4',NULL,1,0.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(728,32,9,NULL,'Câu trả lời mẫu cho câu hỏi 9',NULL,1,2.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(729,32,20,38,NULL,NULL,0,0.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(730,32,7,NULL,'Câu trả lời mẫu cho câu hỏi 7',NULL,1,0.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(731,32,22,45,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(732,32,21,44,NULL,NULL,0,0.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(733,32,25,57,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(734,32,10,NULL,'Câu trả lời mẫu cho câu hỏi 10',NULL,1,1.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(735,32,57,NULL,'Câu trả lời mẫu cho câu hỏi 57',NULL,1,2.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(736,32,48,73,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(737,32,59,NULL,'Câu trả lời mẫu cho câu hỏi 59',NULL,1,0.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(738,32,1,1,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(739,32,11,NULL,'Câu trả lời mẫu cho câu hỏi 11',NULL,1,0.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(740,32,39,NULL,'Câu trả lời mẫu cho câu hỏi 39',NULL,1,2.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(741,33,20,37,NULL,NULL,0,2.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(742,33,46,68,NULL,NULL,0,0.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(743,33,6,NULL,'Câu trả lời mẫu cho câu hỏi 6',NULL,1,1.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(744,33,58,NULL,'Câu trả lời mẫu cho câu hỏi 58',NULL,1,0.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(745,33,1,3,NULL,NULL,0,0.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(746,33,7,NULL,'Câu trả lời mẫu cho câu hỏi 7',NULL,1,1.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(747,33,23,51,NULL,NULL,0,0.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(748,33,10,NULL,'Câu trả lời mẫu cho câu hỏi 10',NULL,1,1.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(749,33,21,42,NULL,NULL,0,0.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(750,33,8,NULL,'Câu trả lời mẫu cho câu hỏi 8',NULL,1,0.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(751,33,48,74,NULL,NULL,0,0.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(752,33,35,NULL,'Câu trả lời mẫu cho câu hỏi 35',NULL,1,1.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(753,33,40,NULL,'Câu trả lời mẫu cho câu hỏi 40',NULL,1,1.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(754,33,56,NULL,'Câu trả lời mẫu cho câu hỏi 56',NULL,1,1.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(755,33,47,72,NULL,NULL,0,0.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(756,33,24,54,NULL,NULL,0,0.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(757,33,26,64,NULL,NULL,0,0.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(758,33,39,NULL,'Câu trả lời mẫu cho câu hỏi 39',NULL,1,0.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(759,33,49,79,NULL,NULL,0,0.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(760,34,36,NULL,'Câu trả lời mẫu cho câu hỏi 36',NULL,1,0.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(761,34,6,NULL,'Câu trả lời mẫu cho câu hỏi 6',NULL,1,1.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(762,34,12,NULL,'Câu trả lời mẫu cho câu hỏi 12',NULL,1,1.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(763,34,56,NULL,'Câu trả lời mẫu cho câu hỏi 56',NULL,1,1.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(764,34,8,NULL,'Câu trả lời mẫu cho câu hỏi 8',NULL,1,0.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(765,34,34,NULL,'Câu trả lời mẫu cho câu hỏi 34',NULL,1,1.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(766,34,46,66,NULL,NULL,0,0.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(767,35,36,NULL,'Câu trả lời mẫu cho câu hỏi 36',NULL,1,1.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(768,35,6,NULL,'Câu trả lời mẫu cho câu hỏi 6',NULL,1,2.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(769,35,12,NULL,'Câu trả lời mẫu cho câu hỏi 12',NULL,1,0.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(770,35,56,NULL,'Câu trả lời mẫu cho câu hỏi 56',NULL,1,1.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(771,35,8,NULL,'Câu trả lời mẫu cho câu hỏi 8',NULL,1,1.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(772,35,34,NULL,'Câu trả lời mẫu cho câu hỏi 34',NULL,1,1.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(773,35,46,67,NULL,NULL,0,0.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(774,35,50,83,NULL,NULL,0,0.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(775,35,35,NULL,'Câu trả lời mẫu cho câu hỏi 35',NULL,1,0.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(776,35,47,70,NULL,NULL,0,0.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(777,35,37,NULL,'Câu trả lời mẫu cho câu hỏi 37',NULL,1,0.00,NULL,'2025-05-16 20:22:31','2025-05-16 20:22:31'),(778,35,23,50,NULL,NULL,0,0.00,NULL,'2025-05-16 20:22:32','2025-05-16 20:22:32'),(779,35,38,NULL,'Câu trả lời mẫu cho câu hỏi 38',NULL,1,1.00,NULL,'2025-05-16 20:22:32','2025-05-16 20:22:32'),(780,35,40,NULL,'Câu trả lời mẫu cho câu hỏi 40',NULL,1,0.00,NULL,'2025-05-16 20:22:32','2025-05-16 20:22:32'),(781,35,24,56,NULL,NULL,0,0.00,NULL,'2025-05-16 20:22:32','2025-05-16 20:22:32'),(782,40,27,NULL,'{\"analysis\":\"fwqw\",\"solution\":\"\\u01b0qf\"}','situation',0,1.00,NULL,'2025-05-16 22:08:50','2025-05-16 22:09:46'),(783,40,13,9,NULL,NULL,0,1.00,NULL,'2025-05-16 22:08:50','2025-05-16 22:08:50'),(784,40,5,NULL,'{\"analysis\":\"dfwqfwf\",\"solution\":null}','situation',0,1.00,NULL,'2025-05-16 22:08:50','2025-05-16 22:09:46'),(785,40,66,106,NULL,NULL,0,0.00,NULL,'2025-05-16 22:08:50','2025-05-16 22:08:50'),(786,40,3,NULL,'agg',NULL,0,0.00,NULL,'2025-05-16 22:08:50','2025-05-16 22:08:50'),(787,40,67,NULL,'{\"analysis\":\"fwq\",\"solution\":\"fwqwq\"}','situation',0,0.00,NULL,'2025-05-16 22:08:50','2025-05-16 22:08:50'),(788,40,4,NULL,'grsgr',NULL,0,0.00,NULL,'2025-05-16 22:08:50','2025-05-16 22:08:50'),(789,40,6,NULL,'grsgrs',NULL,0,0.00,NULL,'2025-05-16 22:08:50','2025-05-16 22:08:50'),(790,40,34,NULL,'{\"process\":\"fwq\",\"result\":\"fwqfwq\",\"evidence_file\":null}','practical',0,0.00,NULL,'2025-05-16 22:08:50','2025-05-16 22:08:50'),(791,40,2,7,NULL,NULL,0,0.00,NULL,'2025-05-16 22:08:50','2025-05-16 22:08:50'),(792,40,68,109,NULL,NULL,0,1.00,NULL,'2025-05-16 22:08:50','2025-05-16 22:08:50'),(793,40,20,38,NULL,NULL,0,0.00,NULL,'2025-05-16 22:08:50','2025-05-16 22:08:50'),(794,40,1,3,NULL,NULL,0,0.00,NULL,'2025-05-16 22:08:50','2025-05-16 22:08:50');
+/*!40000 ALTER TABLE `user_responses` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `users`
+--
+
+DROP TABLE IF EXISTS `users`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `users` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `email_verified_at` timestamp NULL DEFAULT NULL,
+  `password` varchar(255) NOT NULL,
+  `remember_token` varchar(100) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `role_id` bigint(20) unsigned DEFAULT NULL,
+  `seafarer_id` varchar(255) DEFAULT NULL,
+  `phone` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `users_email_unique` (`email`),
+  UNIQUE KEY `users_seafarer_id_unique` (`seafarer_id`),
+  KEY `users_role_id_foreign` (`role_id`),
+  CONSTRAINT `users_role_id_foreign` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`) ON DELETE SET NULL
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `users`
+--
+
+LOCK TABLES `users` WRITE;
+/*!40000 ALTER TABLE `users` DISABLE KEYS */;
+INSERT INTO `users` VALUES (1,'Administrator','admin@thuyenvien.com','2025-05-16 20:22:27','$2y$10$IAoLmNwXT1YpAkdgXc/ggu8xKLai8EqsstejC2dSYz2PFhJm6MFKm',NULL,'2025-05-16 20:22:27','2025-05-16 20:22:27',1,NULL,NULL),(2,'Nguyễn Văn A','nguyenvana@example.com','2025-05-16 20:22:27','$2y$10$IAoLmNwXT1YpAkdgXc/ggu8xKLai8EqsstejC2dSYz2PFhJm6MFKm',NULL,'2025-05-16 20:22:27','2025-05-16 20:22:27',2,'SID001','0901234567'),(3,'Trần Văn B','tranvanb@example.com','2025-05-16 20:22:27','$2y$10$IAoLmNwXT1YpAkdgXc/ggu8xKLai8EqsstejC2dSYz2PFhJm6MFKm',NULL,'2025-05-16 20:22:27','2025-05-16 20:22:27',2,'SID002','0901234568'),(4,'Lê Văn C','levanc@example.com','2025-05-16 20:22:27','$2y$10$IAoLmNwXT1YpAkdgXc/ggu8xKLai8EqsstejC2dSYz2PFhJm6MFKm',NULL,'2025-05-16 20:22:27','2025-05-16 20:22:27',2,'SID003','0901234569'),(5,'Phạm Văn D','phamvand@example.com','2025-05-16 20:22:27','$2y$10$IAoLmNwXT1YpAkdgXc/ggu8xKLai8EqsstejC2dSYz2PFhJm6MFKm',NULL,'2025-05-16 20:22:27','2025-05-16 20:22:27',2,'SID004','0901234570'),(6,'Hoàng Văn E','hoangvane@example.com','2025-05-16 20:22:27','$2y$10$IAoLmNwXT1YpAkdgXc/ggu8xKLai8EqsstejC2dSYz2PFhJm6MFKm',NULL,'2025-05-16 20:22:27','2025-05-16 20:22:27',2,'SID005','0901234571'),(7,'Đỗ Văn F','dovanf@example.com','2025-05-16 20:22:27','$2y$10$IAoLmNwXT1YpAkdgXc/ggu8xKLai8EqsstejC2dSYz2PFhJm6MFKm',NULL,'2025-05-16 20:22:27','2025-05-16 20:22:27',2,'SID006','0901234572'),(8,'Vũ Văn G','vuvang@example.com','2025-05-16 20:22:27','$2y$10$IAoLmNwXT1YpAkdgXc/ggu8xKLai8EqsstejC2dSYz2PFhJm6MFKm',NULL,'2025-05-16 20:22:27','2025-05-16 20:22:27',2,'SID007','0901234573'),(9,'Ngô Văn H','ngovanh@example.com','2025-05-16 20:22:27','$2y$10$IAoLmNwXT1YpAkdgXc/ggu8xKLai8EqsstejC2dSYz2PFhJm6MFKm',NULL,'2025-05-16 20:22:27','2025-05-16 20:22:27',2,'SID008','0901234574'),(10,'Dương Văn I','duongvani@example.com','2025-05-16 20:22:28','$2y$10$IAoLmNwXT1YpAkdgXc/ggu8xKLai8EqsstejC2dSYz2PFhJm6MFKm',NULL,'2025-05-16 20:22:28','2025-05-16 20:22:28',2,'SID009','0901234575'),(11,'Bùi Văn K','buivank@example.com','2025-05-16 20:22:28','$2y$10$IAoLmNwXT1YpAkdgXc/ggu8xKLai8EqsstejC2dSYz2PFhJm6MFKm',NULL,'2025-05-16 20:22:28','2025-05-16 20:22:28',2,'SID010','0901234576');
+/*!40000 ALTER TABLE `users` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2025-05-17 12:10:16

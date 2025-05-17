@@ -34,18 +34,30 @@ class DashboardController extends Controller
             ->take(5)
             ->get();
 
+        $topThuyenVien = User::select(
+            'users.id',
+            'users.name',
+            DB::raw('COUNT(test_attempts.id) as attempts_count'),
+            DB::raw('AVG(test_attempts.score) as average_score'),
+            'positions.name as position_name'
+        )
+        ->leftJoin('test_attempts', 'users.id', '=', 'test_attempts.user_id')
+        ->leftJoin('thuyen_viens', 'users.id', '=', 'thuyen_viens.user_id')
+        ->leftJoin('positions', 'thuyen_viens.position_id', '=', 'positions.id')
+        ->groupBy('users.id', 'users.name', 'positions.name')
+        ->orderBy('average_score', 'desc')
+        ->take(10)
+        ->get();
         // Lấy danh sách lượt thi gần đây
         $recentTestAttempts = TestAttempt::with(['user', 'test'])
             ->orderBy('created_at', 'desc')
             ->take(5)
             ->get();
-
         // Thống kê thuyền viên theo chức danh
         $seafarersByPosition = Position::leftJoin('thuyen_viens', 'positions.id', '=', 'thuyen_viens.position_id')
             ->select('positions.name', DB::raw('COUNT(thuyen_viens.id) as count'))
             ->groupBy('positions.id', 'positions.name')
             ->get();
-
         // Điểm trung bình theo loại bài kiểm tra
         $averageScoresByTest = Test::leftJoin('test_attempts', 'tests.id', '=', 'test_attempts.test_id')
             ->select('tests.title', DB::raw('AVG(test_attempts.score) as average_score'))
@@ -60,7 +72,8 @@ class DashboardController extends Controller
             'recentTests',
             'recentTestAttempts',
             'seafarersByPosition',
-            'averageScoresByTest'
+            'averageScoresByTest',
+            'topThuyenVien'
         ));
     }
 }

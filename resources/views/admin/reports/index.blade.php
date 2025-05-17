@@ -270,7 +270,7 @@
                     @forelse($topSeafarers as $seafarer)
                     <div class="seafarer-item d-flex align-items-center justify-content-between">
                         <div class="d-flex align-items-center">
-                            <img src="https://via.placeholder.com/150" alt="{{ $seafarer->name }}" class="avatar me-3">
+                            <img src="https://banner2.cleanpng.com/20180325/lje/av06ylp8e.webp" alt="{{ $seafarer->name }}" class="avatar me-3">
                             <div>
                                 <h6 class="mb-0">{{ $seafarer->name }}</h6>
                                 <small class="text-muted">
@@ -314,10 +314,10 @@
                                 <div class="text-muted small">{{ $attempt->test->title }}</div>
                             </div>
                             <div class="text-end">
-                                <div class="score-badge 
-                                        @if($attempt->score >= 80) score-high 
-                                        @elseif($attempt->score >= 60) score-medium 
-                                        @else score-low 
+                                <div class="score-badge
+                                        @if($attempt->score >= 80) score-high
+                                        @elseif($attempt->score >= 60) score-medium
+                                        @else score-low
                                         @endif">
                                     {{ $attempt->score }}/100
                                 </div>
@@ -340,12 +340,13 @@
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         // Biểu đồ Thuyền viên theo chức danh
-        const positionLabels = {
-            !!json_encode($seafarersByPosition - > pluck('name')) !!
-        };
-        const positionData = {
-            !!json_encode($seafarersByPosition - > pluck('count')) !!
-        };
+        const positionLabels =
+            {!!json_encode($seafarersByPosition->pluck('name')) !!}
+        ;
+        const positionData =
+            {!!json_encode($seafarersByPosition->pluck('count')) !!}
+        ;
+            console.log(positionLabels);
 
         new Chart(document.getElementById('seafarersByPositionChart'), {
             type: 'pie',
@@ -371,12 +372,8 @@
         });
 
         // Biểu đồ Điểm trung bình theo loại bài kiểm tra
-        const testLabels = {
-            !!json_encode($averageScoresByTest - > pluck('title')) !!
-        };
-        const testData = {
-            !!json_encode($averageScoresByTest - > pluck('average_score')) !!
-        };
+        const testLabels = {!!json_encode($averageScoresByTest->pluck('title')) !!};
+        const testData = {!!json_encode($averageScoresByTest->pluck('average_score')) !!};
 
         new Chart(document.getElementById('averageScoresByTestChart'), {
             type: 'bar',
