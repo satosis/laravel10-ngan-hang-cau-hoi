@@ -231,7 +231,7 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="mb-2">
-                                        <strong>Thời gian bắt đầu:</strong> {{ $attempt->started_at->format('d/m/Y H:i') }}
+                                        <strong>Thời gian bắt đầu:</strong> {{ $attempt->start_time->format('d/m/Y H:i') }}
                                     </div>
                                     <div>
                                         <strong>Hoàn thành:</strong>
